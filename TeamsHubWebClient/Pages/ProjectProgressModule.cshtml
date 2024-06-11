@@ -1,0 +1,267 @@
+@page
+@using TeamsHubWebClient.SinglentonClasses
+@model ProjectProgressModule
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventana del Proyecto</title>
+    <link rel="stylesheet" href="/css/fileModuleStyles.css">
+    <link rel="stylesheet" href="/css/projectProgressModuleStyles.css">
+</head>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: url('/images/Background2.jpeg') no-repeat center center fixed;
+    }
+
+    .container {
+        display: flex;
+        width: 100%;
+        height: 100vh;
+    }
+
+    element.style {
+        display: block;
+        box-sizing: border-box;
+        margin-left: 90px;
+        height: 449px;
+        width: 449px;
+    }
+
+    .sidebar {
+        width: 60px;
+        background-color: rgba(0, 0, 0, 0.4);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+        position: fixed;
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    .sidebar .icon {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 20px;
+        margin-left: 5px;
+        cursor: pointer;
+    }
+
+    .main-content {
+        flex-grow: 1;
+        background-color: #1E1E1E;
+        width: 1770px;
+        height: 879px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-radius: 40px;
+        position: fixed;
+        padding: 20px 0;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        top: 0;
+        left: 0;
+        margin-left: 85px;
+    }
+
+
+
+    .header {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        background-color: #2B2A2A;
+        border-radius: 40px;
+        padding: 10px;
+        margin-left: 0.8cm;
+        margin-right: 0.8cm;
+    }
+
+    .back-arrow {
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        margin-left: 21px;
+    }
+
+    .project-title {
+        font-size: 2.2em;
+        font-weight: bold;
+        color: #f7f7f7;
+        margin-left: 1cm;
+    }
+
+    .content {
+        flex-grow: 1;
+        margin: 20px 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .footer {
+        display: flex;
+        align-items: center;
+    }
+
+    .message-input {
+        flex-grow: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        margin-right: 10px;
+        font-size: 1em;
+    }
+
+    .send-arrow {
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+    }
+
+    .chart-container {
+        position: relative;
+        height: 450px;
+        width: 450px;
+        margin-left: 6cm;
+        margin-top: 1cm;
+    }
+
+    .chart-title {
+        text-align: center;
+        color: #f7f7f7;
+        font-size: 2.2em;
+        margin-bottom: 10px;
+        margin-left: 9.2cm;
+        font-weight: bold;
+    }
+
+    .task-info {
+        margin-left: 8cm;
+        text-align: center;
+        color: #f7f7f7;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .task-info p {
+        font-size: 30px;
+        margin: 10px 0;
+    }
+
+    .task-info ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .task-info li {
+        margin: 5px 0;
+        font-size: 28px;
+        display: flex;
+        align-items: center;
+    }
+
+    .task-info li span {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        margin-right: 8px;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <a href="/"><img src="https://cdn-icons-png.flaticon.com/512/5956/5956494.png" alt="Project Icon"
+                    class="icon"></a>
+            <a href="/AddStudentsToProject"><img src="https://cdn-icons-png.flaticon.com/512/5073/5073264.png"
+                    alt="DetailsProyect Icon" class="icon"></a>
+            <a href="/ActivitiesModule"><img src="https://cdn-icons-png.flaticon.com/512/7891/7891841.png"
+                    alt="Task Icon" class="icon"></a>
+            <a href="/FileModule"><img src="https://cdn-icons-png.flaticon.com/512/14779/14779557.png"
+                    alt="Download Icon" class="icon"></a>
+            <a href="/ProjectProgressModule"><img src="https://cdn-icons-png.flaticon.com/512/7185/7185654.png"
+                    alt="Reports Icon" class="icon"></a>
+            <a href="/Login"><img src="https://cdn-icons-png.flaticon.com/512/1716/1716282.png" alt="Exit Icon"
+                    class="icon"></a>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <a href="/"><img src="https://cdn-icons-png.flaticon.com/512/4885/4885344.png" alt="Back Arrow"
+                        class="back-arrow"></a>
+                <span class="project-title">@ProjectSinglenton.Name</span>
+            </div>
+            <div class="content">
+                <div>
+                    <div class="chart-title">Progreso del proyecto</div>
+                    <div class="chart-container">
+                        <canvas id="taskChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="task-info">
+                    <p>Número de tareas: @Model.TotalTasks</p>
+                    <ul>
+                        <li><span style="background-color: #36A2EB;"></span> Actividades Pendientes:
+                            @Model.PendingPercentage%</li>
+                        <li><span style="background-color: #FF6384;"></span> Actividades Finalizadas:
+                            @Model.FinishedPercentage%</li>
+                        <li><span style="background-color: #FFCE56;"></span> Actividades En proceso:
+                            @Model.InProgressPercentage%</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const pendingPercentage = @Model.PendingPercentage;
+        const inProgressPercentage = @Model.InProgressPercentage;
+        const finishedPercentage = @Model.FinishedPercentage;
+
+        const ctx = document.getElementById('taskChart').getContext('2d');
+        const taskChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Actividades Pendientes', 'Actividades En proceso', 'Actividades Finalizadas'],
+                datasets: [{
+                    data: [pendingPercentage, inProgressPercentage, finishedPercentage],
+                    backgroundColor: ['#36A2EB', '#FFCE56', '#FF6384']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

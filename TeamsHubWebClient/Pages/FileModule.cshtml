@@ -1,0 +1,280 @@
+@page
+@using TeamsHubWebClient.SinglentonClasses
+@model TeamsHubWebClient.Pages.FileModule
+@{
+    Layout = null;
+    ViewData["Title"] = "ChatGeneral";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventana del Proyecto</title>
+    <link rel="stylesheet" href="/css/fileModuleStyles.css">
+</head>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: url('/images/Background2.jpeg') no-repeat center center fixed;
+    }
+
+    .container {
+        display: flex;
+        width: 100%;
+        height: 100vh;
+    }
+
+    .sidebar {
+        width: 60px;
+        background-color: black;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px 0;
+    }
+
+    .sidebar .icon {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 20px;
+        cursor: pointer;
+    }
+
+    .main-content {
+        flex-grow: 1;
+        background-color: rgb(30, 30, 30);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-radius: 40px;
+        margin: 20px;
+        padding: 20px;
+        margin-left: 90px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #2b2a2a;
+        border-radius: 40px;
+        padding: 10px;
+    }
+
+    .back-arrow {
+        width: 49px;
+        height: 49px;
+        margin-left: 25px;
+        cursor: pointer;
+    }
+
+    .project-title {
+        font-size: 2.3em;
+        font-weight: bold;
+        color: #f0f0f0;
+        margin-right: 1159px;
+    }
+
+    .details-button {
+        background-color: black;
+        color: white;
+        font-size: 20px;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 40px;
+        cursor: pointer;
+        height: 50px;
+        width: 230px;
+        margin-right: 30px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .details-button:hover {
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .content {
+        flex-grow: 1;
+        margin: 20px 0;
+    }
+
+    .footer {
+        display: flex;
+        align-items: center;
+    }
+
+    .message-input {
+        flex-grow: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        margin-right: 10px;
+        font-size: 1em;
+    }
+
+    .send-arrow {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+    }
+
+
+    .main-content {
+        flex-grow: 1;
+        background-color: rgb(30, 30, 30);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-radius: 40px;
+        margin: 20px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #2b2a2a;
+        border-radius: 40px;
+        padding: 10px;
+    }
+
+    .user-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+    .user-row img {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .delete-button {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 15px;
+        width: 99px;
+        height: 37px;
+        font-size: 17px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .user-name {
+        flex-grow: 1;
+        font-size: 20px;
+        color: #ffecec;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <a href="/"><img src="https://cdn-icons-png.flaticon.com/512/5956/5956494.png" alt="Project Icon"
+                    class="icon"></a>
+            <a href="/AddStudentsToProject"><img src="https://cdn-icons-png.flaticon.com/512/5073/5073264.png"
+                    alt="DetailsProyect Icon" class="icon"></a>
+            <a href="/ActivitiesModule"><img src="https://cdn-icons-png.flaticon.com/512/7891/7891841.png"
+                    alt="Task Icon" class="icon"></a>
+            <a href="/FileModule"><img src="https://cdn-icons-png.flaticon.com/512/14779/14779557.png"
+                    alt="Download Icon" class="icon"></a>
+            <a href="/ProjectProgressModule"><img src="https://cdn-icons-png.flaticon.com/512/7185/7185654.png"
+                    alt="Reports Icon" class="icon"></a>
+            <a href="/Login"><img src="https://cdn-icons-png.flaticon.com/512/1716/1716282.png" alt="Exit Icon"
+                    class="icon"></a>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <a href="/"><img src="https://cdn-icons-png.flaticon.com/512/4885/4885344.png" alt="Back Arrow" class="back-arrow"></a>
+                <span class="project-title">@ProjectSinglenton.Name</span>
+                <button onclick="document.getElementById('fileInput').click();" class="details-button">Agregar Archivo</button>
+            </div>
+            <div class="content" id="fileList">
+            </div>
+            <div class="content">
+                <form id="uploadForm" method="post" enctype="multipart/form-data">
+                    <input type="file" id="fileInput" name="file" style="display:none;" onchange="document.getElementById('uploadForm').submit();">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script>
+        var documentList = @Html.Raw(Json.Serialize(Model.DocumenttList));
+
+        $(document).ready(function () {
+            loadFilesVisual();
+        })
+
+        function loadFilesVisual() {
+            var fileList = $('#fileList');
+            fileList.empty();
+
+            documentList.forEach(function (file) {
+                console.log(file);
+                var userRow = $('<div class="user-row">');
+                var userImage = $('<img>').attr('src', 'https://cdn.icon-icons.com/icons2/3456/PNG/512/download_folder_file_icon_219533.png').attr('alt', 'Usuario');
+                var userName = $('<span class="user-name">').html('<b>Nombre:</b> ' + file.name);
+                var deleteButton = $('<button class="delete-button">').text('Borrar');
+
+                deleteButton.on('click', function () {
+                    return;
+                });
+
+                userRow.append(userImage, userName, deleteButton);
+                fileList.append(userRow);
+            });
+        }
+
+        document.getElementById('uploadForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const fileInput = document.getElementById('fileInput');
+            if (fileInput.files.length === 0) {
+                alert('Please select a file.');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch('/FileModule', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.text();
+                alert('File uploaded successfully.');
+            } catch (error) {
+                console.error('Error uploading file:', error);
+                alert('Error uploading file.');
+            }
+        });
+
+        function ey(){
+
+        }
+    </script>
+</body>
+</html>

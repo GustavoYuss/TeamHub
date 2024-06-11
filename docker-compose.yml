@@ -1,0 +1,160 @@
+  services:
+
+    appwebclient:
+      image: webclient
+
+      depends_on:
+        apigateway:
+          condition: service_started
+
+      ports:
+        - "8000:8080"
+
+      networks:
+        interna:
+          ipv4_address: 172.16.0.10
+
+    apigateway:
+      image: apigateway
+      depends_on:
+
+        apisessionservice:
+          condition: service_started
+
+        apitaskservice:
+          condition: service_started 
+
+        apiuserservice:
+          condition: service_started 
+
+        apifileservice:
+          condition: service_started 
+
+        apiprojectservice:
+          condition: service_started 
+
+        apifilegrpcservice:
+          condition: service_started
+        
+        apilogservice:
+          condition: service_started
+
+      ports:
+        - "8081:8080"  
+        
+      networks:
+        interna:
+          ipv4_address: 172.16.0.1
+
+              
+    apitaskservice:
+      image: taskservice
+      depends_on:
+
+        apisessionservice:
+          condition: service_started
+
+      networks:
+        interna:
+          ipv4_address: 172.16.0.2
+
+    apiuserservice:
+      image: userservice
+      depends_on:
+      
+        apisessionservice:
+          condition: service_started 
+        
+      networks:
+        interna:
+          ipv4_address: 172.16.0.3
+
+    apifileservice:
+      image: fileservice
+      depends_on:
+      
+        apisessionservice:
+          condition: service_started
+        
+      networks:
+        interna:
+          ipv4_address: 172.16.0.4
+
+    apiprojectservice:
+      image: projectservice
+      depends_on:
+      
+        apisessionservice:
+          condition: service_started
+        
+      networks:
+        interna:
+          ipv4_address: 172.16.0.5
+
+    apifilegrpcservice:
+      image: grpcfileservice
+      depends_on:
+      
+        apisessionservice:
+          condition: service_started
+
+      ports:
+        - "5001:8080"
+
+      networks:
+
+        interna:
+          ipv4_address: 172.16.0.6
+    
+    apisessionservice:
+      image: sessionservice
+
+      depends_on:
+        teamhubdb:
+          condition: service_started
+
+      networks:
+        interna:
+          ipv4_address: 172.16.0.7
+
+    apilogservice:
+      image: logservice
+
+      networks:
+        interna:
+          ipv4_address: 172.16.0.9
+    
+    teamhubdb: 
+      image: teamhub_db
+      environment:
+        - MYSQL_ROOT_PASSWORD=1234
+      volumes:
+        - teamhub_db:/var/lib/mysql
+      ports:
+        - "3309:3306"
+      expose:
+        - 3306
+      networks:
+        interna:
+          ipv4_address: 172.16.0.8
+
+    rabbitmq:
+      image: rabbitmq:3-management
+
+      ports:
+        - "15672:15672"
+      expose:
+        - 5672
+      
+      networks:
+        interna:
+          ipv4_address: 172.16.0.11
+
+  volumes:
+    teamhub_db:
+  networks:
+    interna: 
+        ipam:       
+          config:
+            - subnet:  172.16.0.0/16
+              gateway: 172.16.0.254

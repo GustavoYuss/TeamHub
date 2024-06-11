@@ -1,0 +1,26 @@
+{
+  "name": "teamhubservicesfiles",
+  "version": "1.0.0",
+  "description": "Servicio de archivos para el APi de TamHub",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "proto-gen": "proto-gen.sh"
+  },
+  "author": "Gustavo Mendoza",
+  "license": "ISC",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.10.7",
+    "@grpc/proto-loader": "^0.7.13",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.9.7",
+    "sequelize": "^6.37.3",
+    "swagger-ui-express": "^5.0.0"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}

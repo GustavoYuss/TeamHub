@@ -1,0 +1,156 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Calibri', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('https://static.vecteezy.com/system/resources/thumbnails/011/144/726/original/abstract-blurred-colorful-flickering-light-leak-gradient-background-video.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.container {
+    text-align: center;
+    position: relative;
+}
+
+.logo {
+    width: 397px;
+    height: 160px;
+    margin-bottom: 0px; /* Ajusta la distancia del logo al cuadro */
+}
+
+.overlay {
+    background: rgba(33, 33, 33, 0.6);
+    border-radius: 30px;
+    width: 350px; /* Se ha aumentado el ancho del cuadro */
+    padding: 50px; /* Se ha aumentado el espacio interno del cuadro */
+    position: relative;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    margin-bottom: 50px; /* Ajusta la distancia del cuadro a los enlaces de registro y contraseña */
+    overflow: hidden;
+}
+
+.overlay::before {
+    content: '';
+    position: absolute;
+    top: -2px; /* Ajusta el desplazamiento vertical para que la línea esté justo en el borde */
+    left: -2px; /* Ajusta el desplazamiento horizontal para que la línea esté justo en el borde */
+    width: calc(100% + 4px); /* Ajusta el ancho para cubrir todo el borde */
+    height: calc(100% + 4px); /* Ajusta la altura para cubrir todo el borde */
+    border: 2px solid transparent; /* Crea un borde transparente */
+    border-radius: 15px; /* Mismo radio de borde que el cuadrado */
+    animation: animate 6s linear infinite; /* Aplica la animación */
+}
+
+@keyframes animate {
+    0% {
+        border-color: transparent transparent #FFB53737 transparent; /* Color inicial del borde */
+        transform: rotate(0deg); /* No hay rotación inicial */
+    }    
+    100% {
+        border-color: transparent transparent #FFB53737 transparent; /* Color final del borde */
+        transform: rotate(360deg); /* Rotación completa */
+    }
+}
+
+
+.title {
+    color: #FFFAF5F5;
+    font-size: 40px;
+    font-weight: bold;
+    margin: 0;
+    text-align: left; /* Alinea el título a la izquierda */
+}
+
+.subtitle {
+    color: white;
+    font-size: 18px;
+    margin: 10px 0 20px;
+    text-align: left; /* Alinea el subtítulo a la izquierda */
+}
+
+.form-container {
+    text-align: left; /* Alinea el formulario a la izquierda */
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group .icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+}
+
+.input {
+    width: calc(100% - 60px); /* Se ha reducido el ancho del campo de entrada */
+    height: 52px;
+    padding: 0 10px 0 40px;
+    border: 1px solid #0C97C8;
+    border-radius: 15px;
+    font-size: 18px;
+    color: #FFFFF3F3;
+    background: transparent;
+}
+
+.show-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.sign-in-button {
+    background: #5BA1C5;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.register-text {
+    color: #B2ACAC;
+    font-size: 18px;
+    margin-top: 30px; /* Ajusta la distancia de los enlaces al cuadro */
+}
+
+.register-text a {
+    color: #2A50DD;
+    text-decoration: none;
+}
+
+.forgot-password {
+    color: #2A50DD;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.forgot-password a {
+    color: #2A50DD;
+    text-decoration: none;
+}

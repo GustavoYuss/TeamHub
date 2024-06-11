@@ -1,0 +1,11 @@
+FROM node AS build-env
+WORKDIR /FileRestAPI
+
+COPY . ./
+
+RUN npm install
+
+FROM node
+WORKDIR /FileRestAPI
+COPY --from=build-env /FileRestAPI/ .
+ENTRYPOINT [ "node", "App.js"]

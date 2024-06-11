@@ -1,0 +1,62 @@
+@page
+@model TeamsHubWebClient.Pages.RegisterUserModel
+@{
+    Layout = null;
+    ViewData["Title"] = "Modulo Usuarios";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modulo Usuario</title>
+    <link rel="stylesheet" href="/css/registerUserStyles.css">
+    <style>
+        .button-group {
+            margin-top: -1cm;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background">
+        <div class="container">
+            <img src="/images/Team_Hub-removebg-preview.png" alt="Team Hub" class="logo">
+            <div class="overlay">
+                <div id="form-container">
+                    <h1 class="title">Registrarse</h1>
+                    <div class="input-group">
+                        <div class="column">
+                            <input type="text" placeholder="Nombre" class="input" id="txtNombre"
+                                asp-for="studentDTO.Name" required="required">
+                            <input type="text" placeholder="Apellido Paterno" class="input" id="txtApellidoPaterno"
+                                asp-for="studentDTO.LastName" required="required">
+                            <input type="text" placeholder="Apellido Materno" class="input" id="txtApellidoMaterno"
+                                asp-for="studentDTO.SurName" required="required">
+                            <input type="text" placeholder="Apodo" class="input" id="txtApodo"
+                                asp-for="studentDTO.MiddleName" required="required">
+                        </div>
+                        <div class="column">
+                            <input type="email" placeholder="Correo" class="input" id="txtCorreo"
+                                asp-for="studentDTO.Email" required="required">
+                            <input type="password" placeholder="Contraseña" class="input" id="txtContrasena"
+                                asp-for="studentDTO.Password" required="required">
+                            <input type="password" placeholder="Confirmación con." class="input" id="txtConfirmacion"
+                                asp-for="studentDTO.Password" required="required">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form method="post" id="register-form">
+            <div class="button-group">
+                <button type="button" class="sign-in-button" onclick="location.href='/Login'">Cancelar</button>
+                <button type="submit" class="sign-in-button">Registrar</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</body>
+
+</html>

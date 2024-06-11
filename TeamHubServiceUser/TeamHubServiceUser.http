@@ -1,0 +1,6 @@
+@TeamHubServiceUser_HostAddress = http://localhost:5116
+
+GET {{TeamHubServiceUser_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

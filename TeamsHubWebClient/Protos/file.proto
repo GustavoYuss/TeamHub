@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package filePackage;
+
+service FileManagement {
+    rpc SaveFile(FileRequest) returns (FileResponse) {};
+}
+
+message FileRequest {
+    int32 projectName = 1;
+    string fileName = 2;
+    string extension = 3;
+    bytes fileString = 4;
+}
+
+message FileResponse {
+    int32 response = 1;
+}

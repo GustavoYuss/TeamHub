@@ -1,0 +1,447 @@
+@page
+@model TeamsHubWebClient.Pages.AddStudentsToProject
+@{
+    Layout = null;
+    ViewData["Title"] = "Gestionar Integrantes";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventana del Proyecto</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: url(/images/Background2.jpeg) no-repeat center center fixed;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            color: white;
+        }
+
+        .header {
+            width: 95%;
+            background-color: #201c1c;
+            padding: 10px;
+            display: flex;
+            border-radius: 40px;
+            justify-content: space-between;
+            align-items: center;
+            margin-left: 4%;
+            margin-top: 1%;
+        }
+
+        h1 {
+            display: block;
+            font-size: 2em;
+            margin-block-start: 0.67em;
+            margin-block-end: 0.67em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            font-weight: bold;
+            unicode-bidi: isolate;
+            color: #3cb3c5;
+            margin-left: 21px;
+        }
+
+        h2 {
+            display: block;
+            font-size: 1.8em;
+            margin-block-start: 0.83em;
+            margin-block-end: 0.83em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            font-weight: bold;
+            unicode-bidi: isolate;
+            margin-left: 307px;
+            margin-top: 35px;
+        }
+
+        p {
+            display: block;
+            margin-block-start: 1em;
+            margin-block-end: -4px;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            unicode-bidi: isolate;
+            margin-left: 23px;
+            font-size: 19px;
+        }
+
+        .back-arrow {
+            width: 55px;
+            height: 55px;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+
+        .project-title {
+            font-size: 1.9em;
+            font-weight: bold;
+            color: #f3f0ed;
+            flex-grow: 1;
+            text-align: center;
+            margin-right: 1151px;
+        }
+
+        .user-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            border: white;
+            height: 83px;
+            border-radius: 40px;
+            background: #343037;
+            width: 23cm;
+            padding: 36px;
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex-grow: 1;
+        }
+
+        .sidebar {
+            width: 60px;
+            background-color: black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            justify-content: center;
+            height: 100%;
+            /* Adjust height based on header height */
+            position: fixed;
+            /* Fixed position to stay in place */
+        }
+
+        .sidebar .icon {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            background-color: #201c1c;
+            border-radius: 40px;
+            margin: 20px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            margin-left: 72px;
+        }
+
+        .left-content {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .right-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .search-bar {
+            background-color: #201c1c;
+            margin-bottom: -5px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #201c1c;
+            border-radius: 10px;
+            color: white;
+            background: #494852;
+            font-size: 22px;
+        }
+
+        .search-button {
+            background-color: black;
+            color: white;
+            border: none;
+            width: 126px;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            margin-left: 10px;
+            height: 48px;
+        }
+
+        .search-button:hover {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-list {
+            margin-top: 20px;
+        }
+
+        .user-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .user-row img {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .delete-button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 15px;
+            width: 99px;
+            height: 37px;
+            font-size: 17px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #listStudentOptions option {
+            border: 1px solid #ccc;
+            background-color: white;
+            padding: 5px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+
+        #taskList {
+            margin-top: 20px;
+            /* Espacio superior */
+        }
+
+        .taskItem {
+            border: 3px solid black;
+            width: 19cm;
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 20px;
+            height: 103px;
+        }
+
+        .user-name {
+            flex-grow: 1;
+            font-size: 20px;
+            color: #ffecec;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <a href="/"><img src="https://cdn-icons-png.flaticon.com/512/4885/4885344.png" alt="Back Arrow"
+                class="back-arrow"></a>
+        <span class="project-title">Miembros del proyecto</span>
+    </div>
+
+    <div class="sidebar">
+        <a href="/"><img src="https://cdn-icons-png.flaticon.com/512/5956/5956494.png" alt="Project Icon"
+                class="icon"></a>
+        <a href="/AddStudentsToProject"><img src="https://cdn-icons-png.flaticon.com/512/5073/5073264.png"
+                alt="DetailsProyect Icon" class="icon"></a>
+        <a href="/ActivitiesModule"><img src="https://cdn-icons-png.flaticon.com/512/7891/7891841.png" alt="Task Icon"
+                class="icon"></a>
+        <a href="/FileModule"><img src="https://cdn-icons-png.flaticon.com/512/14779/14779557.png" alt="Download Icon"
+                class="icon"></a>
+        <a href="/ProjectProgressModule"><img src="https://cdn-icons-png.flaticon.com/512/7185/7185654.png"
+                alt="Reports Icon" class="icon"></a>
+        <a href="/Login"><img src="https://cdn-icons-png.flaticon.com/512/1716/1716282.png" alt="Exit Icon"
+                class="icon"></a>
+    </div>
+
+    <div class="content-wrapper">
+        <div class="main-content">
+            <div class="left-content">
+                <h1 id="ProjectName"></h1>
+                <p id="ProjectStartDate">Aquí va el contenido de la izquierda.</p>
+                <p id="ProjectEndDate">Aquí va el contenido de la izquierda.</p>
+                <h2>Tareas</h2>
+                <div id="taskList">
+                </div>
+            </div>
+            <div class="right-content">
+                <div class="search-bar">
+                    <input type="text" class="search-input" list="listStudentOptions" id="searchBar"
+                        placeholder="Buscar usuario con correo">
+                    <button class="search-button" onclick="addStudent()">Buscar</button>
+                    <datalist id="listStudentOptions"></datalist>
+                </div>
+                <div>
+                </div>
+                <div class="course-list" id="courseList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+    <script>
+        var userList = @Html.Raw(Json.Serialize(Model.StudentList));
+        var taskList = @Html.Raw(Json.Serialize(Model.ProjectTask));
+        var projecData = @Html.Raw(Json.Serialize(Model.ProjectData));
+        var projectId = @Model.idProject;
+        var newStudenList = [];
+
+        $(document).ready(function () {
+            var projectName = document.getElementById("ProjectName");
+            var projectStartDate = document.getElementById("ProjectStartDate");
+            var projectEndDate = document.getElementById("ProjectEndDate");
+            projectName.textContent = projecData.name;
+            projectStartDate.textContent = "Fecha de inicio: " + projecData.startDate;
+            projectEndDate.textContent = "Fecha de finalización: " + projecData.endDate;
+            addTaskList();
+            loadStudents();
+            $('#searchBar').on('input', function () {
+                searchStudent();
+            });
+        });
+
+        function loadStudents() {
+            var courseList = $('#courseList'); 
+            courseList.empty();
+
+            userList.forEach(function (user) {
+                var userRow = $('<div class="user-row">');
+                var userImage = $('<img>').attr('src', 'https://cdn-icons-png.freepik.com/256/3135/3135715.png').attr('alt', 'Usuario');
+                var userName = $('<span class="user-name">').html('<b>Nombre:</b> ' + user.fullName + '<b>    Correo electrónico:</b> ' + user.email);
+                var deleteButton = $('<button class="delete-button">').text('Borrar');
+
+                deleteButton.on('click', function () {
+                    deleteStudent(user.id, userRow);
+                });
+
+                userRow.append(userImage, userName, deleteButton);
+                courseList.append(userRow);
+            });
+        }
+
+        function deleteStudent(idStudent, userRow) {
+            $.ajax({
+                url: 'http://localhost:8081/TeamHub/Users/RemoveOfProject/' + projectId + '/' + idStudent,
+                type: 'DELETE',
+                success: function (result) {
+                    alert('Usuario eliminado exitosamente');
+                    userRow.remove();
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error al eliminar el usuario:', error);
+                }
+            });
+        }
+
+        function searchStudent() {
+            var student = document.getElementById("searchBar").value.trim();
+            if (student.length > 0) {
+                $.ajax({
+                    url: 'http://localhost:8081/TeamHub/Users/Search/' + encodeURIComponent(student),
+                    type: 'GET',
+                    success: function (result) {
+                        var dataList = document.getElementById("listStudentOptions");
+                        dataList.innerHTML = '';
+                        newStudenList = result;
+                        result.forEach(function (student) {
+                            var option = document.createElement('option');
+                            option.value = student.email;
+                            option.textContent = student.email;
+                            dataList.appendChild(option);
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error al buscar el usuario:', error);
+                    }
+                })
+            }
+        }
+
+        function addStudent() {
+            var student = document.getElementById("searchBar").value.trim();
+            student = getStudentByEmail(student);
+            if (student != null) {
+                $.ajax({
+                    url: 'http://localhost:8081/TeamHub/Users/AddToProject/' + projectId + '/' + student.id,
+                    type: 'POST',
+                    success: function (result) {
+                        alert('Usuario agregado exitosamente');
+                        newStudenList = [];
+                        document.getElementById("searchBar").value = '';
+                        updateUserList();
+                        loadStudents();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error al agregar el usuario:', error);
+                    }
+                })
+            }
+        }
+
+        function getStudentByEmail(email) {
+            var result = null;
+            if (Array.isArray(newStudenList)) {
+                for (let student of newStudenList) {
+                    if (student.email === email) {
+                        result = student;
+                        break;
+                    }
+                }
+            } else {
+                console.error("newStudenList no está definido o no es una lista.");
+            }
+            return result;
+        }
+
+        function updateUserList() {
+            $.ajax({
+                url: 'http://localhost:8081/TeamHub/Users/ByProject/' + projectId,
+                type: 'GET',
+                success: function (result) {
+                    userList = @Html.Raw(Json.Serialize(Model.StudentList));
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error al actualizar la lista de usuarios:', error);
+                }
+            })
+        }
+
+        function addTaskList() {
+            var taskListDiv = document.getElementById("taskList");
+            taskList.forEach(function (task) {
+                var taskItem = document.createElement("div");
+                taskItem.classList.add("taskItem");
+
+                var taskName = document.createElement("h3");
+                taskName.textContent = task.name;
+
+                var taskDescription = document.createElement("p");
+                taskDescription.textContent = task.description;
+
+                taskItem.appendChild(taskName);
+                taskItem.appendChild(taskDescription);
+                taskListDiv.appendChild(taskItem);
+            })
+        }
+    </script>
+</body>
+
+</html>
