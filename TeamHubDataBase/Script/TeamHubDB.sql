@@ -61,7 +61,7 @@ CREATE TABLE `studentsession` (
   `StartDate` datetime NOT NULL,
   `EndDate` datetime NOT NULL,
   `IPAdress` varchar(30) NOT NULL,
-  `Token` longtext NOT NULL,
+  `Token` longtext,
   PRIMARY KEY (`Id`),
   KEY `session_student_idx` (`IdStudent`),
   CONSTRAINT `session_student` FOREIGN KEY (`IdStudent`) REFERENCES `student` (`IdStudent`)
