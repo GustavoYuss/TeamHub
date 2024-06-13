@@ -33,12 +33,8 @@ namespace TeamsHubWebClient.Gateways.Providers
 
         public async Task AddFile(IFormFile file, int idProject)
         {
-            if (file == null || file.Length == 0)
+            if (file != null && file.Length != 0)
             {   
-                Console.WriteLine("SUP");
-            }
-            else
-            {
                 byte[] fileBytes;
                 using (var memoryStream = new MemoryStream())
                 {

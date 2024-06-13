@@ -1,9 +1,13 @@
 const fs = require('fs');
 const path = require('path');
+const util = require('util');
+const readFileAsync = util.promisify(fs.readFile);
+
 
 const { 
     saveNewFile,
-    deleteFile 
+    deleteFile,
+    getFilePath 
 } = require('../Controller/FileController');
 
 const getFolderPath = (folderName) => {
@@ -41,6 +45,27 @@ const DeleteFile = (req) => {
     deleteFile(idFile)
 }
 
+const DownloadFile = async (req) => {
+    try {
+        const fileId = req.idFile;
+        const filePath = await getFilePath(fileId);
+
+        if (!fs.existsSync(filePath)) {
+            throw new Error('File not found');
+        }
+
+        // Utiliza promisify para convertir readFile en una función que devuelve una promesa
+        const fileData = await readFileAsync(filePath);
+
+        // Puedes procesar los datos aquí si es necesario
+
+        return fileData;
+    } catch (err) {
+        console.error('Error en DownloadFile:', err);
+        throw err; // Propaga el error para que sea manejado en DownloadFileSystem
+    }
+};
+
 const reMakeFile = (fileString, rutaArchivo, callback) => {
     fs.writeFile(rutaArchivo, fileString, err => {
         if (err) {
@@ -51,7 +76,10 @@ const reMakeFile = (fileString, rutaArchivo, callback) => {
 }
 
 
+
+
 module.exports = {
     newFile,
-    DeleteFile
+    DeleteFile,
+    DownloadFile
 };

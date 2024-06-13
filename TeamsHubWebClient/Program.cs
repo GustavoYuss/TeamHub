@@ -29,7 +29,7 @@ builder.Services.AddHttpClient("ApiGateWay", client => {
 builder.Services.AddSession(options =>
 {
     options.Cookie.Name = ".TeamsHub.Session";
-    options.IdleTimeout = TimeSpan.FromMinutes(1);
+    options.IdleTimeout = TimeSpan.FromHours(1);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });

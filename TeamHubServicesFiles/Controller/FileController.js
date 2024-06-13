@@ -48,7 +48,23 @@ const destroyFileSystem = async (req) => {
     }
 }
 
+
+const getFilePath = async (fileId) => {
+    try {
+        const file = await fileDAO.getFile(fileId);
+        if (!file) {
+            throw new Error('File not found');
+        }
+        const filePath = path.join(file.Path, file.Name);
+        return filePath;
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+}
+
 module.exports = {
     saveNewFile,
-    deleteFile
+    deleteFile,
+    getFilePath
 };

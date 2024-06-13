@@ -29,9 +29,7 @@ namespace TeamsHubWebClient.Pages
 
         public async void OnGet()
         {
-            Console.WriteLine("ON GET DE FILEMODULE");
             DocumenttList = await _FileManager.GetFilesByProject(idProject);
-            Console.WriteLine("ON UPDATE DE FILEMODULE");
         }
 
         public async Task OnPostAsync(IFormFile file)

@@ -7,6 +7,7 @@ const protoLoader = require('@grpc/proto-loader');
 
 const SaveFile = require('../Controller/FilegRPCController').SaveFile;
 const DeleteFile = require('../Controller/FilegRPCController').DeleteFileSystem;
+const DownloadFile = require('../Controller/FilegRPCController').DownloadFileSystem;
 
 class ServerApp {
 
@@ -32,7 +33,7 @@ class ServerApp {
 
     getServer(){
         const server = new grpc.Server();
-        server.addService(this.filePackage.FileManagement.service, { SaveFile, DeleteFile });
+        server.addService(this.filePackage.FileManagement.service, { SaveFile, DeleteFile, DownloadFile});
         return server;
     }
 }

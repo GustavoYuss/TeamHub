@@ -11,6 +11,8 @@ export interface ProtoGrpcType {
   filePackage: {
     DeleteRequest: MessageTypeDefinition
     DeleteResponse: MessageTypeDefinition
+    DownloadRequest: MessageTypeDefinition
+    DownloadResponse: MessageTypeDefinition
     FileManagement: SubtypeConstructor<typeof grpc.Client, _filePackage_FileManagementClient> & { service: _filePackage_FileManagementDefinition }
     FileRequest: MessageTypeDefinition
     FileResponse: MessageTypeDefinition
