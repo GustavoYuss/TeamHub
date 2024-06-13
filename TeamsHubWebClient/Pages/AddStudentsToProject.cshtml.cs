@@ -16,6 +16,8 @@ namespace TeamsHubWebClient.Pages
         private readonly IProjectManager _ProjectManager;
 
         public int idProject = ProjectSinglenton.Id;
+
+        public string Token = StudentSinglenton.Token;
         
         [BindProperty]
         public List<User>? StudentList {get; set;} 
@@ -33,7 +35,7 @@ namespace TeamsHubWebClient.Pages
 
         public void OnGet()
         {
-            StudentList = _UserManager.getStudentsByProject(ProjectSinglenton.Id);
+            StudentList = _UserManager.GetStudentsByProject(ProjectSinglenton.Id);
             ProjectData = _ProjectManager.GetProject(ProjectSinglenton.Id);
             ProjectTask = _ProjectManager.GetProjectTasksAsync(ProjectSinglenton.Id); 
         }

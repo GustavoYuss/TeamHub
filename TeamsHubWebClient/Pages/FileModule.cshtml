@@ -205,13 +205,13 @@
             <div class="header">
                 <a href="/"><img src="https://cdn-icons-png.flaticon.com/512/4885/4885344.png" alt="Back Arrow" class="back-arrow"></a>
                 <span class="project-title">@ProjectSinglenton.Name</span>
-                <button onclick="document.getElementById('fileInput').click();" class="details-button">Agregar Archivo</button>
+                <button id="addFileButton" class="details-button">Agregar Archivo</button>
             </div>
             <div class="content" id="fileList">
             </div>
             <div class="content">
-                <form id="uploadForm" method="post" enctype="multipart/form-data">
-                    <input type="file" id="fileInput" name="file" style="display:none;" onchange="document.getElementById('uploadForm').submit();">
+                <form id="uploadForm" method="post">
+                    <input type="file" id="fileInput" name="file" style="display:none;">
                 </form>
             </div>
         </div>
@@ -223,57 +223,76 @@
 
         $(document).ready(function () {
             loadFilesVisual();
-        })
+            document.getElementById('addFileButton').addEventListener('click', function() {
+                document.getElementById('fileInput').click();
+            });
+            document.getElementById('fileInput').addEventListener('change', function() {
+                var formData = new FormData(document.getElementById('uploadForm'));
+                console.log("THIS");
+                $.ajax({
+                    url: '/TeamHub/Project/AddFile/' + @Model.idProject,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log('Archivo subido exitosamente:', response);
+                        UpdateDocList();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error al subir el archivo:', error);
+                    }
+                });
+            });
+        });
 
         function loadFilesVisual() {
             var fileList = $('#fileList');
             fileList.empty();
 
             documentList.forEach(function (file) {
-                console.log(file);
                 var userRow = $('<div class="user-row">');
                 var userImage = $('<img>').attr('src', 'https://cdn.icon-icons.com/icons2/3456/PNG/512/download_folder_file_icon_219533.png').attr('alt', 'Usuario');
                 var userName = $('<span class="user-name">').html('<b>Nombre:</b> ' + file.name);
                 var deleteButton = $('<button class="delete-button">').text('Borrar');
 
                 deleteButton.on('click', function () {
-                    return;
+                    deleteFile(file.idDocument);
                 });
-
                 userRow.append(userImage, userName, deleteButton);
                 fileList.append(userRow);
             });
         }
 
-        document.getElementById('uploadForm').addEventListener('submit', async function (event) {
-            event.preventDefault();
+        function deleteFile(fileId) {
+            $.ajax({
+                url: '/TeamHub/Project/File/' + fileId,
+                type: 'DELETE',
+                success: function (result) {
+                    alert('Archivo eliminado exitosamente');
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error al eliminar el usuario:', error);
+                }
+            });
+        }
 
-            const fileInput = document.getElementById('fileInput');
-            if (fileInput.files.length === 0) {
-                alert('Please select a file.');
-                return;
-            }
+        function UpdateDocList() {
+            $.ajax({
+                url: '/TeamHub/Files/ByProject',
+                type: 'GET',
+                success: function (result) {
+                    reloadPage();
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error al eliminar el usuario:', error);
+                }
+            });
+        }
 
-            const file = fileInput.files[0];
-            const formData = new FormData();
-            formData.append('file', file);
-
-            try {
-                const response = await fetch('/FileModule', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const result = await response.text();
-                alert('File uploaded successfully.');
-            } catch (error) {
-                console.error('Error uploading file:', error);
-                alert('Error uploading file.');
-            }
-        });
-
-        function ey(){
-
+        function reloadPage() {
+            location.reload();
         }
     </script>
 </body>

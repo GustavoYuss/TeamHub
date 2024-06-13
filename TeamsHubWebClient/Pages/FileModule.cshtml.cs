@@ -14,30 +14,31 @@ namespace TeamsHubWebClient.Pages
 {
     public class FileModule : PageModel
     {
-         private readonly ILogger<FileModule> _logger;
+        private readonly ILogger<FileModule> _logger;
 
         private readonly IFileManager _FileManager;
 
         public List<DocumentDTO>? DocumenttList;
         public int idProject = ProjectSinglenton.Id;
         
-
         public FileModule(ILogger<FileModule> logger, IFileManager fileManager)
         {
             _logger = logger;
             _FileManager = fileManager;
         }  
 
-        public void OnGet()
+        public async void OnGet()
         {
-            DocumenttList = _FileManager.GetFilesByProjectt(idProject);
+            Console.WriteLine("ON GET DE FILEMODULE");
+            DocumenttList = await _FileManager.GetFilesByProject(idProject);
+            Console.WriteLine("ON UPDATE DE FILEMODULE");
         }
 
         public async Task OnPostAsync(IFormFile file)
         {
             if (file == null || file.Length == 0)
             {
-                return;
+                return; // O devuelve algún error, según tu lógica.
             }
 
             // Convertir el archivo a bytes
@@ -64,5 +65,6 @@ namespace TeamsHubWebClient.Pages
                 FileString = Google.Protobuf.ByteString.CopyFrom(fileBytes)
             });
         }
+
     }
 }

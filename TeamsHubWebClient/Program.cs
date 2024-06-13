@@ -14,6 +14,7 @@ builder.Services.AddScoped<IProjectManager, ProjectManagerRESTProvider>();
 builder.Services.AddScoped<ITaskManager, TaskManagerRESTProvider>();
 builder.Services.AddScoped<IUserManager, UserManagerRESTProvider>();
 builder.Services.AddScoped<IFileManager, FileManagerRestProvider>();
+builder.Services.AddAntiforgery(options => options.HeaderName = "X-CSRF-TOKEN");
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddTransient<HttpClientsAuthHelper>();
@@ -41,11 +42,13 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 app.UseSession();
+app.UseAntiforgery();
 
 app.MapGet("/TeamHub/Projects/MyProjects/{startDate?}/{endDate?}", (IProjectManager proyectManager, DateTime? startDate, DateTime? endDate) =>
 {     
@@ -103,6 +106,109 @@ app.MapPost("/TeamHub/Task/up", (ITaskManager taskManager, TaskDTO taskDTO) =>
 
     return result;       
 }).WithName("ModificarTarea");
+
+
+app.MapGet("/TeamHub/Users/Search/{student}", ([FromServices] IUserManager userManager, [FromRoute] string student) =>
+{     
+    try
+    {
+        var userList = userManager.SearchStudent(student);
+        return Results.Ok(userList);
+    }
+    catch (System.Exception ex)
+    {
+        Console.WriteLine("Error: " + ex.Message);
+        return Results.BadRequest("Error occurred while searching for users.");
+    }
+}).WithName("SearchStudent");
+
+
+app.MapGet("/TeamHub/Users/ByProject/{idProject}", ([FromServices] IUserManager userManager, [FromRoute] int idProject) =>
+{     
+    try
+    {
+        var userList = userManager.GetStudentsByProject(idProject);
+        return Results.Ok(userList);
+    }
+    catch (System.Exception ex)
+    {
+        Console.WriteLine("Error: " + ex.Message);
+        return Results.BadRequest("Error occurred while searching for users.");
+    }
+}).WithName("GetStudentsByProject");
+
+
+app.MapDelete("/TeamHub/Users/RemoveOfProject/{idProject}/{idStudent}", ([FromServices] IUserManager userManager,[FromRoute] int idProject, [FromRoute] int idStudent) =>
+{     
+    try
+    {
+        var userList = userManager.DeleteStudent(idProject,idStudent);
+        return Results.Ok();
+    }
+    catch (System.Exception ex)
+    {
+        Console.WriteLine("Error: " + ex.Message);
+        return Results.BadRequest("Error occurred while searching for users.");
+    }
+}).WithName("DeleteStudentOfProject");
+
+
+app.MapPost("/TeamHub/Users/AddToProject/{idProject}/{idStudent}", ([FromServices] IUserManager userManager,[FromRoute] int idProject, [FromRoute] int idStudent) =>
+{     
+    try
+    {
+        var userList = userManager.AddStudentToProject(idProject, idStudent);
+        return Results.Ok();
+    }
+    catch (System.Exception ex)
+    {
+        Console.WriteLine("Error: " + ex.Message);
+        return Results.BadRequest("Error occurred while searching for users.");
+    }
+}).WithName("AddStudentOfProject");
+
+app.MapDelete("/TeamHub/Project/File/{idFile}", ([FromServices] IFileManager fileManager,[FromRoute] int idFile) =>
+{     
+    try
+    {
+        Console.WriteLine("Si esto no funciona me voy a pegar 4 putos tiros ");
+        var userList = fileManager.DeleteFile(idFile);
+        return Results.Ok();
+    }
+    catch (System.Exception ex)
+    {
+        Console.WriteLine("Error: " + ex.Message);
+        return Results.BadRequest("Error occurred while searching for users.");
+    }
+}).WithName("DeleteFileOfProject");
+
+app.MapGet("/TeamHub/Files/ByProject", () =>
+{     
+    try
+    {
+        Console.WriteLine("FUNCIONA!!!!!!!!!!!");
+        return Results.Ok();
+    }
+    catch (System.Exception ex)
+    {
+        Console.WriteLine("Error: " + ex.Message);
+        return Results.BadRequest("Error occurred while searching for users.");
+    }
+}).WithName("GetFilesByProjectRest");
+
+app.MapPost("/TeamHub/Project/AddFile/{idProject}", async ([FromServices] IFileManager fileManager, IFormFile file, [FromRoute] int idProject) =>
+{     
+    try
+    {
+        await fileManager.AddFile(file, idProject);
+        return Results.Ok();
+    }
+    catch (System.Exception ex)
+    {
+        Console.WriteLine("Error: " + ex.Message);
+        return Results.BadRequest("Error occurred while searching for users.");
+    }
+}).WithName("AddFileToProject");
 
 app.MapRazorPages();
 app.Run();

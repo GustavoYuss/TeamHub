@@ -1,5 +1,8 @@
 using TeamsHubWebClient.DTOs;
 using TeamsHubWebClient.Gateways.Interfaces;
+using Grpc.Core;
+using FilePackage;
+using Grpc.Net.Client;
 
 namespace TeamsHubWebClient.Gateways.Providers
 {
@@ -7,6 +10,7 @@ namespace TeamsHubWebClient.Gateways.Providers
     {
 
         private HttpClient ClientServiceFile;
+        private FileManagement.FileManagementClient client;
         private ILogger<FileManagerRestProvider> _logger;
 
         public FileManagerRestProvider(ILogger<FileManagerRestProvider> logger, IHttpClientFactory httpClientFactory)
@@ -15,12 +19,51 @@ namespace TeamsHubWebClient.Gateways.Providers
             _logger = logger;
         }
 
-        public int DeleteFile(int IdDocument)
+        public async Task DeleteFile(int IdDocument)
         {
-            throw new NotImplementedException();
+            var channelOptions = new GrpcChannelOptions
+            {
+                Credentials = ChannelCredentials.Insecure
+            };
+
+            using var channel = GrpcChannel.ForAddress("http://172.16.0.6:8080", channelOptions);
+            client = new FileManagement.FileManagementClient(channel);
+            var reply = await client.DeleteFileAsync(new DeleteRequest { IdFile = IdDocument });
         }
 
-        public List<DocumentDTO>? GetFilesByProjectt(int idProject)
+        public async Task AddFile(IFormFile file, int idProject)
+        {
+            if (file == null || file.Length == 0)
+            {   
+                Console.WriteLine("SUP");
+            }
+            else
+            {
+                byte[] fileBytes;
+                using (var memoryStream = new MemoryStream())
+                {
+                    await file.CopyToAsync(memoryStream);
+                    fileBytes = memoryStream.ToArray();
+                }
+
+                var channelOptions = new GrpcChannelOptions
+                {
+                    Credentials = ChannelCredentials.Insecure
+                };
+
+                using var channel = GrpcChannel.ForAddress("http://172.16.0.6:8080", channelOptions);
+                client = new FileManagement.FileManagementClient(channel);
+                var reply = await client.SaveFileAsync(new FileRequest
+                {
+                    ProjectName = idProject,
+                    FileName = file.FileName,
+                    Extension = Path.GetExtension(file.FileName),
+                    FileString = Google.Protobuf.ByteString.CopyFrom(fileBytes)
+                });
+            }
+        }
+
+        public async Task<List<DocumentDTO>>? GetFilesByProject(int idProject)
         {
             try
             {

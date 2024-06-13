@@ -4,14 +4,14 @@ const protoLoader = require('@grpc/proto-loader');
 const { error } = require('console');
 const fs = require('fs');
 
-const PORT = 8083;
+const PORT = 8080;
 const PROTO_FILE = '../Protos/file.proto';
 
 const packageDef = protoLoader.loadSync(path.resolve(__dirname, PROTO_FILE));
 const grpcObj = grpc.loadPackageDefinition(packageDef);
 
 const client = new grpcObj.filePackage.FileManagement(
-    `127.0.0.1:${PORT}`, grpc.credentials.createInsecure()
+    `0.0.0.0:${PORT}`, grpc.credentials.createInsecure()
 );
 
 const deadline = new Date();
@@ -25,6 +25,14 @@ client.waitForReady(deadline, (err) => {
 });
 
 function onClientReady(){
+    client.DeleteFile({idFile: 6}, (err, result) =>{
+        if (err){
+            console.log(err);
+            return;
+        }
+        console.log(result);
+    });
+    /*
     const file = "./CU.docx";
     dividirArchivo(file, (err,data) => {
         if (err) {
@@ -34,7 +42,7 @@ function onClientReady(){
             const filename =  path.basename(file);
             let extension = path.extname(file);
 
-            client.SaveFile({projectName: 2, fileName: filename, extension: extension, fileString: data}, (err, result) =>{
+            client.SaveFile({projectName: 1, fileName: filename, extension: extension, fileString: data}, (err, result) =>{
                 if (err){
                     console.log(err);
                     return;
@@ -42,7 +50,7 @@ function onClientReady(){
                 console.log(result);
             });
         }
-    });
+    });*/
 }
 
 function dividirArchivo(rutaArchivo, callback) {

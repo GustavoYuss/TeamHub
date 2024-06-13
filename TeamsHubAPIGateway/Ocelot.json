@@ -144,7 +144,7 @@
       "UpstreamHttpMethod": [
         "Post"
       ]
-    },
+    },  
     {
       "DownstreamPathTemplate": "/TeamHub/Users/Search/{student}",
       "DownstreamScheme": "http",
