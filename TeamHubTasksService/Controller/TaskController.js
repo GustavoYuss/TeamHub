@@ -53,14 +53,14 @@ const updateTask = async (req, res = response) => {
 }
 
 const deleteTask = async (req, res = response) => {
-    const { Name } = req.params;
+    const { IdTask } = req.params;
       const uid = req.uid;
       try {
         const idUserClaim = parseInt(req.user.IdUser, 10);
         const idSessionClaim = parseInt(req.user.IdSession, 10);
         const message = new UserActionDTO(idUserClaim, idSessionClaim, "Eliminar una tarea de un proyecto");
         saveUserAction(message);
-        await taskDAO.deleteTaskByName(Name);
+        await taskDAO.deleteTaskByID(IdTask);
         res.json({uid});
       } catch (error) {
         console.error(error);

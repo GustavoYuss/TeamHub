@@ -64,9 +64,19 @@ class TaskDAO {
     }
   }
   
-  static async deleteTaskByName(name) {
-    return await tasks.destroy({ where: { name } });
+  static async deleteTaskByID(idTask) {
+    try {
+      const deletedCount = await tasks.destroy({ where: { idTask } });
+      if (deletedCount === 0) {
+        throw new Error('No task found with the given ID');
+      }
+      return { message: 'Task deleted successfully', deletedCount };
+    } catch (error) {
+      console.error('Error deleting task:', error);
+      throw error;
+    }
   }
+  
 }
 
 module.exports = TaskDAO;

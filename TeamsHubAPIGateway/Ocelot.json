@@ -74,7 +74,7 @@
       ]
     },
     {
-      "DownstreamPathTemplate": "/TeamHub/Task/{TaskName}",
+      "DownstreamPathTemplate": "/TeamHub/Task/{IdTask}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -82,7 +82,7 @@
           "Port": 8080
         }
       ],
-      "UpstreamPathTemplate": "/TeamHub/Task/{TaskName}",
+      "UpstreamPathTemplate": "/TeamHub/Task/{IdTask}",
       "UpstreamHttpMethod": [
         "Delete"
       ]

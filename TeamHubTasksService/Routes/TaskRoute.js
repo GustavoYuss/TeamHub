@@ -16,6 +16,6 @@ router.get('/get', getAllTaskByDate);
 router.get('/:IdProject', getTasksByProject);
 router.get('/getAll', getAllTaskCompleteByProject);
 router.post('/up', updateTask);
-router.delete('/:Name', deleteTask);
+router.delete('/:IdTask', deleteTask);
 
 module.exports = router;
