@@ -9,6 +9,8 @@ type SubtypeConstructor<Constructor extends new (...args: any) => any, Subtype> 
 
 export interface ProtoGrpcType {
   filePackage: {
+    DeleteRequest: MessageTypeDefinition
+    DeleteResponse: MessageTypeDefinition
     FileManagement: SubtypeConstructor<typeof grpc.Client, _filePackage_FileManagementClient> & { service: _filePackage_FileManagementDefinition }
     FileRequest: MessageTypeDefinition
     FileResponse: MessageTypeDefinition

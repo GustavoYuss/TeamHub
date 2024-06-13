@@ -4,6 +4,7 @@ package filePackage;
 
 service FileManagement {
     rpc SaveFile(FileRequest) returns (FileResponse) {};
+    rpc DeleteFile(DeleteRequest) returns (DeleteResponse) {};
 }
 
 message FileRequest {
@@ -14,5 +15,13 @@ message FileRequest {
 }
 
 message FileResponse {
+    int32 response = 1;
+}
+
+message DeleteRequest {
+    int32 idFile = 1;
+}
+
+message DeleteResponse {
     int32 response = 1;
 }

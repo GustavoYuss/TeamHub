@@ -302,6 +302,7 @@
         var taskList = @Html.Raw(Json.Serialize(Model.ProjectTask));
         var projecData = @Html.Raw(Json.Serialize(Model.ProjectData));
         var projectId = @Model.idProject;
+        var token =  '@Html.Raw(Model.Token)';
         var newStudenList = [];
 
         $(document).ready(function () {
@@ -339,8 +340,11 @@
 
         function deleteStudent(idStudent, userRow) {
             $.ajax({
-                url: 'http://localhost:8081/TeamHub/Users/RemoveOfProject/' + projectId + '/' + idStudent,
+                url: '/TeamHub/Users/RemoveOfProject/' + projectId + '/' + idStudent,
                 type: 'DELETE',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
                 success: function (result) {
                     alert('Usuario eliminado exitosamente');
                     userRow.remove();
@@ -355,9 +359,15 @@
             var student = document.getElementById("searchBar").value.trim();
             if (student.length > 0) {
                 $.ajax({
-                    url: 'http://localhost:8081/TeamHub/Users/Search/' + encodeURIComponent(student),
+                    url: '/TeamHub/Users/Search/' + encodeURIComponent(student),
                     type: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    },
+                    crossDomain: true,
                     success: function (result) {
+                        console.log("CAME HERE EXXXX");
+                        console.log(result);
                         var dataList = document.getElementById("listStudentOptions");
                         dataList.innerHTML = '';
                         newStudenList = result;
@@ -380,8 +390,11 @@
             student = getStudentByEmail(student);
             if (student != null) {
                 $.ajax({
-                    url: 'http://localhost:8081/TeamHub/Users/AddToProject/' + projectId + '/' + student.id,
+                    url: '/TeamHub/Users/AddToProject/' + projectId + '/' + student.id,
                     type: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    },
                     success: function (result) {
                         alert('Usuario agregado exitosamente');
                         newStudenList = [];
@@ -413,8 +426,11 @@
 
         function updateUserList() {
             $.ajax({
-                url: 'http://localhost:8081/TeamHub/Users/ByProject/' + projectId,
+                url: '/TeamHub/Users/ByProject/' + projectId,
                 type: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
                 success: function (result) {
                     userList = @Html.Raw(Json.Serialize(Model.StudentList));
                 },

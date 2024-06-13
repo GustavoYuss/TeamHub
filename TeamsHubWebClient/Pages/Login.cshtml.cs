@@ -39,6 +39,7 @@ namespace TeamsHubWebClient.Pages
                     StudentSinglenton.Id = response.User.Id;
                     StudentSinglenton.Email = response.User.Email;
                     StudentSinglenton.FullName = response.User.FullName;
+                    StudentSinglenton.Token = response.token;
                     return RedirectToPage("/Index");
                 }
             }

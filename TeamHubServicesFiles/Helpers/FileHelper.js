@@ -2,7 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 const { 
-    saveNewFile 
+    saveNewFile,
+    deleteFile 
 } = require('../Controller/FileController');
 
 const getFolderPath = (folderName) => {
@@ -34,6 +35,12 @@ const newFile = (req) => {
     });
 }
 
+const DeleteFile = (req) => {
+    console.log("HELPER: " + req.idFile);
+    const idFile = req.idFile;
+    deleteFile(idFile)
+}
+
 const reMakeFile = (fileString, rutaArchivo, callback) => {
     fs.writeFile(rutaArchivo, fileString, err => {
         if (err) {
@@ -45,5 +52,6 @@ const reMakeFile = (fileString, rutaArchivo, callback) => {
 
 
 module.exports = {
-    newFile
+    newFile,
+    DeleteFile
 };
