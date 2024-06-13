@@ -87,6 +87,20 @@
         "Delete"
       ]
     },
+    {
+      "DownstreamPathTemplate": "/TeamHub/Task/{IdProject}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "172.16.0.2",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/TeamHub/Task/{IdProject}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ]
+    },
 
 
     {
@@ -145,9 +159,34 @@
         "Get", "Options"
       ]
     },
-    
-
-
+    {
+      "DownstreamPathTemplate": "/TeamHub/Users",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "172.16.0.3",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/TeamHub/Users",
+      "UpstreamHttpMethod": [
+        "Post"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/TeamHub/Users/Edit",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "172.16.0.3",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/TeamHub/Users/Edit",
+      "UpstreamHttpMethod": [
+        "Put"
+      ]
+    },
 
     {
       "DownstreamPathTemplate": "/TeamHub/File/{IdProject}",
@@ -278,6 +317,7 @@
       ]
     },
 
+    
     {
       "DownstreamPathTemplate": "/filePackage.FileManagement/SaveFile",
       "DownstreamScheme": "http",

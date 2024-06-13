@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const Sequelize = require('sequelize');
+const jwt = require('jsonwebtoken');
 
 class Server {
 
@@ -16,14 +17,17 @@ class Server {
         this.app.use(express.json());
         this.app.use(express.static('public'));
         this.app.use((req, res, next) =>  {
-            const authHeader = req.headers['authorization']
-            const token = authHeader && authHeader.split(' ')[1]
-            if (token == null) return res.sendStatus(401)
+            const authHeader = req.headers['authorization'];
+            const token = authHeader && authHeader.split(' ')[1];
+            if (token == null) return res.sendStatus(401);
             jwt.verify(token, process.env.SECRETORPRIVATEKEY, (err, user) => {
-                if (err) return res.sendStatus(403)
-                req.user = user
-                next()
-            })
+                if (err) {
+                    console.error('Token verification error:', err);
+                    return res.sendStatus(403);
+                }
+                req.user = user;
+                next();
+            });
         });
     }
     routes(){

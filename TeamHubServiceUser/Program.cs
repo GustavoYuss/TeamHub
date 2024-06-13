@@ -87,7 +87,6 @@ app.MapPost("/TeamHub/Users/", (IUserService userService, ILogService LogService
     return userService.AddStudent(newStudent);
 })
 .WithName("AddUser")
-.RequireAuthorization()
 .WithOpenApi();
 
 

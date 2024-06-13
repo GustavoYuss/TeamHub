@@ -91,28 +91,8 @@ app.MapGet("/TeamHub/Projects/MyProjects/{studentID}", (IProjectManagement proje
     return projectManagement.GetAllProjectsByStuden(studentID);
 })
 .WithName("GetListaProyectos")
-//.RequireAuthorization("usuario_valido")
 .RequireAuthorization()
 .WithOpenApi();
-/*
-app.MapGet("/TeamHub/Projects/Project/{idProject}", (IProjectManagement projectManagement, int idProject, ILogService LogService, HttpContext httpContext) =>
-{
-    int idUserClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdUser").Select(c => c.Value).SingleOrDefault());
-    int idSessionClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdSession").Select(c => c.Value).SingleOrDefault());
-
-    LogService.SaveUserAction(
-        new UserActionDTO()
-        {
-            IdUser = idUserClaim,
-            IdUserSession = idSessionClaim,
-            Action = "Obtener Lista ded proyectos"
-        }
-    );
-    return projectManagement.GetProjectByID(idProject);
-})
-.WithName("ObtenerProyecto")
-//.RequireAuthorization("usuario_valido")
-.WithOpenApi();*/
 
 app.MapPost("/TeamHub/Projects/AddProject", (IProjectManagement projectManagement, AddProjectRequestDTO request, ILogService LogService, HttpContext httpContext) =>
 {
@@ -130,10 +110,10 @@ app.MapPost("/TeamHub/Projects/AddProject", (IProjectManagement projectManagemen
     return projectManagement.AddProject(request.ProjectNew, request.StudentID);
 })
 .WithName("AgregarProyecto")
-//.RequireAuthorization("usuario_valido")
+.RequireAuthorization()
 .WithOpenApi();
 
-app.MapPost("/TeamHub/Projects/UpdateProject", (IProjectManagement projectManagement, project projectUpdate, ILogService LogService, HttpContext httpContext) =>
+app.MapPut("/TeamHub/Projects/UpdateProject", (IProjectManagement projectManagement, project projectUpdate, ILogService LogService, HttpContext httpContext) =>
 {
     int idUserClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdUser").Select(c => c.Value).SingleOrDefault());
     int idSessionClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdSession").Select(c => c.Value).SingleOrDefault());
@@ -149,10 +129,10 @@ app.MapPost("/TeamHub/Projects/UpdateProject", (IProjectManagement projectManage
     return projectManagement.UpdateProject(projectUpdate);
 })
 .WithName("UpdateProyect")
-//.RequireAuthorization("usuario_valido")
+.RequireAuthorization()
 .WithOpenApi();
 
-app.MapDelete("/Projects", (IProjectManagement projectManagement, int idProject, ILogService LogService, HttpContext httpContext) =>
+app.MapDelete("/TeamHub/Projects/DeleteProject", (IProjectManagement projectManagement, int idProject, ILogService LogService, HttpContext httpContext) =>
 {
     int idUserClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdUser").Select(c => c.Value).SingleOrDefault());
     int idSessionClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdSession").Select(c => c.Value).SingleOrDefault());
@@ -168,7 +148,7 @@ app.MapDelete("/Projects", (IProjectManagement projectManagement, int idProject,
     return projectManagement.RemoveProject(idProject);
 })
 .WithName("DeleteProject")
-//.RequireAuthorization("usuario_valido")
+.RequireAuthorization()
 .WithOpenApi();
 
 app.MapGet("/TeamHub/Projects/Project/{idProject}", (IProjectManagement projectManagement, int idProject, ILogService LogService, HttpContext httpContext) =>
@@ -187,7 +167,6 @@ app.MapGet("/TeamHub/Projects/Project/{idProject}", (IProjectManagement projectM
     return projectManagement.GetProjectByID(idProject);
 })
 .WithName("GetProject")
-//.RequireAuthorization("usuario_valido")
 .RequireAuthorization()
 .WithOpenApi();
 
@@ -207,7 +186,7 @@ app.MapGet("/TeamHub/Projects/Project/Tasks/{idProject}", (IProjectManagement pr
     return projectManagement.GetTasksByProject(idProject);
 })
 .WithName("GetProjectTasks")
-//.RequireAuthorization("usuario_valido")
+.RequireAuthorization()
 .WithOpenApi();
 
 app.Run();

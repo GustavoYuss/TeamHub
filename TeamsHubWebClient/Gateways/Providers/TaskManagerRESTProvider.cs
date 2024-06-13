@@ -91,6 +91,8 @@ public class TaskManagerRESTProvider : ITaskManager
             return false;
         }
     }
+
+
     public List<TaskDTO> GetAllTaskByProject(int projectID)
     {
         try
@@ -106,6 +108,8 @@ public class TaskManagerRESTProvider : ITaskManager
             return null;
         }
     }
+    
+
     public List<TaskDTO> GetTaskbyDate(DateTime startDate, DateTime endDate)
     {
         try
