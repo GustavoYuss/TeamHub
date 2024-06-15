@@ -38,9 +38,14 @@ public class ProjectServices : IProjectServices
         try
         {
             var projectDB = dbContext.project.Find(projectId);
+            
             if (projectDB != null)
             {
-                dbContext.Remove(projectDB);
+                var listTask = dbContext.tasks.Where(t => t.IdProject == projectId).ToList();
+                dbContext.tasks.RemoveRange(listTask);
+                var listDocument = dbContext.document.Where(d => d.IdProject == projectId).ToList();
+                dbContext.document.RemoveRange(listDocument);
+                dbContext.project.Remove(projectDB);
                 dbContext.SaveChanges();
                 return true;
             }

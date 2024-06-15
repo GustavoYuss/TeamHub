@@ -108,7 +108,7 @@ app.MapPost("/TeamHub/Users/Delete", (IUserService userService, ILogService LogS
 .RequireAuthorization()
 .WithOpenApi();
 
-app.MapPost("/TeamHub/Users/Edit", (IUserService userService, ILogService LogService, HttpContext httpContext, StudentDTO editStudent) => 
+app.MapPut("/TeamHub/Users/Edit", (IUserService userService, ILogService LogService, HttpContext httpContext, StudentDTO editStudent) => 
 {
     int idUserClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdUser").Select(c=>c.Value ).SingleOrDefault()); 
     int idSessionClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdSession").Select(c=>c.Value ).SingleOrDefault()); 
@@ -144,6 +144,26 @@ app.MapGet("/TeamHub/Users/ByProject/{idProject}", (IUserService userService, IL
     return Results.Json(students);
 })
 .WithName("GetUserByProject")
+.RequireAuthorization()
+.WithOpenApi();
+
+app.MapGet("/TeamHub/Users/GetUserInformation/{idUser}", (IUserService userService, ILogService LogService, HttpContext httpContext, int idUser) => 
+{
+    
+    int idUserClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdUser").Select(c=>c.Value ).SingleOrDefault()); 
+    int idSessionClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdSession").Select(c=>c.Value ).SingleOrDefault()); 
+
+    LogService.SaveUserAction(
+        new UserActionDTO() {
+            IdUser = idUserClaim,
+            IdUserSession = idSessionClaim,
+            Action = "Obtener Usuarios de un proyecto"
+        }
+    );
+    var student = userService.GetStudentInfo(idUser);
+    return Results.Json(student);
+})
+.WithName("GetUserInformation")
 .RequireAuthorization()
 .WithOpenApi();
 
@@ -201,6 +221,20 @@ app.MapGet("/TeamHub/Users/Search/{student}", (IUserService userService, ILogSer
 })
 .WithName("SearchStudent")
 .RequireAuthorization()
+.WithOpenApi();
+
+app.MapGet("/TeamHub/Users/RecoveryPassword/{userEmail}", (IUserService userService, ILogService LogService, HttpContext httpContext, string userEmail) =>
+{
+    LogService.SaveUserAction(
+        new UserActionDTO() {
+            IdUser = 0,
+            IdUserSession = 0,
+            Action = "Recuperar contraseña"
+        }
+    );
+    return userService.RecoverUserPassword(userEmail);
+})
+.WithName("RecoveryPassword")
 .WithOpenApi();
 
 app.Run();
