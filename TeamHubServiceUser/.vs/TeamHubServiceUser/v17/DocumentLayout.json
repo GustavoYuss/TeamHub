@@ -1,0 +1,51 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamHubServiceUser\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{35A2CAD2-9833-4195-A900-BEA25F16B80D}|TeamHubServiceUser.csproj|d:\\migue\\.onedrive\\onedrive - universidad veracruzana\\escritorio\\teamhub\\teamhubserviceuser\\gateways\\providers\\userservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{35A2CAD2-9833-4195-A900-BEA25F16B80D}|TeamHubServiceUser.csproj|solutionrelative:gateways\\providers\\userservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserServices.cs",
+              "DocumentMoniker": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamHubServiceUser\\Gateways\\Providers\\UserServices.cs",
+              "RelativeDocumentMoniker": "Gateways\\Providers\\UserServices.cs",
+              "ToolTip": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamHubServiceUser\\Gateways\\Providers\\UserServices.cs",
+              "RelativeToolTip": "Gateways\\Providers\\UserServices.cs",
+              "ViewState": "AQIAAN0AAAAAAAAAAAAAAA8BAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-15T06:42:24.192Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

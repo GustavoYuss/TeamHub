@@ -12,4 +12,6 @@ public interface IUserService
     public int RemoveStudentFromProject(int IdStudent, int IdProject);
     public int AddStudentToProject(int IdStudent, int IdProject);
     public List<UserDTO> SearchStudents(string student);
+    public int RecoverUserPassword(string userEmail);
+    public student GetStudentInfo(int idStudent);
 }

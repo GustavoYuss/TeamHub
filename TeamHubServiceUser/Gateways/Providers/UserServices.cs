@@ -1,6 +1,8 @@
 using TeamHubServiceUser.Entities;
 using TeamHubServiceUser.Gateways.Interfaces;
 using TeamHubServiceUser.DTOs;
+using EASendMail;
+using System.Text.RegularExpressions;
 
 namespace TeamHubServiceUser.Gateways.Providers;
 
@@ -36,7 +38,7 @@ public class UserService : IUserService
         }
         catch (Exception ex)
         {
-            
+
             result = 1;
         }
 
@@ -62,7 +64,7 @@ public class UserService : IUserService
         }
         catch (Exception ex)
         {
-            
+
             result = 1;
         }
 
@@ -78,14 +80,12 @@ public class UserService : IUserService
             var dbStudent = dbContext.student.Find(editStudent.IdStudent);
             if (dbStudent != null)
             {
-                dbStudent.IdStudent = editStudent.IdStudent;
                 dbStudent.Name = editStudent.Name;
                 dbStudent.MiddleName = editStudent.MiddleName;
                 dbStudent.LastName = editStudent.LastName;
                 dbStudent.SurName = editStudent.SurName;
                 dbStudent.Email = editStudent.Email;
                 dbStudent.Password = editStudent.Password;
-                dbStudent.ProDocumentImage = editStudent.ProDocumentImage;
                 dbContext.student.Update(dbStudent);
                 result = dbContext.SaveChanges();
             }
@@ -96,7 +96,7 @@ public class UserService : IUserService
         }
         catch (Exception ex)
         {
-            
+
             result = 1;
         }
 
@@ -132,10 +132,25 @@ public class UserService : IUserService
         }
         catch (System.Exception)
         {
-            
+
             throw;
         }
         return UserList;
+    }
+
+    public student GetStudentInfo(int idStudent)
+    {
+        student studentDTO;
+        try
+        {
+            studentDTO = dbContext.student.FirstOrDefault(s => s.IdStudent == idStudent);
+        }
+        catch (System.Exception)
+        {
+            throw;
+        }
+
+        return studentDTO;
     }
 
     public int RemoveStudentFromProject(int IdStudent, int IdProject)
@@ -149,10 +164,10 @@ public class UserService : IUserService
                 dbContext.Remove(dbproject);
                 result = dbContext.SaveChanges();
             }
-        }   
+        }
         catch (System.Exception)
         {
-            
+
             throw;
         }
 
@@ -165,7 +180,7 @@ public class UserService : IUserService
         try
         {
             var dbproject = dbContext.projectstudent.Where(p => p.IdProject == IdProject && p.IdStudent == IdStudent).FirstOrDefault();
-            if(dbproject == null)
+            if (dbproject == null)
             {
                 projectstudent projectstudentDB = new projectstudent
                 {
@@ -177,10 +192,10 @@ public class UserService : IUserService
                 result = dbContext.SaveChanges();
             }
 
-        }   
+        }
         catch (System.Exception)
         {
-            
+
             throw;
         }
 
@@ -197,14 +212,14 @@ public class UserService : IUserService
             try
             {
                 listStudents = dbContext.student
-                                .Where(s => 
+                                .Where(s =>
                                     (s.Name != null && s.Name.ToLower().Contains(student)) ||
                                     (s.MiddleName != null && s.MiddleName.ToLower().Contains(student)) ||
                                     (s.LastName != null && s.LastName.ToLower().Contains(student)) ||
                                     (s.SurName != null && s.SurName.ToLower().Contains(student)) ||
                                     (s.Email != null && s.Email.ToLower().Contains(student))
                                 )
-                                .Take(10) 
+                                .Take(10)
                                 .Select(s => new UserDTO
                                 {
                                     Id = s.IdStudent,
@@ -217,9 +232,72 @@ public class UserService : IUserService
             {
                 throw;
             }
-            
+
         }
 
         return listStudents;
+    }
+
+    public int RecoverUserPassword(string userEmail)
+    {
+        string password = "";
+        int result = 0;
+
+        try
+        {
+            password = dbContext.student
+                                .Where(s => s.Email == userEmail)
+                                .Select(s => s.Password)
+                                .FirstOrDefault();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error al recuperar la contraseña del usuario.", ex);
+        }
+
+        if (!string.IsNullOrEmpty(password))
+        {
+            try
+            {
+                result = SendPasswordToEmail(password, userEmail);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al enviar la contraseña por correo electrónico.", ex);
+            }
+        }
+
+        return result;
+    }
+
+    public int SendPasswordToEmail(String password, String userEmail)
+    {
+        int result = 0;
+        string pattern = @"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|""(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*"")@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\]";
+        if (Regex.IsMatch(userEmail, pattern))
+        {
+            try
+            {
+                SmtpMail mail = new SmtpMail("TryIt");
+                mail.From = "yusgus02@gmail.com";
+                mail.To = userEmail;
+                mail.Subject = "Codigo de verificacion";
+                mail.TextBody = "La contraseña de tu cuenta en Teamhub es: " + password;
+                SmtpServer emailServer = new SmtpServer("smtp.gmail.com");
+                emailServer.User = "yusgus02@gmail.com";
+                emailServer.Password = "nopk fxne wkiy lvpg";
+                emailServer.Port = 587;
+                emailServer.ConnectType = SmtpConnectType.ConnectSSLAuto;
+                SmtpClient reciber = new SmtpClient();
+                reciber.SendMail(emailServer, mail);
+                result = 1;
+            }
+            catch (Exception exception)
+            {
+                result = -1;
+            }
+        }
+
+        return result;
     }
 }

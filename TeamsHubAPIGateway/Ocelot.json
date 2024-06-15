@@ -184,9 +184,38 @@
       ],
       "UpstreamPathTemplate": "/TeamHub/Users/Edit",
       "UpstreamHttpMethod": [
-        "Put"
+        "PUT"
       ]
     },
+    {
+      "DownstreamPathTemplate": "/TeamHub/Users/RecoveryPassword/{userEmail}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "172.16.0.3",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/TeamHub/Users/RecoveryPassword/{userEmail}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/TeamHub/Users/GetUserInformation/{idUser}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "172.16.0.3",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/TeamHub/Users/GetUserInformation/{idUser}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ]
+    },
+
 
     {
       "DownstreamPathTemplate": "/TeamHub/File/{IdProject}",
@@ -271,7 +300,7 @@
       ],
       "UpstreamPathTemplate": "/TeamHub/Projects/UpdateProject",
       "UpstreamHttpMethod": [
-        "Put"
+        "PUT"
       ]
     },
     {
