@@ -2,6 +2,7 @@ const fileDAO = require('../DataAccessObjects/FileDAO');
 const extensionDAO = require('../DataAccessObjects/ExtensionDAO');
 const fs = require('fs').promises;
 const path = require('path');
+const logger = require("../Controller/logger");
 
 const saveNewFile = async (req) => {
     try {
@@ -18,7 +19,7 @@ const saveNewFile = async (req) => {
         req.Extension = extension;
         await fileDAO.saveNewFile(req);
     } catch(err) {
-        console.log(err);
+        throw err;
     }
 }
 
@@ -29,7 +30,7 @@ const deleteFile = async (req) => {
         destroyFileSystem(file);
         await fileDAO.deleteFile(req);
     }catch(err) {
-        console.log(err);
+        throw err;
     }
 }
 
@@ -39,12 +40,11 @@ const destroyFileSystem = async (req) => {
 
         try {
             await fs.unlink(filePath);
-            console.log("File successfully deleted from filesystem.");
         } catch (err) {
-            console.error("Error deleting file from filesystem:", err);
+            throw err;
         }
     }else {
-        console.log("File not found in database.");
+        throw err;
     }
 }
 
@@ -58,7 +58,6 @@ const getFilePath = async (fileId) => {
         const filePath = path.join(file.Path, file.Name);
         return filePath;
     } catch (err) {
-        console.error(err);
         throw err;
     }
 }

@@ -36,10 +36,9 @@ public class UserService : IUserService
             dbContext.student.Add(dbStudent);
             result = dbContext.SaveChanges();
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-
-            result = 1;
+            throw;
         }
 
         return result;
@@ -62,10 +61,9 @@ public class UserService : IUserService
             }
             result = dbContext.SaveChanges();
         }
-        catch (Exception ex)
+        catch (System.Exception)
         {
-
-            result = 1;
+            throw;
         }
 
         return result;
@@ -94,10 +92,9 @@ public class UserService : IUserService
                 result = -1;
             }
         }
-        catch (Exception ex)
+        catch (System.Exception)
         {
-
-            result = 1;
+            throw;
         }
 
         return result;
@@ -132,7 +129,6 @@ public class UserService : IUserService
         }
         catch (System.Exception)
         {
-
             throw;
         }
         return UserList;
@@ -167,7 +163,6 @@ public class UserService : IUserService
         }
         catch (System.Exception)
         {
-
             throw;
         }
 
@@ -195,7 +190,6 @@ public class UserService : IUserService
         }
         catch (System.Exception)
         {
-
             throw;
         }
 
@@ -250,9 +244,9 @@ public class UserService : IUserService
                                 .Select(s => s.Password)
                                 .FirstOrDefault();
         }
-        catch (Exception ex)
+        catch (System.Exception)
         {
-            throw new Exception("Error al recuperar la contraseña del usuario.", ex);
+            throw;
         }
 
         if (!string.IsNullOrEmpty(password))
@@ -261,9 +255,9 @@ public class UserService : IUserService
             {
                 result = SendPasswordToEmail(password, userEmail);
             }
-            catch (Exception ex)
+            catch (System.Exception)
             {
-                throw new Exception("Error al enviar la contraseña por correo electrónico.", ex);
+                throw;
             }
         }
 
@@ -292,9 +286,9 @@ public class UserService : IUserService
                 reciber.SendMail(emailServer, mail);
                 result = 1;
             }
-            catch (Exception exception)
+            catch (System.Exception)
             {
-                result = -1;
+                throw;
             }
         }
 
