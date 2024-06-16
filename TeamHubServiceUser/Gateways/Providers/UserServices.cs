@@ -11,14 +11,12 @@ public class UserService : IUserService
 
     private TeamHubContext dbContext;
 
-    public UserService(TeamHubContext dbContext)
-    {
-        this.dbContext = dbContext;
-    }
+    public UserService(TeamHubContext dbContext) { this.dbContext = dbContext; }
 
     public int AddStudent(StudentDTO newStudent)
     {
-        int result = 0;
+        int result;
+
         try
         {
             var dbStudent = new student
@@ -32,14 +30,12 @@ public class UserService : IUserService
                 Password = newStudent.Password,
                 ProDocumentImage = newStudent.ProDocumentImage
             };
-
             dbContext.student.Add(dbStudent);
             result = dbContext.SaveChanges();
         }
         catch (Exception ex)
         {
-
-            result = 1;
+            result = (int)ServerResponse.ErrorServer;
         }
 
         return result;
@@ -47,7 +43,8 @@ public class UserService : IUserService
 
     public int DeleteStudent(int IdDeleteStudent)
     {
-        int result = 0;
+        int result;
+
         try
         {
             var dbStudent = dbContext.student.Find(IdDeleteStudent);
@@ -58,14 +55,12 @@ public class UserService : IUserService
             }
             else
             {
-                result = -1;
+                result = (int)ServerResponse.UnsuccessfulRegistration;
             }
-            result = dbContext.SaveChanges();
         }
         catch (Exception ex)
         {
-
-            result = 1;
+            result = (int)ServerResponse.ErrorServer;
         }
 
         return result;
@@ -73,10 +68,10 @@ public class UserService : IUserService
 
     public int EditStudent(StudentDTO editStudent)
     {
-        int result = 0;
+        int result;
+
         try
         {
-
             var dbStudent = dbContext.student.Find(editStudent.IdStudent);
             if (dbStudent != null)
             {
@@ -91,13 +86,12 @@ public class UserService : IUserService
             }
             else
             {
-                result = -1;
+                result = (int)ServerResponse.UnsuccessfulRegistration;
             }
         }
         catch (Exception ex)
         {
-
-            result = 1;
+            result = (int)ServerResponse.ErrorServer;
         }
 
         return result;
@@ -106,6 +100,7 @@ public class UserService : IUserService
     public List<UserDTO> GetStudentByProject(int IdProject)
     {
         List<UserDTO> UserList = new List<UserDTO>();
+
         try
         {
             var projectStudents = dbContext.projectstudent
@@ -130,24 +125,25 @@ public class UserService : IUserService
                 UserList.Add(studentTransfer);
             }
         }
-        catch (System.Exception)
+        catch (Exception ex)
         {
-
-            throw;
+            UserList = null;
         }
+
         return UserList;
     }
 
     public student GetStudentInfo(int idStudent)
     {
         student studentDTO;
+
         try
         {
             studentDTO = dbContext.student.FirstOrDefault(s => s.IdStudent == idStudent);
         }
-        catch (System.Exception)
+        catch (Exception ex)
         {
-            throw;
+            studentDTO = null;
         }
 
         return studentDTO;
@@ -155,7 +151,8 @@ public class UserService : IUserService
 
     public int RemoveStudentFromProject(int IdStudent, int IdProject)
     {
-        int result = 0;
+        int result;
+
         try
         {
             var dbproject = dbContext.projectstudent.Where(p => p.IdProject == IdProject && p.IdStudent == IdStudent).FirstOrDefault();
@@ -164,11 +161,14 @@ public class UserService : IUserService
                 dbContext.Remove(dbproject);
                 result = dbContext.SaveChanges();
             }
+            else
+            {
+                result = (int)ServerResponse.UnsuccessfulRegistration;
+            }
         }
-        catch (System.Exception)
+        catch (Exception)
         {
-
-            throw;
+            result = (int)ServerResponse.ErrorServer;
         }
 
         return result;
@@ -176,10 +176,14 @@ public class UserService : IUserService
 
     public int AddStudentToProject(int IdStudent, int IdProject)
     {
-        int result = 0;
+        int result;
+
         try
         {
-            var dbproject = dbContext.projectstudent.Where(p => p.IdProject == IdProject && p.IdStudent == IdStudent).FirstOrDefault();
+            var dbproject = dbContext.projectstudent
+                .Where(p => p.IdProject == IdProject && p.IdStudent == IdStudent)
+                .FirstOrDefault();
+
             if (dbproject == null)
             {
                 projectstudent projectstudentDB = new projectstudent
@@ -191,12 +195,14 @@ public class UserService : IUserService
                 dbContext.projectstudent.Add(projectstudentDB);
                 result = dbContext.SaveChanges();
             }
-
+            else
+            {
+                result = (int)ServerResponse.UnsuccessfulRegistration;
+            }
         }
-        catch (System.Exception)
+        catch (Exception ex)
         {
-
-            throw;
+            result = (int)ServerResponse.ErrorServer;
         }
 
         return result;
@@ -205,34 +211,30 @@ public class UserService : IUserService
     public List<UserDTO> SearchStudents(string student)
     {
         List<UserDTO> listStudents = new List<UserDTO>();
-        if (!string.IsNullOrWhiteSpace(student))
+        student = student.ToUpper();
+
+        try
         {
-            student = student.ToUpper();
-
-            try
-            {
-                listStudents = dbContext.student
-                                .Where(s =>
-                                    (s.Name != null && s.Name.ToLower().Contains(student)) ||
-                                    (s.MiddleName != null && s.MiddleName.ToLower().Contains(student)) ||
-                                    (s.LastName != null && s.LastName.ToLower().Contains(student)) ||
-                                    (s.SurName != null && s.SurName.ToLower().Contains(student)) ||
-                                    (s.Email != null && s.Email.ToLower().Contains(student))
-                                )
-                                .Take(10)
-                                .Select(s => new UserDTO
-                                {
-                                    Id = s.IdStudent,
-                                    Email = s.Email,
-                                    FullName = $"{s.Name} {s.MiddleName} {s.LastName} {s.SurName}"
-                                })
-                                .ToList();
-            }
-            catch (System.Exception)
-            {
-                throw;
-            }
-
+            listStudents = dbContext.student
+                            .Where(s =>
+                                (s.Name != null && s.Name.ToLower().Contains(student)) ||
+                                (s.MiddleName != null && s.MiddleName.ToLower().Contains(student)) ||
+                                (s.LastName != null && s.LastName.ToLower().Contains(student)) ||
+                                (s.SurName != null && s.SurName.ToLower().Contains(student)) ||
+                                (s.Email != null && s.Email.ToLower().Contains(student))
+                            )
+                            .Take(10)
+                            .Select(s => new UserDTO
+                            {
+                                Id = s.IdStudent,
+                                Email = s.Email,
+                                FullName = $"{s.Name} {s.MiddleName} {s.LastName} {s.SurName}"
+                            })
+                            .ToList();
+        }
+        catch (Exception ex)
+        {
+            listStudents = null;
         }
 
         return listStudents;
@@ -241,7 +243,7 @@ public class UserService : IUserService
     public int RecoverUserPassword(string userEmail)
     {
         string password = "";
-        int result = 0;
+        int result;
 
         try
         {
@@ -249,22 +251,11 @@ public class UserService : IUserService
                                 .Where(s => s.Email == userEmail)
                                 .Select(s => s.Password)
                                 .FirstOrDefault();
+            result = SendPasswordToEmail(password, userEmail);
         }
         catch (Exception ex)
         {
-            throw new Exception("Error al recuperar la contraseña del usuario.", ex);
-        }
-
-        if (!string.IsNullOrEmpty(password))
-        {
-            try
-            {
-                result = SendPasswordToEmail(password, userEmail);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al enviar la contraseña por correo electrónico.", ex);
-            }
+            result = (int)ServerResponse.ErrorServer;
         }
 
         return result;
@@ -274,6 +265,7 @@ public class UserService : IUserService
     {
         int result = 0;
         string pattern = @"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|""(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*"")@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\]";
+        
         if (Regex.IsMatch(userEmail, pattern))
         {
             try
@@ -290,11 +282,11 @@ public class UserService : IUserService
                 emailServer.ConnectType = SmtpConnectType.ConnectSSLAuto;
                 SmtpClient reciber = new SmtpClient();
                 reciber.SendMail(emailServer, mail);
-                result = 1;
+                result = (int)ServerResponse.SuccessfulRegistration;
             }
             catch (Exception exception)
             {
-                result = -1;
+                result = (int)ServerResponse.ErrorServer;
             }
         }
 

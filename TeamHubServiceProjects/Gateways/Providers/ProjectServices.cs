@@ -1,4 +1,5 @@
 
+using MySql.Data.MySqlClient;
 using TeamHubServiceProjects.DTOs;
 using TeamHubServiceProjects.Entities;
 using TeamHubServiceProjects.Gateways.Interfaces;
@@ -8,14 +9,17 @@ namespace TeamHubServiceProjects.Gateways.Providers;
 public class ProjectServices : IProjectServices
 {
     private TeamHubContext dbContext;
-
-    public ProjectServices(TeamHubContext dbContext)
+    private readonly ILogger<ProjectServices> _logger;
+    public ProjectServices(TeamHubContext dbContext, ILogger<ProjectServices> logger)
     {
         this.dbContext = dbContext;
+        _logger = logger;
     }
 
     public bool AddProject(project projectNew, int studentID)
     {
+        bool result;
+
         try
         {
             dbContext.project.Add(projectNew);
@@ -25,20 +29,34 @@ public class ProjectServices : IProjectServices
             projectstudentaux.IdProject = projectNew.IdProject;
             dbContext.projectstudent.Add(projectstudentaux);
             dbContext.SaveChanges();
-            return true;
+            result = true;
+        }
+        catch (MySqlException sqlEx)
+        {
+            result = false;
+            _logger.LogError(sqlEx.Message);
+        }
+        catch (TimeoutException timeoutEx)
+        {
+            result = false;
+            _logger.LogError(timeoutEx.Message);
         }
         catch (Exception ex)
         {
-            return false;
+            result = false;
+            _logger.LogError(ex.Message);
         }
+
+        return result;
     }
 
     public bool DeleteProject(int projectId)
     {
+        bool result = false;
+
         try
         {
             var projectDB = dbContext.project.Find(projectId);
-            
             if (projectDB != null)
             {
                 var listTask = dbContext.tasks.Where(t => t.IdProject == projectId).ToList();
@@ -47,26 +65,61 @@ public class ProjectServices : IProjectServices
                 dbContext.document.RemoveRange(listDocument);
                 dbContext.project.Remove(projectDB);
                 dbContext.SaveChanges();
-                return true;
+                result = true;
             }
-            else
-            {
-                return false;
-            }
+        }
+        catch (MySqlException sqlEx)
+        {
+            result = false;
+            _logger.LogError(sqlEx.Message);
+        }
+        catch (TimeoutException timeoutEx)
+        {
+            result = false;
+            _logger.LogError(timeoutEx.Message);
         }
         catch (Exception ex)
         {
-            return false;
+            result = false;
+            _logger.LogError(ex.Message);
         }
+
+        return result;
     }
 
     public List<project> GetAllProjectsByStudentID(int studentID)
     {
-        return dbContext.project.Where(p => p.projectstudent.Any(ps => ps.IdStudent == studentID)).ToList();
+        List<project> result = new List<project>();
+
+        try
+        {
+            result = dbContext.project
+                .Where(p => p.projectstudent.Any(ps => ps.IdStudent == studentID))
+                .ToList();
+        }
+        catch (MySqlException sqlEx)
+        {
+            result = null;
+            _logger.LogError(sqlEx.Message);
+        }
+        catch (TimeoutException timeoutEx)
+        {
+            result = null;
+            _logger.LogError(timeoutEx.Message);
+        }
+        catch (Exception ex)
+        {
+            result = null;
+            _logger.LogError(ex.Message);
+        }
+
+        return result;
     }
 
     public bool UpdateProject(project projectUpdate)
     {
+        bool result = false;
+
         try
         {
             var projectDB = dbContext.project.Find(projectUpdate.IdProject);
@@ -78,31 +131,61 @@ public class ProjectServices : IProjectServices
                 projectDB.Status = projectUpdate.Status;
                 dbContext.project.Update(projectDB);
                 dbContext.SaveChanges();
-                return true;
+                result = true;
             }
-            else
-            {
-                return false;
-            }
+        }
+        catch (MySqlException sqlEx)
+        {
+            result = false;
+            _logger.LogError(sqlEx.Message);
+        }
+        catch (TimeoutException timeoutEx)
+        {
+            result = false;
+            _logger.LogError(timeoutEx.Message);
         }
         catch (Exception ex)
         {
-            Console.Error.WriteLine($"Error updating project: {ex.Message}");
-            return false;
+            result = false;
+            _logger.LogError(ex.Message);
         }
+
+        return result;
     }
 
     public project GetProjectByID(int projectId)
     {
-        return dbContext.project.Find(projectId);
+        project result = new project();
+
+        try
+        {
+            result = dbContext.project.Find(projectId);
+        }
+        catch (MySqlException sqlEx)
+        {
+            result = null;
+            _logger.LogError(sqlEx.Message);
+        }
+        catch (TimeoutException timeoutEx)
+        {
+            result = null;
+            _logger.LogError(timeoutEx.Message);
+        }
+        catch (Exception ex)
+        {
+            result = null;
+            _logger.LogError(ex.Message);
+        }
+
+        return result;
     }
 
     public List<TaskDTO> GetTasksByProject(int idProject)
     {
-        List<TaskDTO> listTask = new List<TaskDTO>();
+        List<TaskDTO> result = new List<TaskDTO>();
         try
         {
-            listTask = dbContext.tasks
+            result = dbContext.tasks
                 .Where(t => t.IdProject == idProject)
                 .Select(t => new TaskDTO
                 {
@@ -116,11 +199,22 @@ public class ProjectServices : IProjectServices
                 })
                 .ToList();
         }
+        catch (MySqlException sqlEx)
+        {
+            result = null;
+            _logger.LogError(sqlEx.Message);
+        }
+        catch (TimeoutException timeoutEx)
+        {
+            result = null;
+            _logger.LogError(timeoutEx.Message);
+        }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            result = null;
+            _logger.LogError(ex.Message);
         }
 
-        return listTask;
+        return result;
     }
 }
