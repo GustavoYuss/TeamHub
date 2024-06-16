@@ -33,9 +33,9 @@ public class UserService : IUserService
             dbContext.student.Add(dbStudent);
             result = dbContext.SaveChanges();
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            result = (int)ServerResponse.ErrorServer;
+            throw;
         }
 
         return result;
@@ -58,9 +58,9 @@ public class UserService : IUserService
                 result = (int)ServerResponse.UnsuccessfulRegistration;
             }
         }
-        catch (Exception ex)
+        catch (System.Exception)
         {
-            result = (int)ServerResponse.ErrorServer;
+            throw;
         }
 
         return result;
@@ -89,9 +89,9 @@ public class UserService : IUserService
                 result = (int)ServerResponse.UnsuccessfulRegistration;
             }
         }
-        catch (Exception ex)
+        catch (System.Exception)
         {
-            result = (int)ServerResponse.ErrorServer;
+            throw;
         }
 
         return result;
@@ -127,7 +127,7 @@ public class UserService : IUserService
         }
         catch (Exception ex)
         {
-            UserList = null;
+            throw;
         }
 
         return UserList;
@@ -168,7 +168,7 @@ public class UserService : IUserService
         }
         catch (Exception)
         {
-            result = (int)ServerResponse.ErrorServer;
+            throw;
         }
 
         return result;
@@ -202,7 +202,7 @@ public class UserService : IUserService
         }
         catch (Exception ex)
         {
-            result = (int)ServerResponse.ErrorServer;
+            throw;
         }
 
         return result;
@@ -253,9 +253,21 @@ public class UserService : IUserService
                                 .FirstOrDefault();
             result = SendPasswordToEmail(password, userEmail);
         }
-        catch (Exception ex)
+        catch (System.Exception)
         {
-            result = (int)ServerResponse.ErrorServer;
+            throw;
+        }
+
+        if (!string.IsNullOrEmpty(password))
+        {
+            try
+            {
+                result = SendPasswordToEmail(password, userEmail);
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
         }
 
         return result;
@@ -284,9 +296,9 @@ public class UserService : IUserService
                 reciber.SendMail(emailServer, mail);
                 result = (int)ServerResponse.SuccessfulRegistration;
             }
-            catch (Exception exception)
+            catch (System.Exception)
             {
-                result = (int)ServerResponse.ErrorServer;
+                throw;
             }
         }
 

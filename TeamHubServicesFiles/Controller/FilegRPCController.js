@@ -3,24 +3,40 @@ const {
     DeleteFile,
     DownloadFile 
 } = require('../Helpers/FileHelper');
+const logger = require("../Controller/logger");
 
 const SaveFile = (req, res) => {
-    newFile(req.request);
-    res(null, {response:200});
+    try{
+        newFile(req.request);
+        res(null, {response:200});
+    }catch (err) {
+        logger.error(err);
+        res({
+            code: grpc.status.NOT_FOUND,
+            message: 'Error al subir el archivo'
+        });
+    }
 };
 
 const DeleteFileSystem = (req, res) => {
-    DeleteFile(req.request);
-    res(null, {response:200});
+    try{
+        DeleteFile(req.request);
+        res(null, {response:200});
+    }catch (err) {
+        logger.error(err);
+        res({
+            code: grpc.status.NOT_FOUND,
+            message: 'Error al eliminar el archivo'
+        });
+    }
 };
 
 const DownloadFileSystem = async (req, res) => {
     try{
         const fileData = await DownloadFile(req.request);
-        console.log(fileData);
         res(null, {fileContent:fileData});
     }catch (err) {
-        console.error(err);
+        logger.error(err);
         res({
             code: grpc.status.NOT_FOUND,
             message: 'Error al descargar el archivo'
