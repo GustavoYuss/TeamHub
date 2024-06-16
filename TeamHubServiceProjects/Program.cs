@@ -2,6 +2,8 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
+using Serilog.Events;
 using TeamHubServiceProjects.DTOs;
 using TeamHubServiceProjects.Entities;
 using TeamHubServiceProjects.Gateways.Interfaces;
@@ -40,7 +42,14 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File("Logs/app-log-.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
 
+builder.Host.UseSerilog();
 
 builder.Services.AddScoped<IProjectManagement, ProjectManagement>();
 builder.Services.AddScoped<IProjectServices, ProjectServices>();
@@ -77,18 +86,24 @@ app.UseAuthorization();
 
 app.MapGet("/TeamHub/Projects/MyProjects/{studentID}", (IProjectManagement projectManagement, int studentID, ILogService LogService, HttpContext httpContext) =>
 {
-    int idUserClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdUser").Select(c => c.Value).SingleOrDefault());
-    int idSessionClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdSession").Select(c => c.Value).SingleOrDefault());
+    if (!InputValidator.IsValidId(studentID))
+    {
+        return Results.BadRequest("Invalid student ID");
+    }
+    if (!InputValidator.IsValidRequest(httpContext, out int idUserClaim, out int idSessionClaim))
+    {
+        return Results.Unauthorized();
+    }
 
-    LogService.SaveUserAction(
-        new UserActionDTO()
-        {
-            IdUser = idUserClaim,
-            IdUserSession = idSessionClaim,
-            Action = "Obtener Lista ded proyectos"
-        }
-    );
-    return projectManagement.GetAllProjectsByStuden(studentID);
+    LogService.SaveUserAction(new UserActionDTO()
+    {
+        IdUser = idUserClaim,
+        IdUserSession = idSessionClaim,
+        Action = "Obtener Lista de proyectos"
+    });
+
+    var projects = projectManagement.GetAllProjectsByStuden(studentID);
+    return projects != null ? Results.Ok(projects) : Results.Problem("Error Server");
 })
 .WithName("GetListaProyectos")
 .RequireAuthorization()
@@ -96,18 +111,24 @@ app.MapGet("/TeamHub/Projects/MyProjects/{studentID}", (IProjectManagement proje
 
 app.MapPost("/TeamHub/Projects/AddProject", (IProjectManagement projectManagement, AddProjectRequestDTO request, ILogService LogService, HttpContext httpContext) =>
 {
-    int idUserClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdUser").Select(c => c.Value).SingleOrDefault());
-    int idSessionClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdSession").Select(c => c.Value).SingleOrDefault());
+    if (request == null || !InputValidator.IsValidString(request.ProjectNew.Name) || !InputValidator.IsValidId(request.StudentID))
+    {
+        return Results.BadRequest("Invalid request data");
+    }
+    if (!InputValidator.IsValidRequest(httpContext, out int idUserClaim, out int idSessionClaim))
+    {
+        return Results.Unauthorized();
+    }
 
-    LogService.SaveUserAction(
-        new UserActionDTO()
-        {
-            IdUser = idUserClaim,
-            IdUserSession = idSessionClaim,
-            Action = "Crear nuevo proyecto"
-        }
-    );
-    return projectManagement.AddProject(request.ProjectNew, request.StudentID);
+    LogService.SaveUserAction(new UserActionDTO()
+    {
+        IdUser = idUserClaim,
+        IdUserSession = idSessionClaim,
+        Action = "Crear nuevo proyecto"
+    });
+
+    var response = projectManagement.AddProject(request.ProjectNew, request.StudentID);
+    return response ? Results.Ok(response) : Results.Problem("Error Server");
 })
 .WithName("AgregarProyecto")
 .RequireAuthorization()
@@ -115,37 +136,49 @@ app.MapPost("/TeamHub/Projects/AddProject", (IProjectManagement projectManagemen
 
 app.MapPut("/TeamHub/Projects/UpdateProject", (IProjectManagement projectManagement, project projectUpdate, ILogService LogService, HttpContext httpContext) =>
 {
-    int idUserClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdUser").Select(c => c.Value).SingleOrDefault());
-    int idSessionClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdSession").Select(c => c.Value).SingleOrDefault());
+    if (projectUpdate == null || !InputValidator.IsValidId(projectUpdate.IdProject))
+    {
+        return Results.BadRequest("Invalid project data");
+    }
+    if (!InputValidator.IsValidRequest(httpContext, out int idUserClaim, out int idSessionClaim))
+    {
+        return Results.Unauthorized();
+    }
 
-    LogService.SaveUserAction(
-        new UserActionDTO()
-        {
-            IdUser = idUserClaim,
-            IdUserSession = idSessionClaim,
-            Action = "Actualizar Proyecto"
-        }
-    );
-    return projectManagement.UpdateProject(projectUpdate);
+    LogService.SaveUserAction(new UserActionDTO()
+    {
+        IdUser = idUserClaim,
+        IdUserSession = idSessionClaim,
+        Action = "Actualizar Proyecto"
+    });
+
+    var response = projectManagement.UpdateProject(projectUpdate);
+    return response ? Results.Ok(response) : Results.Problem("Error Server");
 })
-.WithName("UpdateProyect")
+.WithName("UpdateProject")
 .RequireAuthorization()
 .WithOpenApi();
 
 app.MapDelete("/TeamHub/Projects/DeleteProject", (IProjectManagement projectManagement, int idProject, ILogService LogService, HttpContext httpContext) =>
 {
-    int idUserClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdUser").Select(c => c.Value).SingleOrDefault());
-    int idSessionClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdSession").Select(c => c.Value).SingleOrDefault());
+    if (!InputValidator.IsValidId(idProject))
+    {
+        return Results.BadRequest("Invalid project ID");
+    }
+    if (!InputValidator.IsValidRequest(httpContext, out int idUserClaim, out int idSessionClaim))
+    {
+        return Results.Unauthorized();
+    }
 
-    LogService.SaveUserAction(
-        new UserActionDTO()
-        {
-            IdUser = idUserClaim,
-            IdUserSession = idSessionClaim,
-            Action = "Eliminar Proyecto"
-        }
-    );
-    return projectManagement.RemoveProject(idProject);
+    LogService.SaveUserAction(new UserActionDTO()
+    {
+        IdUser = idUserClaim,
+        IdUserSession = idSessionClaim,
+        Action = "Eliminar Proyecto"
+    });
+
+    var response = projectManagement.RemoveProject(idProject);
+    return response ? Results.Ok(response) : Results.Problem("Error Server");
 })
 .WithName("DeleteProject")
 .RequireAuthorization()
@@ -153,18 +186,24 @@ app.MapDelete("/TeamHub/Projects/DeleteProject", (IProjectManagement projectMana
 
 app.MapGet("/TeamHub/Projects/Project/{idProject}", (IProjectManagement projectManagement, int idProject, ILogService LogService, HttpContext httpContext) =>
 {
-    int idUserClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdUser").Select(c => c.Value).SingleOrDefault());
-    int idSessionClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdSession").Select(c => c.Value).SingleOrDefault());
+    if (!InputValidator.IsValidId(idProject))
+    {
+        return Results.BadRequest("Invalid project ID");
+    }
+    if (!InputValidator.IsValidRequest(httpContext, out int idUserClaim, out int idSessionClaim))
+    {
+        return Results.Unauthorized();
+    }
 
-    LogService.SaveUserAction(
-        new UserActionDTO()
-        {
-            IdUser = idUserClaim,
-            IdUserSession = idSessionClaim,
-            Action = "Obtener Informacion de Proyecto especifico"
-        }
-    );
-    return projectManagement.GetProjectByID(idProject);
+    LogService.SaveUserAction(new UserActionDTO()
+    {
+        IdUser = idUserClaim,
+        IdUserSession = idSessionClaim,
+        Action = "Obtener Informacion de Proyecto especifico"
+    });
+
+    var project = projectManagement.GetProjectByID(idProject);
+    return project != null ? Results.Ok(project) : Results.Problem("Error Server");
 })
 .WithName("GetProject")
 .RequireAuthorization()
@@ -172,18 +211,24 @@ app.MapGet("/TeamHub/Projects/Project/{idProject}", (IProjectManagement projectM
 
 app.MapGet("/TeamHub/Projects/Project/Tasks/{idProject}", (IProjectManagement projectManagement, int idProject, ILogService LogService, HttpContext httpContext) =>
 {
-    int idUserClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdUser").Select(c => c.Value).SingleOrDefault());
-    int idSessionClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdSession").Select(c => c.Value).SingleOrDefault());
+    if (!InputValidator.IsValidId(idProject))
+    {
+        return Results.BadRequest("Invalid project ID");
+    }
+    if (!InputValidator.IsValidRequest(httpContext, out int idUserClaim, out int idSessionClaim))
+    {
+        return Results.Unauthorized();
+    }
 
-    LogService.SaveUserAction(
-        new UserActionDTO()
-        {
-            IdUser = idUserClaim,
-            IdUserSession = idSessionClaim,
-            Action = "Obtener Tareas de proyecto"
-        }
-    );
-    return projectManagement.GetTasksByProject(idProject);
+    LogService.SaveUserAction(new UserActionDTO()
+    {
+        IdUser = idUserClaim,
+        IdUserSession = idSessionClaim,
+        Action = "Obtener Tareas de proyecto"
+    });
+
+    var tasks = projectManagement.GetTasksByProject(idProject);
+    return tasks != null ? Results.Ok(tasks) : Results.Problem("Error Server");
 })
 .WithName("GetProjectTasks")
 .RequireAuthorization()
