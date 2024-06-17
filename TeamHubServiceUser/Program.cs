@@ -79,7 +79,6 @@ app.MapPost("/TeamHub/Users/", async (IUserService userService, ILogService logS
 {
     try
     {
-
         int result = logService.SaveUserAction(new UserActionDTO
         {
             IdUser = 0,
