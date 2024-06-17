@@ -1,32 +1,45 @@
 const cors = require('cors');
 const os = require('os');
-const { expressjwt } = require('express-jwt'); // Correct import for version 7.0.0 and later
 const express = require('express');
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
+const logger = require('../Controller/logger'); 
+dotenv.config();
 
 class Server {
-
-    constructor(){
+    constructor() {
         this.app = express();
-        this.port = process.env.PORT
+        this.port = process.env.PORT;
         this.middleware();
         this.routes();
     }
 
-    middleware(){
+    middleware() {
         this.app.use(cors());
         this.app.use(express.json());
         this.app.use(express.static('public'));
+        this.app.use((req, res, next) => {
+            const authHeader = req.headers['authorization'];
+            const token = authHeader && authHeader.split(' ')[1];
+            if (token == null) return res.sendStatus(401);
+            jwt.verify(token, process.env.SECRETORPRIVATEKEY, (err, user) => {
+                if (err) {
+                    console.error('Token verification error:', err);
+                    return res.sendStatus(403);
+                }
+                req.user = user;
+                next();
+            });
+        });
     }
 
-    routes(){
+    routes() {
         this.app.use('/TeamHub/File', require('../Routes/FileRoute'));
     }
 
-    listen(){
+    listen() {
         const address = this.getNetworkAddress();
-        this.app.listen(this.port, ()=>{
+        this.app.listen(this.port, () => {
             console.log(`Servidor escuchando en http://${address}:${this.port}`);
         });
     }

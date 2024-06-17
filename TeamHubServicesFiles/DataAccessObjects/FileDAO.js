@@ -3,7 +3,12 @@ const { document } = require('../Models');
 
 class FileDAO {
     static async saveNewFile(file) {
-        return await document.create(file);
+        try{
+            const result = await document.create(file);
+            return result;
+        }catch (err){
+            throw err;
+        }
     }
 
     static async getFile(fileId) {
@@ -19,7 +24,7 @@ class FileDAO {
 
             return result;
         }catch (err){
-            console.error(err);
+            throw err;
         }
     }
 
@@ -30,7 +35,7 @@ class FileDAO {
             });
             return result;
         } catch (err) {
-            console.error(err);
+            throw err;
         }
     }
 }
