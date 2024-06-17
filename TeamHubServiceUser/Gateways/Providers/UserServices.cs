@@ -8,7 +8,6 @@ namespace TeamHubServiceUser.Gateways.Providers;
 
 public class UserService : IUserService
 {
-
     private TeamHubContext dbContext;
 
     public UserService(TeamHubContext dbContext) { this.dbContext = dbContext; }
