@@ -80,9 +80,6 @@ app.MapPost("/TeamHub/Users/", async (IUserService userService, ILogService logS
     try
     {
 
-        int idUser = int.Parse(idUserClaim);
-        int idSession = int.Parse(idSessionClaim);
-
         int result = logService.SaveUserAction(new UserActionDTO
         {
             IdUser = 0,
