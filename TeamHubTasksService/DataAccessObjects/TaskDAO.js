@@ -3,16 +3,6 @@ const { tasks } = require("../Models/Index");
 class TaskDAO {
   
   static async createNewTask(taskAux) {
-    const existingTask = await tasks.findOne({
-      where: { Name: taskAux.Name },
-    });
-
-    if (existingTask) {
-      return {
-        message: "La actividad ya está registrada en la base de datos.",
-      };
-    }
-
     return await tasks.create(taskAux);
   }
 
