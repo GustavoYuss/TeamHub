@@ -15,27 +15,34 @@ public class UserService : IUserService
 
     public int AddStudent(StudentDTO newStudent)
     {
-        int result;
+        int result = 0;
 
         try
         {
-            var dbStudent = new student
+            
+            var studentDB = dbContext.student.Where(S => S.Email == newStudent.Email).FirstOrDefault();
+
+            if (studentDB == null)
             {
-                IdStudent = 0,
-                Name = newStudent.Name,
-                MiddleName = newStudent.MiddleName,
-                LastName = newStudent.LastName,
-                SurName = newStudent.SurName,
-                Email = newStudent.Email,
-                Password = newStudent.Password,
-                ProDocumentImage = newStudent.ProDocumentImage
-            };
-            dbContext.student.Add(dbStudent);
-            result = dbContext.SaveChanges();
+                var dbStudent = new student
+                {
+                    IdStudent = 0,
+                    Name = newStudent.Name,
+                    MiddleName = newStudent.MiddleName,
+                    LastName = newStudent.LastName,
+                    SurName = newStudent.SurName,
+                    Email = newStudent.Email,
+                    Password = newStudent.Password,
+                    ProDocumentImage = newStudent.ProDocumentImage
+                };
+                dbContext.student.Add(dbStudent);
+                result = dbContext.SaveChanges();
+            }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw;
+            result = -1;
+            Console.WriteLine(ex);
         }
 
         return result;
@@ -58,9 +65,10 @@ public class UserService : IUserService
                 result = (int)ServerResponse.UnsuccessfulRegistration;
             }
         }
-        catch (System.Exception)
+        catch (System.Exception ex)
         {
-            throw;
+            result = -1;
+            Console.WriteLine(ex);
         }
 
         return result;
@@ -89,9 +97,10 @@ public class UserService : IUserService
                 result = (int)ServerResponse.UnsuccessfulRegistration;
             }
         }
-        catch (System.Exception)
+        catch (System.Exception ex)
         {
-            throw;
+            result = -1;
+            Console.WriteLine(ex);
         }
 
         return result;
@@ -166,9 +175,10 @@ public class UserService : IUserService
                 result = (int)ServerResponse.UnsuccessfulRegistration;
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw;
+            result = -1;
+            Console.WriteLine(ex);
         }
 
         return result;
@@ -202,7 +212,8 @@ public class UserService : IUserService
         }
         catch (Exception ex)
         {
-            throw;
+            result = -1;
+            Console.WriteLine(ex);
         }
 
         return result;
@@ -253,21 +264,10 @@ public class UserService : IUserService
                                 .FirstOrDefault();
             result = SendPasswordToEmail(password, userEmail);
         }
-        catch (System.Exception)
+        catch (System.Exception ex)
         {
-            throw;
-        }
-
-        if (!string.IsNullOrEmpty(password))
-        {
-            try
-            {
-                result = SendPasswordToEmail(password, userEmail);
-            }
-            catch (System.Exception)
-            {
-                throw;
-            }
+            result = -1;
+            Console.WriteLine(ex);
         }
 
         return result;
@@ -296,9 +296,10 @@ public class UserService : IUserService
                 reciber.SendMail(emailServer, mail);
                 result = (int)ServerResponse.SuccessfulRegistration;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-                throw;
+                result = -1;
+                Console.WriteLine(ex);
             }
         }
 

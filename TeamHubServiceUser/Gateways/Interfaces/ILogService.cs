@@ -4,5 +4,5 @@ namespace TeamHubServiceUser.Gateways.Interfaces;
 
 public interface ILogService
 {
-    public void SaveUserAction(UserActionDTO userAction);
+    public int SaveUserAction(UserActionDTO userAction);
 }
