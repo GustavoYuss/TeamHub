@@ -27,7 +27,7 @@ const deleteFile = async (req) => {
     try {
         console.log("LLEGO AQUI DEDEDEDE");
         const file = await fileDAO.getFile(req);
-        destroyFileSystem(file);
+        await destroyFileSystem(file);
         await fileDAO.deleteFile(req);
     }catch(err) {
         throw err;
@@ -40,13 +40,18 @@ const destroyFileSystem = async (req) => {
 
         try {
             await fs.unlink(filePath);
+            console.log(`File ${filePath} was deleted successfully.`);
         } catch (err) {
-            throw err;
+            if (err.code === 'ENOENT') {
+                console.error(`File ${filePath} does not exist.`);
+            } else {
+                throw err;
+            }
         }
-    }else {
-        throw err;
+    } else {
+        throw new Error("Request object is missing.");
     }
-}
+};
 
 
 const getFilePath = async (fileId) => {

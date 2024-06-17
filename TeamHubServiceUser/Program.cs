@@ -75,166 +75,365 @@ app.UseCors("AllowAllOrigins");
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapPost("/TeamHub/Users/", (IUserService userService, ILogService LogService, HttpContext httpContext, StudentDTO newStudent) => 
+app.MapPost("/TeamHub/Users/", async (IUserService userService, ILogService logService, HttpContext httpContext, StudentDTO newStudent) =>
 {
-    LogService.SaveUserAction(
-        new UserActionDTO() {
+    try
+    {
+
+        int idUser = int.Parse(idUserClaim);
+        int idSession = int.Parse(idSessionClaim);
+
+        int result = logService.SaveUserAction(new UserActionDTO
+        {
             IdUser = 0,
             IdUserSession = 0,
-            Action = "Añadir Estudiante"
+            Action = "Agregar Estudiante"
+        });
+
+        if (result != 1)
+        {
+            return Results.StatusCode(500); // Internal Server Error
         }
-    );
-    return userService.AddStudent(newStudent);
+
+        var addResult = userService.AddStudent(newStudent);
+        return Results.Ok(addResult);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex);
+        return Results.BadRequest();
+    }
 })
 .WithName("AddUser")
 .WithOpenApi();
 
 
-app.MapPost("/TeamHub/Users/Delete", (IUserService userService, ILogService LogService, HttpContext httpContext, int idDeleteStudent) => 
-{
-    int idUserClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdUser").Select(c=>c.Value ).SingleOrDefault()); 
-    int idSessionClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdSession").Select(c=>c.Value ).SingleOrDefault()); 
 
-    LogService.SaveUserAction(
-        new UserActionDTO() {
-            IdUser = idUserClaim,
-            IdUserSession = idSessionClaim,
-            Action = "Eliminar Estudiante"
+app.MapPost("/TeamHub/Users/Delete", async (IUserService userService, ILogService logService, HttpContext httpContext, int idDeleteStudent) =>
+{
+    try
+    {
+        var idUserClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "IdUser")?.Value;
+        var idSessionClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "IdSession")?.Value;
+
+        if (idUserClaim == null || idSessionClaim == null)
+        {
+            return Results.Unauthorized();
         }
-    );
-    return userService.DeleteStudent(idDeleteStudent);
+
+        int idUser = int.Parse(idUserClaim);
+        int idSession = int.Parse(idSessionClaim);
+
+        int result = logService.SaveUserAction(new UserActionDTO
+        {
+            IdUser = idUser,
+            IdUserSession = idSession,
+            Action = "Eliminar Estudiante"
+        });
+
+        if (result != 1)
+        {
+            return Results.StatusCode(500); // Internal Server Error
+        }
+
+        var deleteUserResult = userService.DeleteStudent(idDeleteStudent);
+        return Results.Ok(deleteUserResult);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex);
+        return Results.BadRequest(-1);
+    }
 })
 .WithName("DeleteUser")
 .RequireAuthorization()
 .WithOpenApi();
 
-app.MapPut("/TeamHub/Users/Edit", (IUserService userService, ILogService LogService, HttpContext httpContext, StudentDTO editStudent) => 
+app.MapPut("/TeamHub/Users/Edit", async (IUserService userService, ILogService logService, HttpContext httpContext, StudentDTO editStudent) =>
 {
-    int idUserClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdUser").Select(c=>c.Value ).SingleOrDefault()); 
-    int idSessionClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdSession").Select(c=>c.Value ).SingleOrDefault()); 
+    try
+    {
+        var idUserClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "IdUser")?.Value;
+        var idSessionClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "IdSession")?.Value;
 
-    LogService.SaveUserAction(
-        new UserActionDTO() {
-            IdUser = idUserClaim,
-            IdUserSession = idSessionClaim,
-            Action = "Editar Estudiante"
+        if (idUserClaim == null || idSessionClaim == null)
+        {
+            return Results.Unauthorized();
         }
-    );
-    return userService.EditStudent(editStudent);
+
+        int idUser = int.Parse(idUserClaim);
+        int idSession = int.Parse(idSessionClaim);
+
+        int result = logService.SaveUserAction(new UserActionDTO
+        {
+            IdUser = idUser,
+            IdUserSession = idSession,
+            Action = "Editar Estudiante"
+        });
+
+        if (result != 1)
+        {
+            return Results.StatusCode(500); // Internal Server Error
+        }
+
+        var editUserResult = userService.EditStudent(editStudent);
+        return Results.Ok(editUserResult);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex);
+        return Results.BadRequest();
+    }
 })
-.WithName("EditeUser")
+.WithName("EditUser")
 .RequireAuthorization()
 .WithOpenApi();
 
 
-app.MapGet("/TeamHub/Users/ByProject/{idProject}", (IUserService userService, ILogService LogService, HttpContext httpContext, int idProject) => 
-{
-    var students = userService.GetStudentByProject(idProject);
-        
-    int idUserClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdUser").Select(c=>c.Value ).SingleOrDefault()); 
-    int idSessionClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdSession").Select(c=>c.Value ).SingleOrDefault()); 
 
-    LogService.SaveUserAction(
-        new UserActionDTO() {
-            IdUser = idUserClaim,
-            IdUserSession = idSessionClaim,
-            Action = "Obtener Usuarios de un proyecto"
+app.MapGet("/TeamHub/Users/ByProject/{idProject}", async (IUserService userService, ILogService logService, HttpContext httpContext, int idProject) =>
+{
+    try
+    {
+        var idUserClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "IdUser")?.Value;
+        var idSessionClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "IdSession")?.Value;
+
+        if (idUserClaim == null || idSessionClaim == null)
+        {
+            return Results.Unauthorized();
         }
-    );
-    return Results.Json(students);
+
+        int idUser = int.Parse(idUserClaim);
+        int idSession = int.Parse(idSessionClaim);
+
+        int result = logService.SaveUserAction(new UserActionDTO
+        {
+            IdUser = idUser,
+            IdUserSession = idSession,
+            Action = "Obtener Estudiantes de un proyecto"
+        });
+
+        if (result != 1)
+        {
+            return Results.StatusCode(500); // Internal Server Error
+        }
+
+        var students = userService.GetStudentByProject(idProject);
+        return Results.Json(students);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex);
+        return Results.BadRequest();
+    }
 })
 .WithName("GetUserByProject")
 .RequireAuthorization()
 .WithOpenApi();
 
-app.MapGet("/TeamHub/Users/GetUserInformation/{idUser}", (IUserService userService, ILogService LogService, HttpContext httpContext, int idUser) => 
-{
-    
-    int idUserClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdUser").Select(c=>c.Value ).SingleOrDefault()); 
-    int idSessionClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdSession").Select(c=>c.Value ).SingleOrDefault()); 
 
-    LogService.SaveUserAction(
-        new UserActionDTO() {
-            IdUser = idUserClaim,
-            IdUserSession = idSessionClaim,
-            Action = "Obtener Usuarios de un proyecto"
+app.MapGet("/TeamHub/Users/GetUserInformation/{idUser}", async (IUserService userService, ILogService logService, HttpContext httpContext, int idUser) =>
+{
+    try
+    {
+        var idUserClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "IdUser")?.Value;
+        var idSessionClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "IdSession")?.Value;
+
+        if (idUserClaim == null || idSessionClaim == null)
+        {
+            return Results.Unauthorized();
         }
-    );
-    var student = userService.GetStudentInfo(idUser);
-    return Results.Json(student);
+
+        int idUserLogged = int.Parse(idUserClaim);
+        int idSession = int.Parse(idSessionClaim);
+
+        int result = logService.SaveUserAction(new UserActionDTO
+        {
+            IdUser = idUserLogged,
+            IdUserSession = idSession,
+            Action = "Obtener informacion de un Estudiante de un proyecto"
+        });
+
+        if (result != 1)
+        {
+            return Results.StatusCode(500); // Internal Server Error
+        }
+
+        var student = userService.GetStudentInfo(idUser);
+        return Results.Json(student);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex);
+        return Results.BadRequest();
+    }
 })
 .WithName("GetUserInformation")
 .RequireAuthorization()
 .WithOpenApi();
 
-app.MapDelete("/TeamHub/Users/RemoveOfProject/{idProject}/{idStudent}", (IUserService userService, ILogService LogService, HttpContext httpContext, int idProject, int idStudent) => 
-{
-    int idUserClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdUser").Select(c=>c.Value ).SingleOrDefault()); 
-    int idSessionClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdSession").Select(c=>c.Value ).SingleOrDefault());
 
-    LogService.SaveUserAction(
-        new UserActionDTO() {
-            IdUser = idUserClaim,
-            IdUserSession = idSessionClaim,
-            Action = "Remover estudiante de proyecto"
+app.MapDelete("/TeamHub/Users/RemoveOfProject/{idProject}/{idStudent}", async (IUserService userService, ILogService logService, HttpContext httpContext, int idProject, int idStudent) =>
+{
+    try
+    {
+        var idUserClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "IdUser")?.Value;
+        var idSessionClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "IdSession")?.Value;
+
+        if (idUserClaim == null || idSessionClaim == null)
+        {
+            return Results.Unauthorized();
         }
-    );
-    return userService.RemoveStudentFromProject(idStudent,idProject);
+
+        int idUser = int.Parse(idUserClaim);
+        int idSession = int.Parse(idSessionClaim);
+
+        int result = logService.SaveUserAction(new UserActionDTO
+        {
+            IdUser = idUser,
+            IdUserSession = idSession,
+            Action = "Remover Estudiante de un proyecto"
+        });
+
+        if (result != 1)
+        {
+            return Results.StatusCode(500); // Internal Server Error
+        }
+
+        var removeFromProjectResult = userService.RemoveStudentFromProject(idStudent, idProject);
+        return Results.Ok(removeFromProjectResult);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex);
+        return Results.BadRequest();
+    }
 })
 .WithName("RemoveStudentProject")
 .RequireAuthorization()
 .WithOpenApi();
 
 
-app.MapPost("/TeamHub/Users/AddToProject/{idProject}/{idStudent}", (IUserService userService, ILogService LogService, HttpContext httpContext, int idProject, int idStudent) => 
+app.MapPost("/TeamHub/Users/AddToProject/{idProject}/{idStudent}", async (IUserService userService, ILogService logService, HttpContext httpContext, int idProject, int idStudent) =>
 {
-    int idUserClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdUser").Select(c=>c.Value ).SingleOrDefault()); 
-    int idSessionClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdSession").Select(c=>c.Value ).SingleOrDefault()); 
+    try
+    {
+        var idUserClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "IdUser")?.Value;
+        var idSessionClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "IdSession")?.Value;
 
-    LogService.SaveUserAction(
-        new UserActionDTO() {
-            IdUser = idUserClaim,
-            IdUserSession = idSessionClaim,
-            Action = "Añadir estudiante a proyecto"
+        if (idUserClaim == null || idSessionClaim == null)
+        {
+            return Results.Unauthorized();
         }
-    );
-    return userService.AddStudentToProject(idStudent,idProject);
+
+        int idUser = int.Parse(idUserClaim);
+        int idSession = int.Parse(idSessionClaim);
+
+        int result = logService.SaveUserAction(new UserActionDTO
+        {
+            IdUser = idUser,
+            IdUserSession = idSession,
+            Action = "Añadir Estudiante a un proyecto"
+        });
+
+        if (result != 1)
+        {
+            return Results.StatusCode(500); // Internal Server Error
+        }
+
+        var addStudentResult = userService.AddStudentToProject(idStudent, idProject);
+        return Results.Ok(addStudentResult);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex);
+        return Results.BadRequest();
+    }
 })
 .WithName("AddStudentToProject")
 .RequireAuthorization()
 .WithOpenApi();
 
-app.MapGet("/TeamHub/Users/Search/{student}", (IUserService userService, ILogService LogService, HttpContext httpContext, string student) => 
-{
-    int idUserClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdUser").Select(c=>c.Value ).SingleOrDefault()); 
-    int idSessionClaim = Int32.Parse(httpContext.User.Claims.Where(c => c.Type == "IdSession").Select(c=>c.Value ).SingleOrDefault()); 
 
-    LogService.SaveUserAction(
-        new UserActionDTO() {
-            IdUser = idUserClaim,
-            IdUserSession = idSessionClaim,
-            Action = "Buscar estudiante especifico"
+app.MapGet("/TeamHub/Users/Search/{student}", async (IUserService userService, ILogService logService, HttpContext httpContext, string student) =>
+{
+    try
+    {
+        var idUserClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "IdUser")?.Value;
+        var idSessionClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "IdSession")?.Value;
+
+        if (idUserClaim == null || idSessionClaim == null)
+        {
+            return Results.Unauthorized();
         }
-    );
-    var students = userService.SearchStudents(student);
-    return Results.Json(students);
+
+        int idUser = int.Parse(idUserClaim);
+        int idSession = int.Parse(idSessionClaim);
+
+        int result = logService.SaveUserAction(new UserActionDTO
+        {
+            IdUser = idUser,
+            IdUserSession = idSession,
+            Action = "Buscar Estudiante especifico"
+        });
+
+        if (result != 1)
+        {
+            return Results.StatusCode(500); // Internal Server Error
+        }
+
+        var students = userService.SearchStudents(student);
+        return Results.Json(students);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex);
+        return Results.BadRequest();
+    }
 })
 .WithName("SearchStudent")
 .RequireAuthorization()
 .WithOpenApi();
 
-app.MapGet("/TeamHub/Users/RecoveryPassword/{userEmail}", (IUserService userService, ILogService LogService, HttpContext httpContext, string userEmail) =>
+
+app.MapGet("/TeamHub/Users/RecoveryPassword/{userEmail}", async (IUserService userService, ILogService logService, HttpContext httpContext, string userEmail) =>
 {
-    LogService.SaveUserAction(
-        new UserActionDTO() {
-            IdUser = 0,
-            IdUserSession = 0,
-            Action = "Recuperar contraseña"
+    try
+    {
+        var idUserClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "IdUser")?.Value;
+        var idSessionClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "IdSession")?.Value;
+
+        if (idUserClaim == null || idSessionClaim == null)
+        {
+            return Results.Unauthorized();
         }
-    );
-    return userService.RecoverUserPassword(userEmail);
+
+        int idUser = int.Parse(idUserClaim);
+        int idSession = int.Parse(idSessionClaim);
+
+        int result = logService.SaveUserAction(new UserActionDTO
+        {
+            IdUser = idUser,
+            IdUserSession = idSession,
+            Action = "Recuperar contraseña"
+        });
+
+        if (result != 1)
+        {
+            return Results.StatusCode(500); // Internal Server Error
+        }
+
+        var passwordResult = userService.RecoverUserPassword(userEmail);
+        return Results.Ok(passwordResult);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex);
+        return Results.BadRequest();
+    }
 })
 .WithName("RecoveryPassword")
 .WithOpenApi();
+
 
 app.Run();
