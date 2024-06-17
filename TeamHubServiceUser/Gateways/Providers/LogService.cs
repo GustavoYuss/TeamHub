@@ -8,8 +8,9 @@ namespace TeamHubServiceUser.Gateways.Providers;
 
 public class LogService : ILogService
 {
-    public void SaveUserAction(UserActionDTO userAction)
+    public int SaveUserAction(UserActionDTO userAction)
     {
+        int result = 1;
         try
         {
             var factory = new ConnectionFactory { HostName = "172.16.0.11" };
@@ -30,9 +31,11 @@ public class LogService : ILogService
                                 basicProperties: null,
                                 body: body);
         }
-        catch (System.Exception)
+        catch (System.Exception ex)
         {
-            throw;
+            Console.WriteLine(ex);
+            result = 0;
         }
+        return result;
     }
 }
