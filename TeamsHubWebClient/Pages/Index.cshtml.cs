@@ -28,11 +28,7 @@ namespace TeamsHubWebClient.Pages
         
         public void OnGet()
         {
-            listaCursos = _projectManager.GetAllMyProjects(StudentSinglenton.Id);            
-        }
-
-        public void OnPostFechas() {                        
-            //listaCursos = _projectManager.GetProjectsbyDate(StartDate, EndDate);        
+            //listaCursos = _projectManager.GetAllMyProjects(StudentSinglenton.Id);            
         }
 
         public IActionResult OnPostMove(int IdProject, string NameProject)
