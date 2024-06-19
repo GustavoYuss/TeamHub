@@ -20,7 +20,7 @@ public class UserIdentityManagerRESTProvider : IUserIdentityManager
             byte[] encodedPassword = new UTF8Encoding().GetBytes(sessionLoginRequest.Password);
             byte[] hash = ((HashAlgorithm) CryptoConfig.CreateFromName("MD5")).ComputeHash(encodedPassword);
             string passwordMD5 = BitConverter.ToString(hash).Replace("-", string.Empty).ToLower();
-            sessionLoginRequest.Password = passwordMD5;
+            //sessionLoginRequest.Password = passwordMD5;
 
             var resultado = clientUserIdentityService.PostAsJsonAsync<SessionLoginRequest> ($"/TeamHub/Sessions/validateUser", sessionLoginRequest).Result;
             resultado.EnsureSuccessStatusCode();
