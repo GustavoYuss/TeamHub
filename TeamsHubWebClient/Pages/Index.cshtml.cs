@@ -28,7 +28,7 @@ namespace TeamsHubWebClient.Pages
         
         public void OnGet()
         {
-            //listaCursos = _projectManager.GetAllMyProjects(StudentSinglenton.Id);            
+            listaCursos = _projectManager.GetAllMyProjects(StudentSinglenton.Id);            
         }
 
         public IActionResult OnPostMove(int IdProject, string NameProject)
