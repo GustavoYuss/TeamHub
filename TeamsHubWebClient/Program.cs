@@ -50,17 +50,7 @@ app.UseAuthorization();
 app.UseSession();
 app.UseAntiforgery();
 
-app.MapGet("/TeamHub/Projects/MyProjects/{startDate?}/{endDate?}", (IProjectManager proyectManager, DateTime? startDate, DateTime? endDate) =>
-{     
-    if(startDate != null && endDate != null){
-        return new { data = proyectManager.GetProjectsbyDate(startDate.Value, endDate.Value)};
-    }
-    else
-    {
-        return null;
-    }
 
-}).WithName("myProjectsbyDate");
 
 app.MapGet("/TeamHub/Projects/MyProjects/{idStudent}", (IProjectManager proyectManager, int idStudent) =>
 {     
@@ -68,11 +58,19 @@ app.MapGet("/TeamHub/Projects/MyProjects/{idStudent}", (IProjectManager proyectM
         
 }).WithName("myProjects");
 
+
 app.MapGet("/TeamHub/Projects/{idProject}", (IProjectManager proyectManager, int idProject) =>
 {     
         return new { data = proyectManager.GetProject(idProject)};
 
 }).WithName("obtenerProyecto");
+
+app.MapDelete("/TeamHub/Projects/DeleteProject/{projectID}", (IProjectManager proyectManager, int projectID) =>
+{
+    return new { data = proyectManager.RemoveProject(projectID) };
+
+}).WithName("eliminarProyecto");
+
 
 app.MapGet("/TeamHub/Task/{IdProject}", ([FromServices] ITaskManager taskManager, [FromRoute] int IdProject) =>
 {     
@@ -108,6 +106,7 @@ app.MapPost("/TeamHub/Task/up", (ITaskManager taskManager, TaskDTO taskDTO) =>
 }).WithName("ModificarTarea");
 
 
+
 app.MapGet("/TeamHub/Users/Search/{student}", ([FromServices] IUserManager userManager, [FromRoute] string student) =>
 {     
     try
@@ -121,7 +120,6 @@ app.MapGet("/TeamHub/Users/Search/{student}", ([FromServices] IUserManager userM
         return Results.BadRequest("Error occurred while searching for users.");
     }
 }).WithName("SearchStudent");
-
 
 app.MapGet("/TeamHub/Users/ByProject/{idProject}", ([FromServices] IUserManager userManager, [FromRoute] int idProject) =>
 {     
@@ -152,7 +150,6 @@ app.MapDelete("/TeamHub/Users/RemoveOfProject/{idProject}/{idStudent}", ([FromSe
     }
 }).WithName("DeleteStudentOfProject");
 
-
 app.MapPost("/TeamHub/Users/AddToProject/{idProject}/{idStudent}", ([FromServices] IUserManager userManager,[FromRoute] int idProject, [FromRoute] int idStudent) =>
 {     
     try
@@ -171,7 +168,6 @@ app.MapDelete("/TeamHub/Project/File/{idFile}", ([FromServices] IFileManager fil
 {     
     try
     {
-        Console.WriteLine("Si esto no funciona me voy a pegar 4 putos tiros ");
         var userList = fileManager.DeleteFile(idFile);
         return Results.Ok();
     }
@@ -186,7 +182,6 @@ app.MapGet("/TeamHub/Files/ByProject", () =>
 {     
     try
     {
-        Console.WriteLine("FUNCIONA!!!!!!!!!!!");
         return Results.Ok();
     }
     catch (System.Exception ex)

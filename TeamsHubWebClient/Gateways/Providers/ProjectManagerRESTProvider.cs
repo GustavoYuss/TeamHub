@@ -17,21 +17,42 @@ public class ProjectManagerRESTProvider : IProjectManager
             clientServiceProjects = httpClientFactory.CreateClient("ApiGateWay");
     } 
 
-    public bool AddProject(ProjectDTO project, int idStudent)
+    public async Task<bool> AddProject(ProjectDTO project, int idStudent)
     {
+        bool result;
         try
         {
             var request = new { ProjectNew = project, StudentID = idStudent };
-            var result = clientServiceProjects.PostAsJsonAsync($"/TeamHub/Projects/AddProject", request).Result;
-            result.EnsureSuccessStatusCode();
-            var response = result.Content.ReadFromJsonAsync<Boolean>().Result;
-            return response;
+            var response = clientServiceProjects.PostAsJsonAsync($"/TeamHub/Projects/AddProject", request).Result;
+            response.EnsureSuccessStatusCode();
+            result = await response.Content.ReadFromJsonAsync<bool>();
         }
         catch (Exception ex)
         {
-            return false;
+            result = false;
         }
+
+        return result;
     }
+
+    public async Task<bool> UpdateProject(ProjectDTO projectNew)
+    {
+        bool result;
+        try
+        {
+            var content = JsonContent.Create(projectNew);
+            var response = clientServiceProjects.PutAsync($"/TeamHub/Projects/UpdateProject", content).Result;
+            response.EnsureSuccessStatusCode();
+            result = await response.Content.ReadFromJsonAsync<bool>();
+        }
+        catch (Exception ex)
+        {
+            result = false;
+        }
+
+        return result;
+    }
+
     public List<ProjectDTO> GetAllMyProjects(int idStudent)
     {
         try
@@ -73,24 +94,25 @@ public class ProjectManagerRESTProvider : IProjectManager
             return null;
         }
     }
-    public bool RemoveProject(ProjectDTO project)
+
+    public async Task<bool> RemoveProject(int projectID)
     {
-        return true;
-    }
-    public bool UpdateProject(ProjectDTO projectNew)
-    {
+        bool result;
+
         try
         {
-            var result = clientServiceProjects.PostAsJsonAsync($"/TeamHub/Projects/UpdateProject", projectNew).Result;
-            result.EnsureSuccessStatusCode();
-            var response = result.Content.ReadFromJsonAsync<Boolean>().Result;
-            return response;
+            var response = clientServiceProjects.DeleteAsync($"/TeamHub/Projects/DeleteProject?idProject={projectID}").Result;
+            response.EnsureSuccessStatusCode();
+            result = await response.Content.ReadFromJsonAsync<bool>();
         }
         catch (Exception ex)
         {
-            return false;
+            throw new Exception(ex.Message);
         }
+
+        return result;
     }
+    
     public List<TaskDTO>? GetProjectTasksAsync(int idProject)
     {
         List<TaskDTO>? taskList = new List<TaskDTO>();

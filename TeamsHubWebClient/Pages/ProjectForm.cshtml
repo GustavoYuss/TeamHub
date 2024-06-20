@@ -214,60 +214,9 @@
                 <span asp-validation-for="projectDTO.Status" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label for="user-email">Agregar Integrantes</label>
-                <div class="search-bar">
-                    <input type="text" id="user-email" name="user-email" placeholder="Ingresar correo del usuario"
-                        class="form-control">
-                    <img src="https://cdn-icons-png.flaticon.com/512/751/751381.png" alt="Buscar" id="search-icon"
-                        onclick="searchUser()">
-                </div>
-            </div>
             <button type="submit" class="btn btn-primary">Guardar</button>
         </form>
-
-        <div id="user-list">
-        </div>
     </div>
-    <script src="script.js"></script>
 </body>
 
 </html>
-
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const users = [
-            { email: 'miguel@example.com', name: 'Miguel Angel Camo Rincón' },
-            { email: 'juan@example.com', name: 'Juan Perez' },
-            { email: 'maria@example.com', name: 'Maria Gomez' }
-        ];
-
-        window.searchUser = function () {
-            const emailInput = document.getElementById('user-email').value;
-            const userList = document.getElementById('user-list');
-            userList.innerHTML = '';
-
-            const filteredUsers = users.filter(user => user.email.includes(emailInput));
-
-            filteredUsers.forEach(user => {
-                const userItem = document.createElement('div');
-                userItem.classList.add('user-item');
-
-                const userImg = document.createElement('img');
-                userImg.src = 'https://cdn-icons-png.flaticon.com/512/3135/3135755.png';
-                userImg.alt = 'User Image';
-
-                const userName = document.createElement('span');
-                userName.textContent = user.name;
-
-                userItem.appendChild(userImg);
-                userItem.appendChild(userName);
-
-                userList.appendChild(userItem);
-            });
-        };
-    });
-
-</script>

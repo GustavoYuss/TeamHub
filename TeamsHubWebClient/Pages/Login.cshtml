@@ -15,6 +15,53 @@
     <link rel="stylesheet" href="/css/loginStyles.css">
 </head>
 
+<style>
+    .form-container {
+        text-align: left;
+        color: red;
+    }
+
+    .input-group .icon {
+        position: absolute;
+        left: 10px;
+        top: 60%;
+        transform: translateY(-50%);
+    }
+
+    .input-group .input {
+        padding-left: 40px;
+    }
+
+    .input {
+        width: calc(100% - 60px);
+        height: 52px;
+        padding: 0 10px 0 40px;
+        border: 1px solid #0C97C8;
+        border-radius: 15px;
+        font-size: 18px;
+        color: #FFFFF3F3;
+        background: transparent;
+        margin-top: 13px;
+    }
+
+    .show-password {
+        position: absolute;
+        right: 10px;
+        top: 60%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .text-danger {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+</style>
+
 <body>
     <div class="background">
         <div class="container">
@@ -24,17 +71,22 @@
                     <form method="post">
                         <h1 class="title">Sign in</h1>
                         <p class="subtitle">Por favor ingrese su correo y contraseña</p>
+
                         <div class="input-group">
                             <img src="/images/ICON-EMAIL.png" alt="Email Icon" class="icon">
                             <input type="text" placeholder="Email" class="input" id="txtEmail" required="required"
                                 asp-for="sessionLoginRequest.Email">
+                            <span asp-validation-for="sessionLoginRequest.Email" class="text-danger"></span>
                         </div>
+
                         <div class="input-group">
                             <img src="/images/ICON-PASSWORD.png" alt="Password Icon" class="icon">
                             <input type="password" placeholder="Password" class="input" id="txtPassword"
                                 required="required" asp-for="sessionLoginRequest.Password">
-                            <label for="showPassword" class="show-password">Mostrar</label>
+                            <label for="showPassword" id="togglePassword" class="show-password">Mostrar</label>
+                            <span asp-validation-for="sessionLoginRequest.Password" class="text-danger"></span>
                         </div>
+
                         <button class="sign-in-button" type="submit" value="login">Sign in</button>
                     </form>
                 </div>
@@ -44,6 +96,24 @@
             <p class="forgot-password"><a href="#">¿Olvidaste tu contraseña?</a></p>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var togglePassword = document.getElementById('togglePassword');
+            var passwordField = document.getElementById('txtPassword');
+
+            togglePassword.addEventListener('click', function () {
+                var passwordFieldType = passwordField.getAttribute('type');
+                if (passwordFieldType === 'password') {
+                    passwordField.setAttribute('type', 'text');
+                    togglePassword.textContent = 'Ocultar';
+                } else {
+                    passwordField.setAttribute('type', 'password');
+                    togglePassword.textContent = 'Mostrar';
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

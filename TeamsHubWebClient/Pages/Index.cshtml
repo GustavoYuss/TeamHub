@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyectos</title>
     <link rel="stylesheet" href="/css/indexStyles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <style src="/css/LoginStyles.css"></style>
@@ -226,10 +227,19 @@
     }
 
     .edit-icon {
-        width: 40px;
-        height: 40px;
-        margin-top: 30px;
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        margin-top: 23px;
         margin-right: 15px;
+    }
+
+    .Delete-icon {
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        margin-right: 14px;
+        margin-top: 26px;
     }
 
     .details-button {
@@ -260,32 +270,92 @@
     .column:not(:last-child) {
         margin-right: 20px;
     }
+
+    .project-form {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+
+
+    .project-form h2 {
+        margin: 0;
+        margin-bottom: 20px;
+        font-size: 1.5em;
+        color: #333;
+    }
+
+    .project-form label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+
+    .project-form input,
+    .project-form select {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .project-form button {
+        background-color: #055160;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .project-form button:hover {
+        background-color: #033c47;
+    }
+
+    .close-form {
+        align-self: flex-start;
+        background: none;
+        border: none;
+        font-size: 1.5em;
+        cursor: pointer;
+        color: #333;
+    }
 </style>
 
 <body>
     <div class="background">
         <div class="container">
+
+
             <div class="header">
                 <h1>Mi Espacio de trabajo</h1>
                 <div class="header-buttons">
-                    <button class="new-project-button" onclick="location.href='/ProjectForm'">Nuevo Proyecto</button>
+                    <button class="new-project-button" onclick="showNewForm()">Nuevo Proyecto</button>
                     <div class="user-button">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User Icon"
-                            class="user-icon">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User Icon" class="user-icon">
                         <span>@StudentSinglenton.FullName</span>
                         <div class="dropdown-content">
                             <button onclick="location.href='/Login'">
-                                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile Icon"
-                                    class="icon"> Mi perfil
+                                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile Icon" class="icon"> Mi perfil
                             </button>
                             <button onclick="location.href='/Login'">
-                                <img src="https://cdn-icons-png.flaticon.com/512/603/603120.png" alt="Logout Icon"
-                                    class="icon"> Log out
+                                <img src="https://cdn-icons-png.flaticon.com/512/603/603120.png" alt="Logout Icon" class="icon"> Log out
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
+
+
             <div class="projects-list column">
                 @if (Model.listaCursos != null)
                 {
@@ -296,15 +366,17 @@
                                 <img src="https://cdn-icons-png.flaticon.com/512/4946/4946348.png" alt="Project Icon">
                                 <div>
                                     <h2>@project.Name</h2>
-                                    <p><span>Fecha de inicio:</span> @project.StartDate</p>
-                                    <p><span>Fecha de cierre:</span> @project.EndDate</p>
+                                    <p><span>Fecha de inicio:</span> @project.StartDate?.ToString("yyyy-MM-dd")</p>
+                                    <p><span>Fecha de cierre:</span> @project.EndDate?.ToString("yyyy-MM-dd")</p>
                                 </div>
                             </div>
                             <div class="project-status">
-                                <p>Estatus: <span>Activo</span></p>
+                                <p>Estatus: <span>@project.Status</span></p>
                                 <div class="action-buttons">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/1160/1160515.png" alt="Edit Icon"
-                                        class="edit-icon">
+                                    <img src="/images/ICON-DELETEPROJECT.png" alt="Delete Icon"
+                                         class="Delete-icon" onclick="DeleteProject('@project.IdProject')">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/1160/1160515.png" alt="Edit Icon" 
+                                    class="edit-icon" onclick="showEditForm('@project.IdProject', '@project.Name', '@project.StartDate', '@project.EndDate', '@project.Status')">
                                     <form method="post" asp-page-handler="Move">
                                         <input type="hidden" name="IdProject" value="@project.IdProject" />
                                         <input type="hidden" name="NameProject" value="@project.Name" />
@@ -316,8 +388,147 @@
                     }
                 }
             </div>
+
+
         </div>
     </div>
+
+    <div class="project-form" id="newProjectForm">
+        <button class="close-form" onclick="hideNewForm()">&#x2190;</button>
+        <h2>Formulario Proyecto</h2>
+        <form method="post">
+            <label for="projectName">Nombre del Proyecto</label>
+            <input type="text" id="projectName" name="ProjectDTO.Name" required>
+            <label for="startDate">Fecha de Inicio</label>
+            <input type="date" id="startDate" name="ProjectDTO.StartDate" required>
+            <label for="endDate">Fecha de Cierre</label>
+            <input type="date" id="endDate" name="ProjectDTO.EndDate" required>
+            <label for="status">Estatus</label>
+            <select id="status" name="ProjectDTO.Status" required>
+                <option value="Activo">Activo</option>
+                <option value="Terminado">Terminado</option>
+            </select>
+            <button type="submit">Guardar</button>
+        </form>
+    </div>
+
+    <div class="project-form" id="editProjectForm">
+        <button class="close-form" onclick="hideEditForm()">&#x2190;</button>
+        <h2>Editar Proyecto</h2>
+        <form method="post" asp-page-handler="Edit">
+            <input type="hidden" name="ProjectDTO.IdProject" id="ProjectDTO_IdProject" />
+            <label for="ProjectDTO_Name">Nombre del Proyecto</label>
+            <input type="text" id="ProjectDTO_Name" name="ProjectDTO.Name" required>
+            <label for="ProjectDTO_StartDate">Fecha de Inicio</label>
+            <input type="date" id="ProjectDTO_StartDate" name="ProjectDTO.StartDate" required>
+            <label for="ProjectDTO_EndDate">Fecha de Cierre</label>
+            <input type="date" id="ProjectDTO_EndDate" name="ProjectDTO.EndDate" required>
+            <label for="ProjectDTO_Status">Estatus</label>
+            <select id="ProjectDTO_Status" name="ProjectDTO.Status" required>
+                <option value="Activo">Activo</option>
+                <option value="Terminado">Terminado</option>
+            </select>
+            <button type="submit">Guardar</button>
+        </form>
+    </div>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops... hubo error con los servidores",
+                    text: "@TempData["ErrorMessage"]"
+                });
+            });
+        </script>
+    }
+
+    @if (TempData["Message"] != null && TempData["Title"] != null)
+    {
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                Swal.fire({
+                    icon: "success",
+                    title: "@TempData["Title"]",
+                    text: "@TempData["Message"]",
+                });
+            });
+        </script>
+    }
+
+    <script>
+        var token =  '@Html.Raw(Model.Token)';
+
+        function showNewForm() {
+            document.getElementById('newProjectForm').style.display = 'block';
+        }
+
+        function hideNewForm() {
+            document.getElementById('newProjectForm').style.display = 'none';
+        }
+
+        function showEditForm(id, name, startDate, endDate, status) {
+            document.getElementById('editProjectForm').style.display = 'block';
+            document.getElementById('ProjectDTO_IdProject').value = id;
+            document.getElementById('ProjectDTO_Name').value = name;
+
+            let formattedStartDate = new Date(startDate);
+            let formattedStartDateString = formattedStartDate.getFullYear() + '-' +
+                ('0' + (formattedStartDate.getMonth() + 1)).slice(-2) + '-' +
+                ('0' + formattedStartDate.getDate()).slice(-2);
+            document.getElementById('ProjectDTO_StartDate').value = formattedStartDateString;
+
+            let formattedEndDate = new Date(endDate);
+            let formattedEndDateString = formattedEndDate.getFullYear() + '-' +
+                ('0' + (formattedEndDate.getMonth() + 1)).slice(-2) + '-' +
+                ('0' + formattedEndDate.getDate()).slice(-2);
+            document.getElementById('ProjectDTO_EndDate').value = formattedEndDateString;
+
+            document.getElementById('ProjectDTO_Status').value = status;
+        }
+
+        function hideEditForm() {
+            document.getElementById('editProjectForm').style.display = 'none';
+        }
+
+        function DeleteProject(id) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/TeamHub/Projects/DeleteProject/" + id,
+                        type: "DELETE",
+                        headers: {
+                            'Authorization': 'Bearer ' + token
+                        },
+                        success: function (response) {
+                            if (response) {
+                                Swal.fire("Deleted!", "Your file has been deleted.", "success")
+                                    .then(() => {
+                                        location.reload(); // Recarga la página después de eliminar
+                                    });
+                            } else {
+                                Swal.fire("Error!", "Failed to delete the file.", "error");
+                            }
+                        },
+                        error: function () {
+                            Swal.fire("Error!", "Failed to delete the file.", "error");
+                        }
+                    });
+                }
+            });
+        }
+
+    </script>
 </body>
 
 </html>

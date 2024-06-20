@@ -11,8 +11,6 @@ namespace TeamsHubWebClient.Pages
         private readonly ILogger<LoginModel> _logger;
         private readonly IUserIdentityManager _UserIdentityManager;
 
-        public readonly IProjectManager _ProjectManager;
-
         [BindProperty]
         public SessionLoginRequest sessionLoginRequest {get; set;}
 
@@ -22,15 +20,13 @@ namespace TeamsHubWebClient.Pages
             _UserIdentityManager = userIdentityManager;
         }
 
-        public void OnGet()
-        {
-            
-        }
+        public void OnGet() {}
 
         public IActionResult OnPost()
         {
             if (sessionLoginRequest != null)
             {
+                
                 _logger.LogInformation(sessionLoginRequest.Password);
                 var response = _UserIdentityManager.ValidateUser(sessionLoginRequest);
                 if (response.IsValid)
@@ -42,7 +38,9 @@ namespace TeamsHubWebClient.Pages
                     StudentSinglenton.Token = response.token;
                     return RedirectToPage("/Index");
                 }
+
             }
+            
             return Page();
         }
     }
