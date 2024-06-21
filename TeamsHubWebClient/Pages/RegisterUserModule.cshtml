@@ -29,28 +29,28 @@
                     <h1 class="title">Registrarse</h1>
                     <div class="input-group">
                         <div class="column">
-                            <input type="text" placeholder="Nombre" class="input" id="txtNombre"
-                                asp-for="studentDTO.Name" required="required">
+                            <input type="text" placeholder="Nombre" class="input" id="txtN1ombre"
+                                asp-for="studentDTO.Name" required="required" maxlength="15">
                                 <span asp-validation-for="studentDTO.Name" class="text-danger"></span>
                             <input type="text" placeholder="Apellido Paterno" class="input" id="txtApellidoPaterno"
-                                asp-for="studentDTO.LastName" required="required">
+                                asp-for="studentDTO.LastName" required="required" maxlength="15">
                                 <span asp-validation-for="studentDTO.LastName" class="text-danger"></span>
                             <input type="text" placeholder="Apellido Materno" class="input" id="txtApellidoMaterno"
-                                asp-for="studentDTO.SurName" required="required">
+                                asp-for="studentDTO.SurName" required="required" maxlength="15">
                                 <span asp-validation-for="studentDTO.SurName" class="text-danger"></span>
                             <input type="text" placeholder="Apodo" class="input" id="txtApodo"
-                                asp-for="studentDTO.MiddleName" required="required">
+                                asp-for="studentDTO.MiddleName" required="required" maxlength="15">
                                 <span asp-validation-for="studentDTO.MiddleName" class="text-danger"></span>
                         </div>
                         <div class="column">
                             <input type="email" placeholder="Correo" class="input" id="txtCorreo"
-                                asp-for="studentDTO.Email" required="required">
+                                asp-for="studentDTO.Email" required="required" maxlength="50">
                                 <span asp-validation-for="studentDTO.Email" class="text-danger"></span>
                             <input type="password" placeholder="Contraseña" class="input" id="txtContrasena"
-                                asp-for="studentDTO.Password" required="required">
+                                asp-for="studentDTO.Password" required="required" maxlength="20">
                                 <span asp-validation-for="studentDTO.LastName" class="text-danger"></span>
                             <input type="password" placeholder="Confirmación con." class="input" id="txtConfirmacion"
-                                asp-for="studentDTO.Password" required="required">
+                                asp-for="studentDTO.Password" required="required" maxlength="20">
                                 <span asp-validation-for="studentDTO.LastName" class="text-danger"></span>
                         </div>
                     </div>
