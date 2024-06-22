@@ -16,12 +16,16 @@ namespace TeamsHubWebClient.Pages
         public List<ProjectDTO> listaCursos { get; set; }
 
         [BindProperty]
+        public int StudentID { get; set; }
+
+        [BindProperty]
         public ProjectDTO ProjectDTO { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger, IProjectManager projectManager)
         {
             _logger = logger;
             _projectManager = projectManager;
+            StudentID = StudentSinglenton.Id;
         }
 
         public void OnGet()

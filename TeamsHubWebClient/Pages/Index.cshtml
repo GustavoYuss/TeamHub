@@ -361,13 +361,16 @@
         display: flex;
         justify-content: center;
         margin-bottom: 20px;
+        margin-top: -3px;
+        margin-right: 24px;
     }
 
     .user-icon img {
         width: 120px;
         height: 120px;
         border-radius: 50%;
-        margin-left: 153px;
+        margin-right: 18px;
+        margin-top: 0px;
     }
 
     .profile-icon {
@@ -606,9 +609,9 @@
     <div class="profile-form" id="userProfileForm">
         <h2>Detalles Perfil</h2>
         <div class="profile-icon">
-            <img src="/images/ICON-PROFILEUSER.png" alt="profile Icon">
+            <img src="/images/ICON-PROFILEUSER.png" alt="Icono de perfil">
         </div>
-        <form method="post" onsubmit="return validateUserProfileForm()">
+        <form id="modifyUserProfileForm" onsubmit="return modifyUserProfile()">
             <div class="form-row">
                 <div class="form-group">
                     <label for="Nombre">Nombre:</label>
@@ -638,7 +641,7 @@
                     <input type="password" id="Contraseña" name="Contraseña" required>
                 </div>
                 <div class="form-group">
-                    <label for="ConfirmacionContraseña">Confirmación con.</label>
+                    <label for="ConfirmacionContraseña">Confirmación de Contraseña:</label>
                     <input type="password" id="ConfirmacionContraseña" name="ConfirmacionContraseña" required>
                 </div>
             </div>
@@ -717,6 +720,32 @@
 
         function ShowUserProfileForm() {
             document.getElementById('userProfileForm').style.display = 'block';
+            loadUserProfile();
+        }
+
+        function loadUserProfile() {
+            var studentID = '@Model.StudentID'; // Assume StudentID is passed from the backend
+
+            $.ajax({
+                url: '/TeamHub/Users/GetUserInformation/' + studentID,
+                type: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                success: function (response) {
+                    console.log(JSON.stringify(response))
+                    document.getElementById('Nombre').value = response.name || '';
+                    document.getElementById('ApellidoPaterno').value = response.middleName || '';
+                    document.getElementById('ApellidoMaterno').value = response.lastName || '';
+                    document.getElementById('Correo').value = response.email || '';
+                    document.getElementById('Apodo').value = response.surName || '';
+                    document.getElementById('Contraseña').value = response.password || '';
+                    document.getElementById('ConfirmacionContraseña').value = response.Password || '';
+                },
+                error: function () {
+                    Swal.fire("Error!", "Failed to load user profile.", "error");
+                }
+            });
         }
 
         function DeleteProject(id) {
@@ -754,6 +783,59 @@
             });
         }
 
+        function modifyUserProfile() {
+            var form = document.getElementById('modifyUserProfileForm');
+
+            var nombre = form.querySelector('#Nombre').value.trim();
+            var apellidoPaterno = form.querySelector('#ApellidoPaterno').value.trim();
+            var apellidoMaterno = form.querySelector('#ApellidoMaterno').value.trim();
+            var correo = form.querySelector('#Correo').value.trim();
+            var apodo = form.querySelector('#Apodo').value.trim();
+            var contrasena = form.querySelector('#Contraseña').value.trim();
+            var confirmacionContrasena = form.querySelector('#ConfirmacionContraseña').value.trim();
+
+            if (!nombre || !apellidoPaterno || !apellidoMaterno || !correo || !apodo || !contrasena || !confirmacionContrasena) {
+                alert('Por favor, complete todos los campos.');
+                return false;
+            }
+
+            if (contrasena !== confirmacionContrasena) {
+                alert('Las contraseñas no coinciden.');
+                return false;
+            }
+
+            var studentDTO = {
+                IdStudent: '@Model.StudentID',
+                Name: nombre,
+                MiddleName: apellidoPaterno,
+                LastName: apellidoMaterno,
+                SurName: apodo,
+                Email: correo,
+                Password: contrasena
+            };
+
+            $.ajax({
+                url: '/TeamHub/Users/Edit',
+                type: 'PUT',
+                contentType: 'application/json',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                data: JSON.stringify(studentDTO),
+                success: function(response) {
+                    Swal.fire("¡Éxito!", "Perfil actualizado correctamente.", "success")
+                        .then(() => {
+                            hideUserProfileForm();
+                        });
+                },
+                error: function() {
+                    Swal.fire("Error!", "Error al actualizar el perfil.", "error");
+                }
+            });
+
+            return false; // Prevenir la submisión del formulario
+        }
+        
         function validateNewProjectForm() {
             return validateForm('newProjectForm');
         }
