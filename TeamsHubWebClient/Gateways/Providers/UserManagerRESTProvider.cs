@@ -104,5 +104,23 @@ namespace TeamsHubWebClient.Gateways.Providers
                 return false;
             }
         }
+
+        public bool PasswordRecovery(string userEmail)
+        {
+            bool result;
+
+            try
+            {
+                var response = clientServiceUser.GetAsync($"/TeamHub/Users/RecoveryPassword/{userEmail}").Result;
+                response.EnsureSuccessStatusCode();
+                result = true;
+            }
+            catch (System.Exception)
+            {
+                result = false;
+            }
+
+            return result;
+        }
     }
 }

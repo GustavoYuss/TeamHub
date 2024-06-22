@@ -11,5 +11,6 @@ namespace TeamsHubWebClient.Gateways.Interfaces
         public List<User> SearchStudent(string student);
         public bool DeleteStudent(int idProject, int idStudent);
         public bool AddStudentToProject(int idProject, int idStudent);
+        public bool PasswordRecovery(string userEmail);
     }
 }

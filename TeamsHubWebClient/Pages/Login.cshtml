@@ -13,6 +13,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="/css/loginStyles.css">
+    <!-- Incluir SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
 
 <style>
@@ -75,14 +77,14 @@
                         <div class="input-group">
                             <img src="/images/ICON-EMAIL.png" alt="Email Icon" class="icon">
                             <input type="text" placeholder="Email" class="input" id="txtEmail" required="required"
-                                asp-for="sessionLoginRequest.Email">
+                                   asp-for="sessionLoginRequest.Email">
                             <span asp-validation-for="sessionLoginRequest.Email" class="text-danger"></span>
                         </div>
 
                         <div class="input-group">
                             <img src="/images/ICON-PASSWORD.png" alt="Password Icon" class="icon">
                             <input type="password" placeholder="Password" class="input" id="txtPassword"
-                                required="required" asp-for="sessionLoginRequest.Password">
+                                   required="required" asp-for="sessionLoginRequest.Password">
                             <label for="showPassword" id="togglePassword" class="show-password">Mostrar</label>
                             <span asp-validation-for="sessionLoginRequest.Password" class="text-danger"></span>
                         </div>
@@ -91,11 +93,14 @@
                     </form>
                 </div>
             </div>
-            <p class="register-text">¿Aun no cuentas con una cuenta? <a href="/RegisterUserModule">Registrarse aquí</a>
+            <p class="register-text">
+                ¿Aun no cuentas con una cuenta? <a href="/RegisterUserModule">Registrarse aquí</a>
             </p>
-            <p class="forgot-password"><a href="#">¿Olvidaste tu contraseña?</a></p>
+            <p class="forgot-password"><a href="javascript:void(0);" onclick="PasswordRecovery()">¿Olvidaste tu contraseña?</a></p>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -113,7 +118,59 @@
                 }
             });
         });
+
+        function PasswordRecovery() {
+            Swal.fire({
+                title: "Recuperar contraseña",
+                text: "Para recuperar su contraseña, por favor ingrese el correo electrónico con " +
+                    "el que se registró. Le enviaremos su contraseña a esa dirección.",
+                input: "email",
+                inputAttributes: {
+                    autocapitalize: "off"
+                },
+                showCancelButton: true,
+                confirmButtonText: "Enviar",
+                showLoaderOnConfirm: true,
+                preConfirm: async (email) => {
+
+                    if (!email) {
+                        Swal.showValidationMessage('El correo electrónico es obligatorio');
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch("/TeamHub/Users/RecoveryPassword/" + email, {
+                            method: "GET",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                        });
+
+                        if (!response.ok) {
+                            const errorData = await response.json();
+                            return Swal.showValidationMessage(`Error: ${errorData.message || response.statusText}`);
+                        }
+
+                        const result = await response.json();
+                        return result;
+
+                    } catch (error) {
+                        return Swal.showValidationMessage(`Request failed: ${error}`);
+                    }
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: "Correo enviado",
+                        text: "Si el correo electrónico está registrado, recibirá un correo con instrucciones para recuperar su contraseña.",
+                        icon: "success"
+                    });
+                }
+            });
+        }
     </script>
+
 </body>
 
 </html>

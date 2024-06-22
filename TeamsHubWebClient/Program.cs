@@ -121,6 +121,20 @@ app.MapGet("/TeamHub/Users/Search/{student}", ([FromServices] IUserManager userM
     }
 }).WithName("SearchStudent");
 
+app.MapGet("/TeamHub/Users/RecoveryPassword/{userEmail}", (IUserManager userManager, string userEmail) =>
+{
+        return userManager.PasswordRecovery(userEmail);
+
+}).WithName("PasswordRecovery");
+
+
+app.MapGet("/TeamHub/Projects/{idProject}", (IProjectManager proyectManager, int idProject) =>
+{
+    return new { data = proyectManager.GetProject(idProject) };
+
+}).WithName("obtenerProyecto");
+
+
 app.MapGet("/TeamHub/Users/ByProject/{idProject}", ([FromServices] IUserManager userManager, [FromRoute] int idProject) =>
 {     
     try

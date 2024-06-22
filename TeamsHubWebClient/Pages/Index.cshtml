@@ -10,11 +10,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyectos</title>
-    <link rel="stylesheet" href="/css/indexStyles.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-
-<style src="/css/LoginStyles.css"></style>
 
 <style>
     body,
@@ -89,15 +86,15 @@
     .user-button {
         position: relative;
         background: #ff000000;
-        color: white;
+        color: #e9ecef;
         font-size: 25px;
-        text-align: center;
+        align-content: center;
         height: 52px;
         border: white;
-        width: 300px;
+        width: 392px;
+        font-weight: bold;
         border-radius: 40px;
         display: flex;
-        align-items: center;
         cursor: pointer;
     }
 
@@ -106,6 +103,7 @@
         height: 40px;
         border-radius: 50%;
         margin-right: 10px;
+        margin-top: 22px;
     }
 
     .dropdown-content {
@@ -199,7 +197,6 @@
         margin-bottom: 2px;
     }
 
-
     .project-info p span {
         font-weight: bold;
         font-size: 22px;
@@ -277,35 +274,26 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background-color: #fff;
+        background-color: #212529;
         padding: 20px;
-        border-radius: 10px;
+        border-radius: 40px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         z-index: 1000;
+        width: 33cm;
+        height: 16cm;
+        color: white;
     }
 
-
-    .project-form h2 {
-        margin: 0;
-        margin-bottom: 20px;
-        font-size: 1.5em;
-        color: #333;
-    }
-
-    .project-form label {
-        display: block;
-        margin-bottom: 10px;
-    }
-
-
-    .project-form input,
-    .project-form select {
+    .project-form input, .project-form select {
         width: calc(100% - 20px);
         padding: 10px;
         margin-bottom: 10px;
         border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 14px;
+        border-radius: 15px;
+        font-size: 17px;
+        color: white;
+        background: #212529;
+        width: 32cm;
     }
 
     .project-form button {
@@ -313,8 +301,47 @@
         color: white;
         border: none;
         padding: 10px 20px;
-        border-radius: 5px;
+        border-radius: 25px;
+        font-size: 18px;
         cursor: pointer;
+        margin-top: 20px;
+    }
+
+    .project-form h2 {
+        margin: 0;
+        margin-bottom: 32px;
+        font-size: 37px;
+        font-weight: bold;
+        color: white;
+        margin-left: 91px;
+        margin-top: -45px;
+    }
+
+    .project-form label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 20px;
+    }
+
+    .profile-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .profile-details {
+        background-color: #333;
+        padding: 20px;
+        border-radius: 10px;
+        color: white;
+        width: 450px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .profile-details h2 {
+        margin-bottom: 20px;
+        text-align: center;
     }
 
     .project-form button:hover {
@@ -329,32 +356,177 @@
         cursor: pointer;
         color: #333;
     }
+
+    .user-icon {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .user-icon img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        margin-left: 153px;
+    }
+
+    .profile-icon {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .profile-icon img {
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        margin-left: -25cm;
+    }
+
+    .profile-form {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #212529;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        width: 33cm;
+        height: 15.3cm;
+        color: white;
+    }
+
+    .profile-form input, .profile-form select {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 15px;
+        font-size: 17px;
+        color: white;
+        background: #212529;
+        width: 288px;
+    }
+
+    .profile-form h2 {
+        margin: 0;
+        margin-bottom: 32px;
+        font-size: 48px;
+        font-weight: bold;
+        color: white;
+        margin-left: 17px;
+        margin-top: 1px;
+    }
+
+    .profile-form label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 20px;
+    }
+
+    .profile-form button {
+        background-color: #055160;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-size: 18px;
+        cursor: pointer;
+        margin-top: 12px;
+        margin-left: 10px;
+    }
+
+    .profile-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .profile-details {
+        background-color: #333;
+        padding: 20px;
+        border-radius: 10px;
+        color: white;
+        width: 450px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .profile-details h2 {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .profile-form button:hover {
+        background-color: #033c47;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-buttons {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .cancel-button,
+    .modify-button {
+        background-color: #555;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 48%;
+        text-align: center;
+    }
+
+    .cancel-button:hover,
+    .modify-button:hover {
+        background-color: #777;
+    }
+
+    .form-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
 </style>
+
 
 <body>
     <div class="background">
         <div class="container">
-
-
             <div class="header">
                 <h1>Mi Espacio de trabajo</h1>
                 <div class="header-buttons">
                     <button class="new-project-button" onclick="showNewForm()">Nuevo Proyecto</button>
                     <div class="user-button">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User Icon" class="user-icon">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User Icon"
+                             class="user-icon">
                         <span>@StudentSinglenton.FullName</span>
                         <div class="dropdown-content">
-                            <button onclick="location.href='/Login'">
-                                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile Icon" class="icon"> Mi perfil
+                            <button onclick="ShowUserProfileForm()">
+                                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile Icon"
+                                     class="icon"> Mi perfil
                             </button>
                             <button onclick="location.href='/Login'">
-                                <img src="https://cdn-icons-png.flaticon.com/512/603/603120.png" alt="Logout Icon" class="icon"> Log out
+                                <img src="https://cdn-icons-png.flaticon.com/512/603/603120.png" alt="Logout Icon"
+                                     class="icon"> Log out
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-
 
             <div class="projects-list column">
                 @if (Model.listaCursos != null)
@@ -373,10 +545,11 @@
                             <div class="project-status">
                                 <p>Estatus: <span>@project.Status</span></p>
                                 <div class="action-buttons">
-                                    <img src="/images/ICON-DELETEPROJECT.png" alt="Delete Icon"
-                                         class="Delete-icon" onclick="DeleteProject('@project.IdProject')">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/1160/1160515.png" alt="Edit Icon" 
-                                    class="edit-icon" onclick="showEditForm('@project.IdProject', '@project.Name', '@project.StartDate', '@project.EndDate', '@project.Status')">
+                                    <img src="/images/ICON-DELETEPROJECT.png" alt="Delete Icon" class="Delete-icon"
+                                         onclick="DeleteProject('@project.IdProject')">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/1160/1160515.png" alt="Edit Icon"
+                                         class="edit-icon"
+                                         onclick="showEditForm('@project.IdProject', '@project.Name', '@project.StartDate', '@project.EndDate', '@project.Status')">
                                     <form method="post" asp-page-handler="Move">
                                         <input type="hidden" name="IdProject" value="@project.IdProject" />
                                         <input type="hidden" name="NameProject" value="@project.Name" />
@@ -388,21 +561,19 @@
                     }
                 }
             </div>
-
-
         </div>
     </div>
 
     <div class="project-form" id="newProjectForm">
         <button class="close-form" onclick="hideNewForm()">&#x2190;</button>
         <h2>Formulario Proyecto</h2>
-        <form method="post">
+        <form method="post" onsubmit="return validateNewProjectForm()">
             <label for="projectName">Nombre del Proyecto</label>
             <input type="text" id="projectName" name="ProjectDTO.Name" required>
             <label for="startDate">Fecha de Inicio</label>
-            <input type="date" id="startDate" name="ProjectDTO.StartDate" required>
+            <input type="date" id="startDate" name="ProjectDTO.StartDate" required readonly onfocus="this.removeAttribute('readonly');">
             <label for="endDate">Fecha de Cierre</label>
-            <input type="date" id="endDate" name="ProjectDTO.EndDate" required>
+            <input type="date" id="endDate" name="ProjectDTO.EndDate" required readonly onfocus="this.removeAttribute('readonly');">
             <label for="status">Estatus</label>
             <select id="status" name="ProjectDTO.Status" required>
                 <option value="Activo">Activo</option>
@@ -415,20 +586,67 @@
     <div class="project-form" id="editProjectForm">
         <button class="close-form" onclick="hideEditForm()">&#x2190;</button>
         <h2>Editar Proyecto</h2>
-        <form method="post" asp-page-handler="Edit">
+        <form method="post" asp-page-handler="Edit" onsubmit="return validateEditProjectForm()">
             <input type="hidden" name="ProjectDTO.IdProject" id="ProjectDTO_IdProject" />
             <label for="ProjectDTO_Name">Nombre del Proyecto</label>
             <input type="text" id="ProjectDTO_Name" name="ProjectDTO.Name" required>
             <label for="ProjectDTO_StartDate">Fecha de Inicio</label>
-            <input type="date" id="ProjectDTO_StartDate" name="ProjectDTO.StartDate" required>
+            <input type="date" id="ProjectDTO_StartDate" name="ProjectDTO.StartDate" required readonly onfocus="this.removeAttribute('readonly');">
             <label for="ProjectDTO_EndDate">Fecha de Cierre</label>
-            <input type="date" id="ProjectDTO_EndDate" name="ProjectDTO.EndDate" required>
+            <input type="date" id="ProjectDTO_EndDate" name="ProjectDTO.EndDate" required readonly onfocus="this.removeAttribute('readonly');">
             <label for="ProjectDTO_Status">Estatus</label>
             <select id="ProjectDTO_Status" name="ProjectDTO.Status" required>
                 <option value="Activo">Activo</option>
                 <option value="Terminado">Terminado</option>
             </select>
             <button type="submit">Guardar</button>
+        </form>
+    </div>
+
+    <div class="profile-form" id="userProfileForm">
+        <h2>Detalles Perfil</h2>
+        <div class="profile-icon">
+            <img src="/images/ICON-PROFILEUSER.png" alt="profile Icon">
+        </div>
+        <form method="post" onsubmit="return validateUserProfileForm()">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="Nombre">Nombre:</label>
+                    <input type="text" id="Nombre" name="Nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="ApellidoPaterno">Apellido Paterno:</label>
+                    <input type="text" id="ApellidoPaterno" name="ApellidoPaterno" required>
+                </div>
+                <div class="form-group">
+                    <label for="ApellidoMaterno">Apellido Materno:</label>
+                    <input type="text" id="ApellidoMaterno" name="ApellidoMaterno" required>
+                </div>
+                <div class="form-group">
+                    <label for="Correo">Correo:</label>
+                    <input type="email" id="Correo" name="Correo" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="Apodo">Apodo:</label>
+                    <input type="text" id="Apodo" name="Apodo" required>
+                </div>
+                <div class="form-group">
+                    <label for="Contraseña">Contraseña:</label>
+                    <input type="password" id="Contraseña" name="Contraseña" required>
+                </div>
+                <div class="form-group">
+                    <label for="ConfirmacionContraseña">Confirmación con.</label>
+                    <input type="password" id="ConfirmacionContraseña" name="ConfirmacionContraseña" required>
+                </div>
+            </div>
+
+            <div class="form-buttons">
+                <button type="button" class="cancel-button" onclick="hideUserProfileForm()">Cancelar</button>
+                <button type="submit" class="modify-button">Modificar</button>
+            </div>
         </form>
     </div>
 
@@ -459,7 +677,7 @@
     }
 
     <script>
-        var token =  '@Html.Raw(Model.Token)';
+        var token = '@Html.Raw(Model.Token)';
 
         function showNewForm() {
             document.getElementById('newProjectForm').style.display = 'block';
@@ -491,6 +709,14 @@
 
         function hideEditForm() {
             document.getElementById('editProjectForm').style.display = 'none';
+        }
+
+        function hideUserProfileForm() {
+            document.getElementById('userProfileForm').style.display = 'none';
+        }
+
+        function ShowUserProfileForm() {
+            document.getElementById('userProfileForm').style.display = 'block';
         }
 
         function DeleteProject(id) {
@@ -528,7 +754,29 @@
             });
         }
 
+        function validateNewProjectForm() {
+            return validateForm('newProjectForm');
+        }
+
+        function validateEditProjectForm() {
+            return validateForm('editProjectForm');
+        }
+
+        function validateUserProfileForm() {
+            return validateForm('userProfileForm');
+        }
+
+        function validateForm(formId) {
+            var form = document.getElementById(formId);
+            var inputs = form.querySelectorAll('input[required], select[required]');
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].value.trim() === '') {
+                    alert('Por favor, complete todos los campos.');
+                    return false;
+                }
+            }
+            return true;
+        }
     </script>
 </body>
-
 </html>

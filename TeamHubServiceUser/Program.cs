@@ -396,29 +396,18 @@ app.MapGet("/TeamHub/Users/RecoveryPassword/{userEmail}", async (IUserService us
 {
     try
     {
-        var idUserClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "IdUser")?.Value;
-        var idSessionClaim = httpContext.User.Claims.FirstOrDefault(c => c.Type == "IdSession")?.Value;
-
-        if (idUserClaim == null || idSessionClaim == null)
-        {
-            return Results.Unauthorized();
-        }
-
-        int idUser = int.Parse(idUserClaim);
-        int idSession = int.Parse(idSessionClaim);
-
         int result = logService.SaveUserAction(new UserActionDTO
         {
-            IdUser = idUser,
-            IdUserSession = idSession,
+            IdUser = 0,
+            IdUserSession = 0,
             Action = "Recuperar contraseña"
         });
 
         if (result != 1)
         {
-            return Results.StatusCode(500); // Internal Server Error
+            return Results.StatusCode(500);
         }
-
+        
         var passwordResult = userService.RecoverUserPassword(userEmail);
         return Results.Ok(passwordResult);
     }
