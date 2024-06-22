@@ -30,8 +30,24 @@ namespace TeamsHubWebClient.Pages
         public void OnGet()
         {
             TaskList = _TaskManager.GetAllTaskByProject(ProjectSinglenton.Id);
+            int totalTasks;
 
-            var totalTasks = TaskList.Count;
+            if (TaskList != null)
+            {
+                totalTasks = TaskList.Count;
+                LoadChartData(totalTasks);
+            }
+            else
+            {
+                totalTasks = 0;
+                TempData["ErrorMessage"] = "Lo siento, hubo un problema con los servidores, " +
+                                       "inténtelo más tarde por favor, si el error persiste, " +
+                                       "comuníquese con el personal!";
+            }
+        }
+
+        private void LoadChartData(int totalTasks)
+        {
             var pendingTasks = TaskList.Count(t => t.Status == "Actividad Pendiente");
             var inProgressTasks = TaskList.Count(t => t.Status == "Actividad en proceso");
             var finishedTasks = TaskList.Count(t => t.Status == "Actividad Finalizada");
@@ -40,5 +56,7 @@ namespace TeamsHubWebClient.Pages
             InProgressPercentage = totalTasks > 0 ? (inProgressTasks * 100 / totalTasks) : 0;
             FinishedPercentage = totalTasks > 0 ? (finishedTasks * 100 / totalTasks) : 0;
         }
+
+
     }
 }

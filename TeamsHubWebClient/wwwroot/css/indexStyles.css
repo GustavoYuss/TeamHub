@@ -181,7 +181,6 @@ p {
     margin-bottom: 2px;
 }
 
-
 .project-info p span {
     font-weight: bold;
     font-size: 22px;
@@ -346,16 +345,17 @@ p {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
+    margin-top: -3px;
+    margin-right: 24px;
 }
 
     .user-icon img {
         width: 120px;
         height: 120px;
         border-radius: 50%;
-        margin-left: 153px;
+        margin-right: 18px;
+        margin-top: 0px;
     }
-
-
 
 .profile-icon {
     display: flex;
@@ -414,7 +414,6 @@ p {
         font-size: 20px;
     }
 
-
     .profile-form button {
         background-color: #055160;
         color: white;
@@ -451,10 +450,6 @@ p {
 .profile-form button:hover {
     background-color: #033c47;
 }
-
-
-
-
 
 .form-group {
     margin-bottom: 15px;

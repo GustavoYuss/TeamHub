@@ -13,7 +13,7 @@ namespace TeamsHubWebClient.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly IProjectManager _projectManager;
         public string Token = StudentSinglenton.Token;
-        public List<ProjectDTO> listaCursos { get; set; }
+        public List<ProjectDTO> Projects { get; set; }
 
         [BindProperty]
         public int StudentID { get; set; }
@@ -30,7 +30,7 @@ namespace TeamsHubWebClient.Pages
 
         public void OnGet()
         {
-            listaCursos = _projectManager.GetAllMyProjects(StudentSinglenton.Id);
+            Projects = _projectManager.GetAllMyProjects(StudentSinglenton.Id);
         }
 
         public IActionResult OnPostMove(int IdProject, string NameProject)

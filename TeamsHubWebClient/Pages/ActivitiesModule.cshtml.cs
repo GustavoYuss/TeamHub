@@ -28,6 +28,12 @@ namespace TeamsHubWebClient.Pages
         public void OnGet()
         {
             TaskList = _TaskManager.GetAllTaskByProject(ProjectSinglenton.Id);
+            if(TaskList == null)
+            {
+                TempData["ErrorMessage"] = "Lo siento, hubo un problema con los servidores, " +
+                                       "inténtelo más tarde por favor, si el error persiste, " +
+                                       "comuníquese con el personal!";
+            }
         }
 
         public async Task<IActionResult> OnPostAsync()
