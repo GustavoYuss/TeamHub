@@ -218,6 +218,7 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         var documentList = @Html.Raw(Json.Serialize(Model.DocumenttList));
 
@@ -232,16 +233,13 @@
                 var fileInput = event.target;
                 var files = fileInput.files;
                 var maxSize = 4 * 1024 * 1024;
-                
-                for (var i = 0; i < files.length; i++) {
-                    if (files[i].size > maxSize) {
-                        alert('El archivo "' + files[i].name + '" supera los 4 MB. Por favor, selecciona un archivo más pequeño.');
-                        fileInput.value = ''; 
-                        return; 
-                    }
+
+                if (files[0].size > maxSize) {
+                    Swal.fire("Error!", 'El archivo "' + files[0].name + '" supera los 4 MB. Por favor, selecciona un archivo más pequeño.', "error");
+                    fileInput.value = ''; 
                 }
                 
-                var formData = new FormData(document.getElementById('uploadForm'));s
+                var formData = new FormData(document.getElementById('uploadForm'));
                 $.ajax({
                     url: '/TeamHub/Project/AddFile/' + @Model.idProject,
                     type: 'POST',
@@ -250,8 +248,11 @@
                     contentType: false,
                     success: function(response) {
                         console.log('Archivo subido exitosamente:', response);
-                        UpdateDocList();
-                    },
+                        Swal.fire("Exito!", "Archivo subido correctamentte.", "success")
+                            .then(() => {
+                                UpdateDocList();
+                            });
+                        },
                     error: function(xhr, status, error) {
                         console.error('Error al subir el archivo:', error);
                     }
@@ -282,8 +283,10 @@
                 url: '/TeamHub/Project/File/' + fileId,
                 type: 'DELETE',
                 success: function (result) {
-                    alert('Archivo eliminado exitosamente');
-                    location.reload();
+                    Swal.fire("Exito!", "Archivo eliminado correctamentte.", "success")
+                        .then(() => {
+                            location.reload(); 
+                        });
                 },
                 error: function (xhr, status, error) {
                     console.error('Error al eliminar el usuario:', error);
