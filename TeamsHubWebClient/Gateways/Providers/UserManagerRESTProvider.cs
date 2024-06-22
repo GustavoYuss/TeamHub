@@ -32,10 +32,25 @@ namespace TeamsHubWebClient.Gateways.Providers
             }
         }
 
-        public bool EditStudent(StudentDTO editStudent)
+        public async Task<int> EditStudent(StudentDTO editStudent)
         {
-            // Implementación del método EditStudent
-            throw new NotImplementedException();
+            int result;
+            String password = editStudent.Password;
+
+            try
+            {
+                var content = JsonContent.Create(editStudent);
+                var response = clientServiceUser.PutAsync("/TeamHub/Users/Edit", content).Result;
+                response.EnsureSuccessStatusCode();
+                result = await response.Content.ReadFromJsonAsync<Int16>();
+            }
+            catch (Exception ex)
+            {
+                result = -1;
+                _logger.LogError(ex.Message);
+            }
+
+            return result;
         }
 
         public List<User> GetStudentsByProject(int idProject)
@@ -104,6 +119,26 @@ namespace TeamsHubWebClient.Gateways.Providers
                 return false;
             }
         }
+
+        public StudentDTO GetUserPersonalData(int studentID)
+        {
+            StudentDTO response;
+
+            try
+            {
+                var result = clientServiceUser.GetAsync($"/TeamHub/Users/GetUserInformation/{studentID}").Result;
+                result.EnsureSuccessStatusCode();
+                response = result.Content.ReadFromJsonAsync<StudentDTO>().Result;
+            }
+            catch (Exception ex)
+            {
+                response = null;
+                _logger.LogError(ex.Message);
+            }
+
+            return response;
+        }
+
 
         public bool PasswordRecovery(string userEmail)
         {

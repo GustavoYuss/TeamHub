@@ -52,16 +52,22 @@ namespace TeamsHubWebClient.Pages
                 Credentials = ChannelCredentials.Insecure
             };
 
-            // Crear un canal gRPC para la dirección especificada con credenciales inseguras
-            using var channel = GrpcChannel.ForAddress("http://localhost:5001", channelOptions);
-            var client = new FileManagement.FileManagementClient(channel);
-            var reply = await client.SaveFileAsync(new FileRequest
+            try
             {
-                ProjectName = idProject,
-                FileName = file.FileName,
-                Extension = Path.GetExtension(file.FileName),
-                FileString = Google.Protobuf.ByteString.CopyFrom(fileBytes)
-            });
+                using var channel = GrpcChannel.ForAddress("http://localhost:5001", channelOptions);
+                var client = new FileManagement.FileManagementClient(channel);
+                var reply = await client.SaveFileAsync(new FileRequest
+                {
+                    ProjectName = idProject,
+                    FileName = file.FileName,
+                    Extension = Path.GetExtension(file.FileName),
+                    FileString = Google.Protobuf.ByteString.CopyFrom(fileBytes)
+                });
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
     }

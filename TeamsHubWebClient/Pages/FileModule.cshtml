@@ -223,12 +223,25 @@
 
         $(document).ready(function () {
             loadFilesVisual();
+            
             document.getElementById('addFileButton').addEventListener('click', function() {
                 document.getElementById('fileInput').click();
             });
-            document.getElementById('fileInput').addEventListener('change', function() {
-                var formData = new FormData(document.getElementById('uploadForm'));
-                console.log("THIS");
+            
+            document.getElementById('fileInput').addEventListener('change', function(event) {
+                var fileInput = event.target;
+                var files = fileInput.files;
+                var maxSize = 4 * 1024 * 1024;
+                
+                for (var i = 0; i < files.length; i++) {
+                    if (files[i].size > maxSize) {
+                        alert('El archivo "' + files[i].name + '" supera los 4 MB. Por favor, selecciona un archivo más pequeño.');
+                        fileInput.value = ''; 
+                        return; 
+                    }
+                }
+                
+                var formData = new FormData(document.getElementById('uploadForm'));s
                 $.ajax({
                     url: '/TeamHub/Project/AddFile/' + @Model.idProject,
                     type: 'POST',

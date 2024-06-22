@@ -1,5 +1,6 @@
 using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
+using TeamHubServiceUser.Entities;
 using TeamsHubWebClient.DTOs;
 using TeamsHubWebClient.Gateways.Interfaces;
 using TeamsHubWebClient.Gateways.Providers;
@@ -121,19 +122,18 @@ app.MapGet("/TeamHub/Users/Search/{student}", ([FromServices] IUserManager userM
     }
 }).WithName("SearchStudent");
 
+app.MapPut("/TeamHub/Users/Edit", async (IUserManager userManager, StudentDTO studentDTO) =>
+{            
+    return await userManager.EditStudent(studentDTO);
+
+}).WithName("EditUser");
+
+
 app.MapGet("/TeamHub/Users/RecoveryPassword/{userEmail}", (IUserManager userManager, string userEmail) =>
 {
         return userManager.PasswordRecovery(userEmail);
 
 }).WithName("PasswordRecovery");
-
-
-app.MapGet("/TeamHub/Projects/{idProject}", (IProjectManager proyectManager, int idProject) =>
-{
-    return new { data = proyectManager.GetProject(idProject) };
-
-}).WithName("obtenerProyecto");
-
 
 app.MapGet("/TeamHub/Users/ByProject/{idProject}", ([FromServices] IUserManager userManager, [FromRoute] int idProject) =>
 {     
@@ -148,6 +148,12 @@ app.MapGet("/TeamHub/Users/ByProject/{idProject}", ([FromServices] IUserManager 
         return Results.BadRequest("Error occurred while searching for users.");
     }
 }).WithName("GetStudentsByProject");
+
+app.MapGet("/TeamHub/Users/GetUserInformation/{studentID}", ([FromServices] IUserManager userManager, [FromRoute] int studentID) =>
+{
+        return userManager.GetUserPersonalData(studentID);
+
+}).WithName("GetUserInformation");
 
 
 app.MapDelete("/TeamHub/Users/RemoveOfProject/{idProject}/{idStudent}", ([FromServices] IUserManager userManager,[FromRoute] int idProject, [FromRoute] int idStudent) =>
