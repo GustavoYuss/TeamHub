@@ -25,16 +25,16 @@
                     <button class="new-project-button" onclick="showNewForm()">Nuevo Proyecto</button>
                     <div class="user-button">
                         <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User Icon"
-                             class="user-icon">
+                            class="user-icon">
                         <span>@StudentSinglenton.FullName</span>
                         <div class="dropdown-content">
                             <button onclick="ShowUserProfileForm()">
                                 <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile Icon"
-                                     class="icon"> Mi perfil
+                                    class="icon"> Mi perfil
                             </button>
                             <button onclick="location.href='/Login'">
                                 <img src="https://cdn-icons-png.flaticon.com/512/603/603120.png" alt="Logout Icon"
-                                     class="icon"> Log out
+                                    class="icon"> Log out
                             </button>
                         </div>
                     </div>
@@ -59,10 +59,10 @@
                                 <p>Estatus: <span>@project.Status</span></p>
                                 <div class="action-buttons">
                                     <img src="/images/ICON-DELETEPROJECT.png" alt="Delete Icon" class="Delete-icon"
-                                         onclick="DeleteProject('@project.IdProject')">
+                                        onclick="DeleteProject('@project.IdProject')">
                                     <img src="https://cdn-icons-png.flaticon.com/512/1160/1160515.png" alt="Edit Icon"
-                                         class="edit-icon"
-                                         onclick="showEditForm('@project.IdProject', '@project.Name', '@project.StartDate', '@project.EndDate', '@project.Status')">
+                                        class="edit-icon"
+                                        onclick="showEditForm('@project.IdProject', '@project.Name', '@project.StartDate', '@project.EndDate', '@project.Status')">
                                     <form method="post" asp-page-handler="Move">
                                         <input type="hidden" name="IdProject" value="@project.IdProject" />
                                         <input type="hidden" name="NameProject" value="@project.Name" />
@@ -82,11 +82,13 @@
         <h2>Formulario Proyecto</h2>
         <form method="post" onsubmit="return validateNewProjectForm()">
             <label for="projectName">Nombre del Proyecto</label>
-            <input type="text" id="projectName" name="ProjectDTO.Name" required>
+            <input type="text" id="projectName" name="ProjectDTO.Name" required maxlength="50">
             <label for="startDate">Fecha de Inicio</label>
-            <input type="date" id="startDate" name="ProjectDTO.StartDate" required readonly onfocus="this.removeAttribute('readonly');">
+            <input type="date" id="startDate" name="ProjectDTO.StartDate" required readonly
+                onfocus="this.removeAttribute('readonly');">
             <label for="endDate">Fecha de Cierre</label>
-            <input type="date" id="endDate" name="ProjectDTO.EndDate" required readonly onfocus="this.removeAttribute('readonly');">
+            <input type="date" id="endDate" name="ProjectDTO.EndDate" required readonly
+                onfocus="this.removeAttribute('readonly');">
             <label for="status">Estatus</label>
             <select id="status" name="ProjectDTO.Status" required>
                 <option value="Activo">Activo</option>
@@ -102,11 +104,13 @@
         <form method="post" asp-page-handler="Edit" onsubmit="return validateEditProjectForm()">
             <input type="hidden" name="ProjectDTO.IdProject" id="ProjectDTO_IdProject" />
             <label for="ProjectDTO_Name">Nombre del Proyecto</label>
-            <input type="text" id="ProjectDTO_Name" name="ProjectDTO.Name" required>
+            <input type="text" id="ProjectDTO_Name" name="ProjectDTO.Name" required maxlength="50">
             <label for="ProjectDTO_StartDate">Fecha de Inicio</label>
-            <input type="date" id="ProjectDTO_StartDate" name="ProjectDTO.StartDate" required readonly onfocus="this.removeAttribute('readonly');">
+            <input type="date" id="ProjectDTO_StartDate" name="ProjectDTO.StartDate" required readonly
+                onfocus="this.removeAttribute('readonly');">
             <label for="ProjectDTO_EndDate">Fecha de Cierre</label>
-            <input type="date" id="ProjectDTO_EndDate" name="ProjectDTO.EndDate" required readonly onfocus="this.removeAttribute('readonly');">
+            <input type="date" id="ProjectDTO_EndDate" name="ProjectDTO.EndDate" required readonly
+                onfocus="this.removeAttribute('readonly');">
             <label for="ProjectDTO_Status">Estatus</label>
             <select id="ProjectDTO_Status" name="ProjectDTO.Status" required>
                 <option value="Activo">Activo</option>
@@ -125,34 +129,34 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="Nombre">Nombre:</label>
-                    <input type="text" id="Nombre" name="Nombre" required>
+                    <input type="text" id="Nombre" name="Nombre" required maxlength="15">
                 </div>
                 <div class="form-group">
                     <label for="ApellidoPaterno">Apellido Paterno:</label>
-                    <input type="text" id="ApellidoPaterno" name="ApellidoPaterno" required>
+                    <input type="text" id="ApellidoPaterno" name="ApellidoPaterno" required maxlength="15">
                 </div>
                 <div class="form-group">
                     <label for="ApellidoMaterno">Apellido Materno:</label>
-                    <input type="text" id="ApellidoMaterno" name="ApellidoMaterno" required>
+                    <input type="text" id="ApellidoMaterno" name="ApellidoMaterno" required maxlength="15">
                 </div>
                 <div class="form-group">
                     <label for="Correo">Correo:</label>
-                    <input type="email" id="Correo" name="Correo" required>
+                    <input type="email" id="Correo" name="Correo" required maxlength="50">
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label for="Apodo">Apodo:</label>
-                    <input type="text" id="Apodo" name="Apodo" required>
+                    <input type="text" id="Apodo" name="Apodo" required maxlength="15">
                 </div>
                 <div class="form-group">
                     <label for="Contraseña">Contraseña:</label>
-                    <input type="password" id="Contraseña" name="Contraseña" required>
+                    <input type="password" id="Contraseña" name="Contraseña" required maxlength="20">
                 </div>
                 <div class="form-group">
                     <label for="ConfirmacionContraseña">Confirmación de Contraseña:</label>
-                    <input type="password" id="ConfirmacionContraseña" name="ConfirmacionContraseña" required>
+                    <input type="password" id="ConfirmacionContraseña" name="ConfirmacionContraseña" required maxlength="20">
                 </div>
             </div>
 
@@ -163,13 +167,13 @@
         </form>
     </div>
 
-    @if (TempData["ErrorMessage"] != null)
+    @if (TempData["ErrorMessage"] != null && TempData["ErrorTitle"] != null)
     {
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 Swal.fire({
                     icon: "error",
-                    title: "Oops... hubo error con los servidores",
+                    title: "@TempData["ErrorTitle"]",
                     text: "@TempData["ErrorMessage"]"
                 });
             });
@@ -204,21 +208,29 @@
             document.getElementById('editProjectForm').style.display = 'block';
             document.getElementById('ProjectDTO_IdProject').value = id;
             document.getElementById('ProjectDTO_Name').value = name;
-
-            let formattedStartDate = new Date(startDate);
-            let formattedStartDateString = formattedStartDate.getFullYear() + '-' +
-                ('0' + (formattedStartDate.getMonth() + 1)).slice(-2) + '-' +
-                ('0' + formattedStartDate.getDate()).slice(-2);
-            document.getElementById('ProjectDTO_StartDate').value = formattedStartDateString;
-
-            let formattedEndDate = new Date(endDate);
-            let formattedEndDateString = formattedEndDate.getFullYear() + '-' +
-                ('0' + (formattedEndDate.getMonth() + 1)).slice(-2) + '-' +
-                ('0' + formattedEndDate.getDate()).slice(-2);
-            document.getElementById('ProjectDTO_EndDate').value = formattedEndDateString;
-
+            document.getElementById('ProjectDTO_StartDate').value = formatDateForInput(startDate);
+            document.getElementById('ProjectDTO_EndDate').value = formatDateForInput(endDate);
             document.getElementById('ProjectDTO_Status').value = status;
         }
+
+        function formatDateForInput(dateString) {
+            if (dateString.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                return dateString;
+            }
+
+            const dateParts = dateString.split(' ')[0].split('/');
+            if (dateParts.length === 3) {
+                const day = dateParts[0];
+                const month = dateParts[1];
+                const year = dateParts[2];
+                return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+            }
+
+            console.error("Fecha inválida:", dateString);
+            return '';
+        }
+
+
 
         function hideEditForm() {
             document.getElementById('editProjectForm').style.display = 'none';
@@ -305,12 +317,12 @@
             var confirmacionContrasena = form.querySelector('#ConfirmacionContraseña').value.trim();
 
             if (!nombre || !apellidoPaterno || !apellidoMaterno || !correo || !apodo || !contrasena || !confirmacionContrasena) {
-                alert('Por favor, complete todos los campos.');
+                Swal.fire("Campos invalidos", "Por favor, complete todos los campos", "warning");
                 return false;
             }
 
             if (contrasena !== confirmacionContrasena) {
-                alert('Las contraseñas no coinciden.');
+                Swal.fire("Contrasena incorrectas", "Las contrasenas no coinciden", "warning");
                 return false;
             }
 
@@ -332,20 +344,20 @@
                     'Authorization': 'Bearer ' + token
                 },
                 data: JSON.stringify(studentDTO),
-                success: function(response) {
+                success: function (response) {
                     Swal.fire("¡Éxito!", "Perfil actualizado correctamente.", "success")
                         .then(() => {
                             hideUserProfileForm();
                         });
                 },
-                error: function() {
+                error: function () {
                     Swal.fire("Error!", "Error al actualizar el perfil.", "error");
                 }
             });
 
             return false;
         }
-        
+
         function validateNewProjectForm() {
             return validateForm('newProjectForm');
         }
@@ -363,7 +375,7 @@
             var inputs = form.querySelectorAll('input[required], select[required]');
             for (var i = 0; i < inputs.length; i++) {
                 if (inputs[i].value.trim() === '') {
-                    alert('Por favor, complete todos los campos.');
+                    Swal.fire("Campos invalidos", "Por favor, complete todos los campos", "warning");
                     return false;
                 }
             }
@@ -371,4 +383,5 @@
         }
     </script>
 </body>
+
 </html>

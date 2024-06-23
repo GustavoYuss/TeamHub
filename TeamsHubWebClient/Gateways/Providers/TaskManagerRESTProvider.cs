@@ -18,80 +18,57 @@ public class TaskManagerRESTProvider : ITaskManager
 
     public async Task<bool> AddTask(TaskDTO newTask)
     {
+        bool response;
+
         try
         {
             var json = JsonSerializer.Serialize(newTask);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var request = new HttpRequestMessage(HttpMethod.Post, "/TeamHub/Task/")
-            {
-                Content = content
-            };
+            var request = new HttpRequestMessage(HttpMethod.Post, "/TeamHub/Task/") { Content = content };
             var result = await clientServiceTask.SendAsync(request);
-            if (!result.IsSuccessStatusCode)
+            if (result.IsSuccessStatusCode)
             {
-                var responseContent = await result.Content.ReadAsStringAsync();
-                Console.WriteLine($"Error: {result.StatusCode}, Content: {responseContent}");
-                return false;
-            }
-            var responseContentSuccess = await result.Content.ReadAsStringAsync();
-            Console.WriteLine($"Response Content: {responseContentSuccess}");
-
-            bool response;
-            if (bool.TryParse(responseContentSuccess, out response))
-            {
-                return response;
+                response = true;
             }
             else
             {
-                Console.WriteLine("La respuesta no se pudo convertir a booleano.");
-                return false;
+                response = false;
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Error: " + ex.Message);
-            return false;
+            response = false;
         }
+
+        return response;
     }
-    
+
     public async Task<bool> UpdateTask(TaskDTO task)
     {
+        bool response;
         try
         {
             var json = JsonSerializer.Serialize(task);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var request = new HttpRequestMessage(HttpMethod.Post, "/TeamHub/Task/up")
-            {
-                Content = content
-            };
+            var request = new HttpRequestMessage(HttpMethod.Post, "/TeamHub/Task/up") { Content = content };
             var result = await clientServiceTask.SendAsync(request);
-            if (!result.IsSuccessStatusCode)
+            if (result.IsSuccessStatusCode)
             {
-                var responseContent = await result.Content.ReadAsStringAsync();
-                Console.WriteLine($"Error: {result.StatusCode}, Content: {responseContent}");
-                return false;
-            }
-            var responseContentSuccess = await result.Content.ReadAsStringAsync();
-            Console.WriteLine($"Response Content: {responseContentSuccess}");
-
-            bool response;
-            if (bool.TryParse(responseContentSuccess, out response))
-            {
-                return response;
+                response = true;
             }
             else
             {
-                Console.WriteLine("La respuesta no se pudo convertir a booleano.");
-                return false;
+                response = false;
             }
         }
         catch (Exception ex)
         {
             Console.WriteLine("Error: " + ex.Message);
-            return false;
+            response = false;
         }
-    }
 
+        return response;
+    }
 
     public List<TaskDTO> GetAllTaskByProject(int projectID)
     {
@@ -108,7 +85,7 @@ public class TaskManagerRESTProvider : ITaskManager
             return null;
         }
     }
-    
+
 
     public List<TaskDTO> GetTaskbyDate(DateTime startDate, DateTime endDate)
     {

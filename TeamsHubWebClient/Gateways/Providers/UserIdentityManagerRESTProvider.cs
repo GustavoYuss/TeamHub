@@ -16,18 +16,23 @@ public class UserIdentityManagerRESTProvider : IUserIdentityManager
 
     public UserValidationResponse ValidateUser(SessionLoginRequest sessionLoginRequest)
     {
+        UserValidationResponse userValidationResponse;
+
         try {
+
             byte[] encodedPassword = new UTF8Encoding().GetBytes(sessionLoginRequest.Password);
             byte[] hash = ((HashAlgorithm) CryptoConfig.CreateFromName("MD5")).ComputeHash(encodedPassword);
             string passwordMD5 = BitConverter.ToString(hash).Replace("-", string.Empty).ToLower();
-            //sessionLoginRequest.Password = passwordMD5;
-
             var resultado = clientUserIdentityService.PostAsJsonAsync<SessionLoginRequest> ($"/TeamHub/Sessions/validateUser", sessionLoginRequest).Result;
             resultado.EnsureSuccessStatusCode();
-            var respuesta = resultado.Content.ReadFromJsonAsync<UserValidationResponse>().Result;    
-            return respuesta;
+            userValidationResponse = resultado.Content.ReadFromJsonAsync<UserValidationResponse>().Result; 
+            
         } catch (Exception e) {
-            return new UserValidationResponse() { IsValid=false };
+
+            userValidationResponse = null;
+
         }
+
+        return userValidationResponse;
     }
 }

@@ -3,28 +3,20 @@
   "WorkspaceRootPath": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamsHubWebClient\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{109B6DB3-C9D7-450B-B528-4D39CB238D7C}|TeamsHubWebClient.csproj|d:\\migue\\.onedrive\\onedrive - universidad veracruzana\\escritorio\\teamhub\\teamshubwebclient\\pages\\projectprogressmodule.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{109B6DB3-C9D7-450B-B528-4D39CB238D7C}|TeamsHubWebClient.csproj|solutionrelative:pages\\projectprogressmodule.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{109B6DB3-C9D7-450B-B528-4D39CB238D7C}|TeamsHubWebClient.csproj|d:\\migue\\.onedrive\\onedrive - universidad veracruzana\\escritorio\\teamhub\\teamshubwebclient\\pages\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{109B6DB3-C9D7-450B-B528-4D39CB238D7C}|TeamsHubWebClient.csproj|solutionrelative:pages\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{109B6DB3-C9D7-450B-B528-4D39CB238D7C}|TeamsHubWebClient.csproj|d:\\migue\\.onedrive\\onedrive - universidad veracruzana\\escritorio\\teamhub\\teamshubwebclient\\pages\\filemodule.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{109B6DB3-C9D7-450B-B528-4D39CB238D7C}|TeamsHubWebClient.csproj|solutionrelative:pages\\filemodule.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{109B6DB3-C9D7-450B-B528-4D39CB238D7C}|TeamsHubWebClient.csproj|d:\\migue\\.onedrive\\onedrive - universidad veracruzana\\escritorio\\teamhub\\teamshubwebclient\\pages\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{109B6DB3-C9D7-450B-B528-4D39CB238D7C}|TeamsHubWebClient.csproj|solutionrelative:pages\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{109B6DB3-C9D7-450B-B528-4D39CB238D7C}|TeamsHubWebClient.csproj|d:\\migue\\.onedrive\\onedrive - universidad veracruzana\\escritorio\\teamhub\\teamshubwebclient\\pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{109B6DB3-C9D7-450B-B528-4D39CB238D7C}|TeamsHubWebClient.csproj|solutionrelative:pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{109B6DB3-C9D7-450B-B528-4D39CB238D7C}|TeamsHubWebClient.csproj|d:\\migue\\.onedrive\\onedrive - universidad veracruzana\\escritorio\\teamhub\\teamshubwebclient\\dtos\\sessionloginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{109B6DB3-C9D7-450B-B528-4D39CB238D7C}|TeamsHubWebClient.csproj|solutionrelative:dtos\\sessionloginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{109B6DB3-C9D7-450B-B528-4D39CB238D7C}|TeamsHubWebClient.csproj|d:\\migue\\.onedrive\\onedrive - universidad veracruzana\\escritorio\\teamhub\\teamshubwebclient\\pages\\addstudentstoproject.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{109B6DB3-C9D7-450B-B528-4D39CB238D7C}|TeamsHubWebClient.csproj|solutionrelative:pages\\addstudentstoproject.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{109B6DB3-C9D7-450B-B528-4D39CB238D7C}|TeamsHubWebClient.csproj|d:\\migue\\.onedrive\\onedrive - universidad veracruzana\\escritorio\\teamhub\\teamshubwebclient\\pages\\activitiesmodule.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{109B6DB3-C9D7-450B-B528-4D39CB238D7C}|TeamsHubWebClient.csproj|solutionrelative:pages\\activitiesmodule.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{109B6DB3-C9D7-450B-B528-4D39CB238D7C}|TeamsHubWebClient.csproj|d:\\migue\\.onedrive\\onedrive - universidad veracruzana\\escritorio\\teamhub\\teamshubwebclient\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{109B6DB3-C9D7-450B-B528-4D39CB238D7C}|TeamsHubWebClient.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{109B6DB3-C9D7-450B-B528-4D39CB238D7C}|TeamsHubWebClient.csproj|d:\\migue\\.onedrive\\onedrive - universidad veracruzana\\escritorio\\teamhub\\teamshubwebclient\\wwwroot\\css\\loginstyles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{109B6DB3-C9D7-450B-B528-4D39CB238D7C}|TeamsHubWebClient.csproj|solutionrelative:wwwroot\\css\\loginstyles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,81 +34,52 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ProjectProgressModule.cshtml",
-              "DocumentMoniker": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamsHubWebClient\\Pages\\ProjectProgressModule.cshtml",
-              "RelativeDocumentMoniker": "Pages\\ProjectProgressModule.cshtml",
-              "ToolTip": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamsHubWebClient\\Pages\\ProjectProgressModule.cshtml",
-              "RelativeToolTip": "Pages\\ProjectProgressModule.cshtml",
-              "ViewState": "AQIAADAAAAAAAAAAAAAAAEwAAAASAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-06-22T21:11:26.731Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamsHubWebClient\\Pages\\Index.cshtml",
-              "RelativeDocumentMoniker": "Pages\\Index.cshtml",
-              "ToolTip": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamsHubWebClient\\Pages\\Index.cshtml",
-              "RelativeToolTip": "Pages\\Index.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-06-22T21:11:24.881Z",
-              "EditorCaption": ""
+              "Title": "SessionLoginRequest.cs",
+              "DocumentMoniker": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamsHubWebClient\\DTOs\\SessionLoginRequest.cs",
+              "RelativeDocumentMoniker": "DTOs\\SessionLoginRequest.cs",
+              "ToolTip": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamsHubWebClient\\DTOs\\SessionLoginRequest.cs",
+              "RelativeToolTip": "DTOs\\SessionLoginRequest.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-23T00:21:01.724Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ActivitiesModule.cshtml",
-              "DocumentMoniker": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamsHubWebClient\\Pages\\ActivitiesModule.cshtml",
-              "RelativeDocumentMoniker": "Pages\\ActivitiesModule.cshtml",
-              "ToolTip": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamsHubWebClient\\Pages\\ActivitiesModule.cshtml",
-              "RelativeToolTip": "Pages\\ActivitiesModule.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACcAAAAQAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-06-22T21:10:24.76Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AddStudentsToProject.cshtml",
-              "DocumentMoniker": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamsHubWebClient\\Pages\\AddStudentsToProject.cshtml",
-              "RelativeDocumentMoniker": "Pages\\AddStudentsToProject.cshtml",
-              "ToolTip": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamsHubWebClient\\Pages\\AddStudentsToProject.cshtml",
-              "RelativeToolTip": "Pages\\AddStudentsToProject.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-06-22T21:10:17.85Z",
+              "DocumentIndex": 0,
+              "Title": "Login.cshtml.cs",
+              "DocumentMoniker": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamsHubWebClient\\Pages\\Login.cshtml.cs",
+              "RelativeDocumentMoniker": "Pages\\Login.cshtml.cs",
+              "ToolTip": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamsHubWebClient\\Pages\\Login.cshtml.cs",
+              "RelativeToolTip": "Pages\\Login.cshtml.cs",
+              "ViewState": "AQIAAC4AAAAAAAAAAADwv0QAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-23T00:11:48.907Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "FileModule.cshtml",
-              "DocumentMoniker": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamsHubWebClient\\Pages\\FileModule.cshtml",
-              "RelativeDocumentMoniker": "Pages\\FileModule.cshtml",
-              "ToolTip": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamsHubWebClient\\Pages\\FileModule.cshtml",
-              "RelativeToolTip": "Pages\\FileModule.cshtml",
-              "ViewState": "AQIAAPkAAAAAAAAAAAAAAM0AAACHAAAA",
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamsHubWebClient\\Pages\\Login.cshtml",
+              "RelativeDocumentMoniker": "Pages\\Login.cshtml",
+              "ToolTip": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamsHubWebClient\\Pages\\Login.cshtml",
+              "RelativeToolTip": "Pages\\Login.cshtml",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAACYAAABvAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-06-22T21:07:07.045Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-23T00:08:56.407Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamsHubWebClient\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamsHubWebClient\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-22T21:06:00.625Z",
-              "EditorCaption": ""
+              "DocumentIndex": 3,
+              "Title": "loginStyles.css",
+              "DocumentMoniker": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamsHubWebClient\\wwwroot\\css\\loginStyles.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\loginStyles.css",
+              "ToolTip": "D:\\Migue\\.onedrive\\OneDrive - Universidad Veracruzana\\Escritorio\\TeamHub\\TeamsHubWebClient\\wwwroot\\css\\loginStyles.css",
+              "RelativeToolTip": "wwwroot\\css\\loginStyles.css",
+              "ViewState": "AQIAAHYAAAAAAAAAAAAqwKYAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-06-23T00:01:04.29Z"
             }
           ]
         },

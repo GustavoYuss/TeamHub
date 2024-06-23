@@ -33,7 +33,7 @@ CREATE TABLE `project` (
 
 CREATE TABLE `document` (
   `IdDocument` int NOT NULL AUTO_INCREMENT,
-  `Name` varchar(50) DEFAULT NULL,
+  `Name` varchar(300) DEFAULT NULL,
   `Path` varchar(250) DEFAULT NULL,
   `Extension` int DEFAULT NULL,
   `IdProject` int NOT NULL,

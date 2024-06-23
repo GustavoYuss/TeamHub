@@ -30,28 +30,39 @@ namespace TeamsHubWebClient.Pages
             TaskList = _TaskManager.GetAllTaskByProject(ProjectSinglenton.Id);
             if(TaskList == null)
             {
+                TempData["ErrorTitle"] = "Ops... hubo un problema con los servidores";
                 TempData["ErrorMessage"] = "Lo siento, hubo un problema con los servidores, " +
-                                       "inténtelo más tarde por favor, si el error persiste, " +
-                                       "comuníquese con el personal!";
+                                       "intentelo más tarde por favor, si el error persiste, " +
+                                       "comuniquese con el personal!";
             }
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            bool result;
-            Task.IdProject = ProjectSinglenton.Id;
-            if (Task.IdTask == 0)
+            if (Task.StartDate >= Task.EndDate)
             {
-                result = await _TaskManager.AddTask(Task);
-                Console.WriteLine("AddTask executed, result: " + result);
-
+                SetErrorMessage("La fecha de inicio no puede ser mayor a la fecha de cierre", "Fechas invalidas");
             }
             else
             {
-                result = await _TaskManager.UpdateTask(Task);
-                Console.WriteLine("UpdateTask executed, result: " + result);
+                Task.IdProject = ProjectSinglenton.Id;
+                bool result = Task.IdTask == 0
+                ? await _TaskManager.AddTask(Task)
+                : await _TaskManager.UpdateTask(Task);
             }
             return RedirectToPage("/ActivitiesModule");
         }
-    }
+
+        private void SetSuccessMessage(string message, string title)
+        {
+            TempData["Message"] = message;
+            TempData["Title"] = title;
+        }
+
+        private void SetErrorMessage(string message, string title)
+        {
+            TempData["ErrorTitle"] = title;
+            TempData["ErrorMessage"] = message;
+        }
+    } 
 }

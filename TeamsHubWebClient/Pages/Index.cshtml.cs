@@ -31,6 +31,13 @@ namespace TeamsHubWebClient.Pages
         public void OnGet()
         {
             Projects = _projectManager.GetAllMyProjects(StudentSinglenton.Id);
+            if(Projects == null)
+            {
+                TempData["ErrorTitle"] = "Ops... hubo un problema con los servidores";
+                TempData["ErrorMessage"] = "Lo siento, hubo un problema con los servidores, " +
+                                       "intentelo más tarde por favor, si el error persiste, " +
+                                       "comuniquese con el personal!";
+            }
         }
 
         public IActionResult OnPostMove(int IdProject, string NameProject)
@@ -42,32 +49,24 @@ namespace TeamsHubWebClient.Pages
 
         public async Task<IActionResult> OnPost()
         {
-            bool result;
-            string successMessage;
-            string successTitle;
-
-            if (ProjectDTO.IdProject == 0)
+            if (ProjectDTO.StartDate >= ProjectDTO.EndDate)
             {
-                result = await _projectManager.AddProject(ProjectDTO, StudentSinglenton.Id);
-                successMessage = "Se ha registrado correctamente el proyecto";
-                successTitle = "Registro de proyecto exitoso";
+                SetErrorMessage("La fecha de inicio no puede ser mayor a la fecha de cierre", "Fechas invalidas");
             }
             else
             {
-                result = await _projectManager.UpdateProject(ProjectDTO);
-                successMessage = "Se ha modificado correctamente el proyecto";
-                successTitle = "Modificación de proyecto exitoso";
-            }
+                bool result = ProjectDTO.IdProject == 0
+                ? await _projectManager.AddProject(ProjectDTO, StudentSinglenton.Id)
+                : await _projectManager.UpdateProject(ProjectDTO);
 
-            if (result)
-            {
-                SetSuccessMessage(successMessage, successTitle);
+                if (result)
+                {
+                    SetSuccessMessage(
+                        ProjectDTO.IdProject == 0 ? "Se ha registrado correctamente el proyecto" : "Se ha modificado correctamente el proyecto",
+                        ProjectDTO.IdProject == 0 ? "Registro de proyecto exitoso" : "Modificacion de proyecto exitoso"
+                    );
+                }
             }
-            else
-            {
-                SetErrorMessage();
-            }
-
             return RedirectToPage("/Index");
         }
 
@@ -77,11 +76,10 @@ namespace TeamsHubWebClient.Pages
             TempData["Title"] = title;
         }
 
-        private void SetErrorMessage()
+        private void SetErrorMessage(string message, string title)
         {
-            TempData["ErrorMessage"] = "Lo siento, hubo un problema con los servidores, " +
-                                       "inténtelo más tarde por favor, si el error persiste, " +
-                                       "comuníquese con el personal!";
+            TempData["ErrorTitle"] = title;
+            TempData["ErrorMessage"] = message;
         }
     }
 }
