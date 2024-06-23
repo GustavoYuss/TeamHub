@@ -17,20 +17,20 @@ body {
 
 .sidebar {
     width: 60px;
-    background-color: black;
+    background-color: #0000003b;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Este ajuste centra los íconos verticalmente */
+    justify-content: center;
     padding: 20px 0;
 }
 
-.sidebar .icon {
-    width: 40px;
-    height: 40px;
-    margin: 20px 0; /* Ajusta el margen para centrar los íconos */
-    cursor: pointer;
-}
+    .sidebar .icon {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 20px;
+        cursor: pointer;
+    }
 
 .main-content {
     flex-grow: 1;
@@ -41,6 +41,7 @@ body {
     border-radius: 40px;
     margin: 20px;
     padding: 20px;
+    margin-left: 90px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -54,33 +55,36 @@ body {
 }
 
 .back-arrow {
-    width: 44px;
-    height: 44px;
+    width: 49px;
+    height: 49px;
+    margin-left: 25px;
     cursor: pointer;
 }
 
 .project-title {
-    font-size: 1.5em;
+    font-size: 2.3em;
     font-weight: bold;
     color: #f0f0f0;
+    margin-right: 1159px;
 }
 
 .details-button {
     background-color: black;
     color: white;
+    font-size: 20px;
     border: none;
     padding: 10px 20px;
     border-radius: 40px;
     cursor: pointer;
     height: 50px;
-    width: 160px;
+    width: 230px;
     margin-right: 30px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.details-button:hover {
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-}
+    .details-button:hover {
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    }
 
 .content {
     flex-grow: 1;
@@ -105,4 +109,58 @@ body {
     width: 30px;
     height: 30px;
     cursor: pointer;
+}
+
+
+.main-content {
+    flex-grow: 1;
+    background-color: rgb(30, 30, 30);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 40px;
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2b2a2a;
+    border-radius: 40px;
+    padding: 10px;
+}
+
+.user-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+    .user-row img {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+.delete-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 15px;
+    width: 99px;
+    height: 37px;
+    font-size: 17px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.user-name {
+    flex-grow: 1;
+    font-size: 20px;
+    color: #ffecec;
 }

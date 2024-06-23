@@ -150,3 +150,13 @@ body, html {
     text-decoration: none;
     font-size: 18px;
 }
+
+.button-group {
+    margin-top: -1cm;
+}
+
+/* Añadido para asegurar interactividad */
+.overlay, .input, .sign-in-button {
+    z-index: 1;
+    pointer-events: auto;
+}

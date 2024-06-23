@@ -10,521 +10,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyectos</title>
+    <link rel="stylesheet" href="/css/indexStyles.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<style>
-    body,
-    html {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        font-family: 'Calibri', sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: url('https://monkey88.bet/wp-content/uploads/2022/05/iphone.jpg') no-repeat center center fixed;
-        background-size: cover;
-    }
-
-    .background {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-    }
-
-    .container {
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        padding: 20px;
-        overflow: hidden;
-        flex: 1;
-    }
-
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .header h1 {
-        font-size: 2em;
-        color: #d5dce3;
-        font-weight: bold;
-    }
-
-    .header-buttons {
-        display: flex;
-        align-items: center;
-    }
-
-    .new-project-button {
-        background-color: #055160;
-        color: white;
-        border: none;
-        font-family: 'Arial', sans-serif;
-        font-size: 1.3em;
-        font-weight: bold;
-        padding: 10px 20px;
-        border-radius: 40px;
-        cursor: pointer;
-        width: 250px;
-        height: 50px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        margin-right: 50px;
-    }
-
-    .new-project-button:hover {
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .user-button {
-        position: relative;
-        background: #ff000000;
-        color: #e9ecef;
-        font-size: 25px;
-        align-content: center;
-        height: 52px;
-        border: white;
-        width: 392px;
-        font-weight: bold;
-        border-radius: 40px;
-        display: flex;
-        cursor: pointer;
-    }
-
-    .user-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        margin-right: 10px;
-        margin-top: 22px;
-    }
-
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        right: 0;
-        background-color: rgb(11, 2, 2);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        border-radius: 10px;
-        overflow: hidden;
-        z-index: 1;
-    }
-
-    .dropdown-content button {
-        width: 200px;
-        height: 45px;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        background-color: #41464b;
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-    }
-
-    .dropdown-content button:hover {
-        background-color: #070505;
-    }
-
-    .dropdown-content .icon {
-        width: 35px;
-        height: 35px;
-        margin-top: 5px;
-        margin-bottom: 5px;
-        margin-right: 15px;
-    }
-
-    .user-button:hover .dropdown-content {
-        display: block;
-    }
-
-    .projects-list {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        overflow-y: auto;
-        flex: 1;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-    }
-
-    .projects-list::-webkit-scrollbar {
-        display: none;
-    }
-
-    .project-card {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #4d617b;
-        padding: 20px;
-        border-radius: 30px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .project-info {
-        display: flex;
-        align-items: center;
-    }
-
-    .project-info img {
-        width: 150px;
-        height: 150px;
-        margin-right: 30px;
-    }
-
-    .project-info h2 {
-        font-size: 2.5em;
-        margin-top: -6px;
-        margin-bottom: 13px;
-        font-weight: bold;
-    }
-
-    .project-info p {
-        font-weight: normal;
-        font-size: 20px;
-    }
-
-    p {
-        margin-top: -1px;
-        margin-bottom: 2px;
-    }
-
-    .project-info p span {
-        font-weight: bold;
-        font-size: 22px;
-    }
-
-    .project-status {
-        text-align: right;
-        font-family: 'Arial', sans-serif;
-        font-size: 1.5em;
-    }
-
-    .project-status p {
-        font-weight: bold;
-        margin-right: 40px;
-    }
-
-    .project-status p span {
-        font-weight: normal;
-    }
-
-    .action-buttons {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .edit-icon {
-        width: 50px;
-        height: 50px;
-        cursor: pointer;
-        margin-top: 23px;
-        margin-right: 15px;
-    }
-
-    .Delete-icon {
-        width: 50px;
-        height: 50px;
-        cursor: pointer;
-        margin-right: 14px;
-        margin-top: 26px;
-    }
-
-    .details-button {
-        background-color: black;
-        color: white;
-        border: none;
-        font-family: 'Arial', sans-serif;
-        font-size: .8em;
-        font-weight: bold;
-        padding: 10px 20px;
-        border-radius: 40px;
-        cursor: pointer;
-        width: 250px;
-        height: 45px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        margin-top: 30px;
-    }
-
-    .details-button:hover {
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .column {
-        flex: 1;
-        overflow-y: auto;
-    }
-
-    .column:not(:last-child) {
-        margin-right: 20px;
-    }
-
-    .project-form {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: #212529;
-        padding: 20px;
-        border-radius: 40px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-        width: 33cm;
-        height: 16cm;
-        color: white;
-    }
-
-    .project-form input, .project-form select {
-        width: calc(100% - 20px);
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 15px;
-        font-size: 17px;
-        color: white;
-        background: #212529;
-        width: 32cm;
-    }
-
-    .project-form button {
-        background-color: #055160;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 25px;
-        font-size: 18px;
-        cursor: pointer;
-        margin-top: 20px;
-    }
-
-    .project-form h2 {
-        margin: 0;
-        margin-bottom: 32px;
-        font-size: 37px;
-        font-weight: bold;
-        color: white;
-        margin-left: 91px;
-        margin-top: -45px;
-    }
-
-    .project-form label {
-        display: block;
-        margin-bottom: 10px;
-        font-size: 20px;
-    }
-
-    .profile-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
-
-    .profile-details {
-        background-color: #333;
-        padding: 20px;
-        border-radius: 10px;
-        color: white;
-        width: 450px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    }
-
-    .profile-details h2 {
-        margin-bottom: 20px;
-        text-align: center;
-    }
-
-    .project-form button:hover {
-        background-color: #033c47;
-    }
-
-    .close-form {
-        align-self: flex-start;
-        background: none;
-        border: none;
-        font-size: 1.5em;
-        cursor: pointer;
-        color: #333;
-    }
-
-    .user-icon {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
-        margin-top: -3px;
-        margin-right: 24px;
-    }
-
-    .user-icon img {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        margin-right: 18px;
-        margin-top: 0px;
-    }
-
-    .profile-icon {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
-    }
-
-    .profile-icon img {
-        width: 130px;
-        height: 130px;
-        border-radius: 50%;
-        margin-left: -25cm;
-    }
-
-    .profile-form {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: #212529;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-        width: 33cm;
-        height: 15.3cm;
-        color: white;
-    }
-
-    .profile-form input, .profile-form select {
-        width: calc(100% - 20px);
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 15px;
-        font-size: 17px;
-        color: white;
-        background: #212529;
-        width: 288px;
-    }
-
-    .profile-form h2 {
-        margin: 0;
-        margin-bottom: 32px;
-        font-size: 48px;
-        font-weight: bold;
-        color: white;
-        margin-left: 17px;
-        margin-top: 1px;
-    }
-
-    .profile-form label {
-        display: block;
-        margin-bottom: 10px;
-        font-size: 20px;
-    }
-
-    .profile-form button {
-        background-color: #055160;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 25px;
-        font-size: 18px;
-        cursor: pointer;
-        margin-top: 12px;
-        margin-left: 10px;
-    }
-
-    .profile-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
-
-    .profile-details {
-        background-color: #333;
-        padding: 20px;
-        border-radius: 10px;
-        color: white;
-        width: 450px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    }
-
-    .profile-details h2 {
-        margin-bottom: 20px;
-        text-align: center;
-    }
-
-    .profile-form button:hover {
-        background-color: #033c47;
-    }
-
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    .form-buttons {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .cancel-button,
-    .modify-button {
-        background-color: #555;
-        color: white;
-        border: none;
-        padding: 10px;
-        border-radius: 5px;
-        cursor: pointer;
-        width: 48%;
-        text-align: center;
-    }
-
-    .cancel-button:hover,
-    .modify-button:hover {
-        background-color: #777;
-    }
-
-    .form-row {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-    }
-</style>
-
-
 <body>
     <div class="background">
+
         <div class="container">
+
             <div class="header">
                 <h1>Mi Espacio de trabajo</h1>
                 <div class="header-buttons">
                     <button class="new-project-button" onclick="showNewForm()">Nuevo Proyecto</button>
                     <div class="user-button">
                         <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User Icon"
-                             class="user-icon">
+                            class="user-icon">
                         <span>@StudentSinglenton.FullName</span>
                         <div class="dropdown-content">
                             <button onclick="ShowUserProfileForm()">
                                 <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile Icon"
-                                     class="icon"> Mi perfil
+                                    class="icon"> Mi perfil
                             </button>
                             <button onclick="location.href='/Login'">
                                 <img src="https://cdn-icons-png.flaticon.com/512/603/603120.png" alt="Logout Icon"
-                                     class="icon"> Log out
+                                    class="icon"> Log out
                             </button>
                         </div>
                     </div>
@@ -532,9 +42,9 @@
             </div>
 
             <div class="projects-list column">
-                @if (Model.listaCursos != null)
+                @if (Model.Projects != null)
                 {
-                    @foreach (var project in Model.listaCursos)
+                    @foreach (var project in Model.Projects)
                     {
                         <div class="project-card">
                             <div class="project-info">
@@ -549,10 +59,10 @@
                                 <p>Estatus: <span>@project.Status</span></p>
                                 <div class="action-buttons">
                                     <img src="/images/ICON-DELETEPROJECT.png" alt="Delete Icon" class="Delete-icon"
-                                         onclick="DeleteProject('@project.IdProject')">
+                                        onclick="DeleteProject('@project.IdProject')">
                                     <img src="https://cdn-icons-png.flaticon.com/512/1160/1160515.png" alt="Edit Icon"
-                                         class="edit-icon"
-                                         onclick="showEditForm('@project.IdProject', '@project.Name', '@project.StartDate', '@project.EndDate', '@project.Status')">
+                                        class="edit-icon"
+                                        onclick="showEditForm('@project.IdProject', '@project.Name', '@project.StartDate', '@project.EndDate', '@project.Status')">
                                     <form method="post" asp-page-handler="Move">
                                         <input type="hidden" name="IdProject" value="@project.IdProject" />
                                         <input type="hidden" name="NameProject" value="@project.Name" />
@@ -572,11 +82,13 @@
         <h2>Formulario Proyecto</h2>
         <form method="post" onsubmit="return validateNewProjectForm()">
             <label for="projectName">Nombre del Proyecto</label>
-            <input type="text" id="projectName" name="ProjectDTO.Name" required>
+            <input type="text" id="projectName" name="ProjectDTO.Name" required maxlength="50">
             <label for="startDate">Fecha de Inicio</label>
-            <input type="date" id="startDate" name="ProjectDTO.StartDate" required readonly onfocus="this.removeAttribute('readonly');">
+            <input type="date" id="startDate" name="ProjectDTO.StartDate" required readonly
+                onfocus="this.removeAttribute('readonly');">
             <label for="endDate">Fecha de Cierre</label>
-            <input type="date" id="endDate" name="ProjectDTO.EndDate" required readonly onfocus="this.removeAttribute('readonly');">
+            <input type="date" id="endDate" name="ProjectDTO.EndDate" required readonly
+                onfocus="this.removeAttribute('readonly');">
             <label for="status">Estatus</label>
             <select id="status" name="ProjectDTO.Status" required>
                 <option value="Activo">Activo</option>
@@ -592,11 +104,13 @@
         <form method="post" asp-page-handler="Edit" onsubmit="return validateEditProjectForm()">
             <input type="hidden" name="ProjectDTO.IdProject" id="ProjectDTO_IdProject" />
             <label for="ProjectDTO_Name">Nombre del Proyecto</label>
-            <input type="text" id="ProjectDTO_Name" name="ProjectDTO.Name" required>
+            <input type="text" id="ProjectDTO_Name" name="ProjectDTO.Name" required maxlength="50">
             <label for="ProjectDTO_StartDate">Fecha de Inicio</label>
-            <input type="date" id="ProjectDTO_StartDate" name="ProjectDTO.StartDate" required readonly onfocus="this.removeAttribute('readonly');">
+            <input type="date" id="ProjectDTO_StartDate" name="ProjectDTO.StartDate" required readonly
+                onfocus="this.removeAttribute('readonly');">
             <label for="ProjectDTO_EndDate">Fecha de Cierre</label>
-            <input type="date" id="ProjectDTO_EndDate" name="ProjectDTO.EndDate" required readonly onfocus="this.removeAttribute('readonly');">
+            <input type="date" id="ProjectDTO_EndDate" name="ProjectDTO.EndDate" required readonly
+                onfocus="this.removeAttribute('readonly');">
             <label for="ProjectDTO_Status">Estatus</label>
             <select id="ProjectDTO_Status" name="ProjectDTO.Status" required>
                 <option value="Activo">Activo</option>
@@ -615,34 +129,34 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="Nombre">Nombre:</label>
-                    <input type="text" id="Nombre" name="Nombre" required>
+                    <input type="text" id="Nombre" name="Nombre" required maxlength="15">
                 </div>
                 <div class="form-group">
                     <label for="ApellidoPaterno">Apellido Paterno:</label>
-                    <input type="text" id="ApellidoPaterno" name="ApellidoPaterno" required>
+                    <input type="text" id="ApellidoPaterno" name="ApellidoPaterno" required maxlength="15">
                 </div>
                 <div class="form-group">
                     <label for="ApellidoMaterno">Apellido Materno:</label>
-                    <input type="text" id="ApellidoMaterno" name="ApellidoMaterno" required>
+                    <input type="text" id="ApellidoMaterno" name="ApellidoMaterno" required maxlength="15">
                 </div>
                 <div class="form-group">
                     <label for="Correo">Correo:</label>
-                    <input type="email" id="Correo" name="Correo" required>
+                    <input type="email" id="Correo" name="Correo" required maxlength="50">
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label for="Apodo">Apodo:</label>
-                    <input type="text" id="Apodo" name="Apodo" required>
+                    <input type="text" id="Apodo" name="Apodo" required maxlength="15">
                 </div>
                 <div class="form-group">
                     <label for="Contraseña">Contraseña:</label>
-                    <input type="password" id="Contraseña" name="Contraseña" required>
+                    <input type="password" id="Contraseña" name="Contraseña" required maxlength="20">
                 </div>
                 <div class="form-group">
                     <label for="ConfirmacionContraseña">Confirmación de Contraseña:</label>
-                    <input type="password" id="ConfirmacionContraseña" name="ConfirmacionContraseña" required>
+                    <input type="password" id="ConfirmacionContraseña" name="ConfirmacionContraseña" required maxlength="20">
                 </div>
             </div>
 
@@ -653,13 +167,13 @@
         </form>
     </div>
 
-    @if (TempData["ErrorMessage"] != null)
+    @if (TempData["ErrorMessage"] != null && TempData["ErrorTitle"] != null)
     {
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 Swal.fire({
                     icon: "error",
-                    title: "Oops... hubo error con los servidores",
+                    title: "@TempData["ErrorTitle"]",
                     text: "@TempData["ErrorMessage"]"
                 });
             });
@@ -694,21 +208,29 @@
             document.getElementById('editProjectForm').style.display = 'block';
             document.getElementById('ProjectDTO_IdProject').value = id;
             document.getElementById('ProjectDTO_Name').value = name;
-
-            let formattedStartDate = new Date(startDate);
-            let formattedStartDateString = formattedStartDate.getFullYear() + '-' +
-                ('0' + (formattedStartDate.getMonth() + 1)).slice(-2) + '-' +
-                ('0' + formattedStartDate.getDate()).slice(-2);
-            document.getElementById('ProjectDTO_StartDate').value = formattedStartDateString;
-
-            let formattedEndDate = new Date(endDate);
-            let formattedEndDateString = formattedEndDate.getFullYear() + '-' +
-                ('0' + (formattedEndDate.getMonth() + 1)).slice(-2) + '-' +
-                ('0' + formattedEndDate.getDate()).slice(-2);
-            document.getElementById('ProjectDTO_EndDate').value = formattedEndDateString;
-
+            document.getElementById('ProjectDTO_StartDate').value = formatDateForInput(startDate);
+            document.getElementById('ProjectDTO_EndDate').value = formatDateForInput(endDate);
             document.getElementById('ProjectDTO_Status').value = status;
         }
+
+        function formatDateForInput(dateString) {
+            if (dateString.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                return dateString;
+            }
+
+            const dateParts = dateString.split(' ')[0].split('/');
+            if (dateParts.length === 3) {
+                const day = dateParts[0];
+                const month = dateParts[1];
+                const year = dateParts[2];
+                return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+            }
+
+            console.error("Fecha inválida:", dateString);
+            return '';
+        }
+
+
 
         function hideEditForm() {
             document.getElementById('editProjectForm').style.display = 'none';
@@ -724,7 +246,7 @@
         }
 
         function loadUserProfile() {
-            var studentID = '@Model.StudentID'; // Assume StudentID is passed from the backend
+            var studentID = '@Model.StudentID';
 
             $.ajax({
                 url: '/TeamHub/Users/GetUserInformation/' + studentID,
@@ -769,7 +291,7 @@
                             if (response) {
                                 Swal.fire("Deleted!", "Your file has been deleted.", "success")
                                     .then(() => {
-                                        location.reload(); // Recarga la página después de eliminar
+                                        location.reload();
                                     });
                             } else {
                                 Swal.fire("Error!", "Failed to delete the file.", "error");
@@ -795,12 +317,12 @@
             var confirmacionContrasena = form.querySelector('#ConfirmacionContraseña').value.trim();
 
             if (!nombre || !apellidoPaterno || !apellidoMaterno || !correo || !apodo || !contrasena || !confirmacionContrasena) {
-                alert('Por favor, complete todos los campos.');
+                Swal.fire("Campos invalidos", "Por favor, complete todos los campos", "warning");
                 return false;
             }
 
             if (contrasena !== confirmacionContrasena) {
-                alert('Las contraseñas no coinciden.');
+                Swal.fire("Contrasena incorrectas", "Las contrasenas no coinciden", "warning");
                 return false;
             }
 
@@ -822,20 +344,20 @@
                     'Authorization': 'Bearer ' + token
                 },
                 data: JSON.stringify(studentDTO),
-                success: function(response) {
+                success: function (response) {
                     Swal.fire("¡Éxito!", "Perfil actualizado correctamente.", "success")
                         .then(() => {
                             hideUserProfileForm();
                         });
                 },
-                error: function() {
+                error: function () {
                     Swal.fire("Error!", "Error al actualizar el perfil.", "error");
                 }
             });
 
-            return false; // Prevenir la submisión del formulario
+            return false;
         }
-        
+
         function validateNewProjectForm() {
             return validateForm('newProjectForm');
         }
@@ -853,7 +375,7 @@
             var inputs = form.querySelectorAll('input[required], select[required]');
             for (var i = 0; i < inputs.length; i++) {
                 if (inputs[i].value.trim() === '') {
-                    alert('Por favor, complete todos los campos.');
+                    Swal.fire("Campos invalidos", "Por favor, complete todos los campos", "warning");
                     return false;
                 }
             }
@@ -861,4 +383,5 @@
         }
     </script>
 </body>
+
 </html>

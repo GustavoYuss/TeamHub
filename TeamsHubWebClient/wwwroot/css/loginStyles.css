@@ -1,4 +1,5 @@
-body, html {
+body,
+html {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -53,18 +54,6 @@ body, html {
     animation: animate 6s linear infinite; /* Aplica la animación */
 }
 
-@keyframes animate {
-    0% {
-        border-color: transparent transparent #FFB53737 transparent; /* Color inicial del borde */
-        transform: rotate(0deg); /* No hay rotación inicial */
-    }    
-    100% {
-        border-color: transparent transparent #FFB53737 transparent; /* Color final del borde */
-        transform: rotate(360deg); /* Rotación completa */
-    }
-}
-
-
 .title {
     color: #FFFAF5F5;
     font-size: 40px;
@@ -91,7 +80,7 @@ body, html {
 
 .input-group .icon {
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 10px;
     transform: translateY(-50%);
     width: 20px;
@@ -99,7 +88,7 @@ body, html {
 }
 
 .input {
-    width: calc(100% - 60px); /* Se ha reducido el ancho del campo de entrada */
+    width: 100%; /* Ajusta el ancho al 100% para ocupar todo el contenedor */
     height: 52px;
     padding: 0 10px 0 40px;
     border: 1px solid #0C97C8;
@@ -107,17 +96,27 @@ body, html {
     font-size: 18px;
     color: #FFFFF3F3;
     background: transparent;
+    box-sizing: border-box;
+    margin-top: 13px;
 }
 
 .show-password {
     position: absolute;
-    top: 50%;
+    top: 60%;
     right: 10px;
     transform: translateY(-50%);
     color: white;
     font-weight: bold;
     cursor: pointer;
     margin-right: 10px;
+}
+
+.text-danger {
+    color: red; /* Cambia el color del texto de error a rojo */
+    margin-top: 5px; /* Añade margen superior para espaciar el texto de error del campo */
+    font-size: 14px;
+    line-height: 1.5;
+    position: relative;
 }
 
 .sign-in-button {
@@ -153,4 +152,11 @@ body, html {
 .forgot-password a {
     color: #2A50DD;
     text-decoration: none;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -1cm; 
+    gap: 10px;
 }

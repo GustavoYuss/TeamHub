@@ -7,261 +7,6 @@
     var taskListJson = System.Text.Json.JsonSerializer.Serialize(Model.TaskList);
 }
 
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: Arial, sans-serif;
-        background: url('/images/Background2.jpeg') no-repeat center center fixed;
-        display: flex;
-        height: 100vh;
-        overflow: hidden;
-    }
-
-    .sidebar {
-        width: 60px;
-        background-color: rgba(0, 0, 0, 0.4);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 20px 0;
-    }
-
-    .sidebar .icon {
-        width: 40px;
-        height: 40px;
-        margin-bottom: 20px;
-        cursor: pointer;
-    }
-
-    .main-container {
-        flex: 1;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-    }
-
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        background-color: #171616;
-        padding: 10px 20px;
-        border-radius: 30px;
-        position: relative;
-    }
-
-    .header h1 {
-        font-family: 'Arial', sans-serif;
-        font-size: 1.8em;
-        font-weight: bold;
-        color: #f6f6f6;
-        margin: 0;
-        flex-grow: 1;
-        text-align: left;
-        margin-left: 17px;
-    }
-
-.header .back-arrow {
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    margin-left: 13px;
-}
-
-    .new-activity-button {
-        background-color: black;
-        color: rgb(249, 246, 246);
-        border: none;
-        font-family: 'Arial', sans-serif;
-        font-size: 1.3em;
-        font-weight: bold;
-        padding: 10px 20px;
-        border-radius: 40px;
-        cursor: pointer;
-        width: 250px;
-        height: 50px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .new-activity-button:hover {
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .columns {
-        display: flex;
-        justify-content: space-between;
-        flex-grow: 1;
-        overflow: hidden;
-    }
-
-    .column {
-        width: 33%;
-        background-color: #202022;
-        border-radius: 30px;
-        padding: 20px;
-        overflow-y: auto;
-        max-height: calc(100vh - 140px);
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
-
-    .column::-webkit-scrollbar {
-        display: none;
-    }
-
-    .column h2 {
-        font-size: 1.2em;
-        color: rgb(255 255 255);
-        margin-bottom: 10px;
-        padding: 10px;
-        border-radius: 10px;
-        text-align: center;
-    }
-
-    #pending h2 {
-        background-color: #3498db;
-    }
-
-    #in-process h2 {
-        background-color: #2ecc71;
-    }
-
-    #completed h2 {
-        background-color: #e74c3c;
-    }
-
-.activities .card {
-    background-color: rgb(37, 37, 39);
-    border-radius: 18px;
-    padding: 22px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-    .card:hover {
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .card .progress-bar {
-        height: 8px;
-        width: 80px;
-        border-radius: 30px;
-        margin-bottom: 10px;
-    }
-
-    .card .progress-bar.pending {
-        background-color: #3498db;
-    }
-
-    .card .progress-bar.in-process {
-        background-color: #2ecc71;
-    }
-
-    .card .progress-bar.completed {
-        background-color: #e74c3c;
-    }
-
-    .card h3 {
-    font-size: 1.3em;
-    color: #f6f4f4;
-    margin-bottom: 13px;
-    margin-top: -17px;
-}
-
-    .card p {
-    font-size: 1em;
-    color: #868181;
-    margin-bottom: 5px;
-}
-
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        justify-content: center;
-        align-items: center;
-    }
-
-    .modal-content {
-        background-color: rgb(31, 30, 30);
-        padding: 26px;
-        border-radius: 40px;
-        width: 791px;
-        max-height: 93vh;
-        font-size: 19px;
-        overflow-y: auto;
-        color: white;
-    }
-
-    .close-button {
-        float: right;
-        font-size: 1.5em;
-        cursor: pointer;
-    }
-
-    form label {
-        display: block;
-        margin-top: 20px;
-    }
-
-    form input,
-    form textarea,
-    form select {
-        width: 100%;
-        padding: 5px;
-        margin-top: 5px;
-        font-size: 18px;
-        border: 1px solid #1a1818;
-        border-radius: 5px;
-    }
-
-    form button {
-        margin-top: 10px;
-        padding: 10px;
-        width: 100%;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    form button:first-of-type {
-        background-color: #238847;
-        color: rgb(255 247 247);
-        font-size: 18px;
-        font-weight: bold;
-        height: 38px;
-        width: 178px;
-        border-radius: 40px;
-        margin-top: 24px;
-        margin-left: 14.7cm;
-    }
-
-    form button:last-of-type {
-        background-color: #238847;
-        color: rgb(255 247 247);
-        font-size: 18px;
-        font-weight: bold;
-        height: 38px;
-        width: 178px;
-        border-radius: 40px;
-        margin-top: 24px;
-        margin-left: 14.7cm;
-    }
-</style>
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -269,7 +14,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Actividades</title>
-    <link href="/lib/fileinput/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/css/activitiesStyles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -290,8 +36,8 @@
 
     <div class="main-container">
         <div class="header">
-            <img src="https://cdn-icons-png.flaticon.com/512/4885/4885344.png" alt="Back Arrow" class="back-arrow"
-                onclick="goBack()">
+            <a href="/"><img src="https://cdn-icons-png.flaticon.com/512/4885/4885344.png" alt="Back Arrow" 
+                class="back-arrow"></a>
             <h1>@SinglentonClasses.ProjectSinglenton.Name</h1>
             <button class="new-activity-button" onclick="openForm()">Nueva Actividad</button>
         </div>
@@ -318,16 +64,18 @@
             <form method="post">
                 <input type="hidden" id="task-id" name="Task.IdTask" asp-for="Task.IdTask" />
                 <label for="name">Nombre de la Actividad:</label>
-                <input type="text" id="name" name="Task.Name" asp-for="Task.Name" required>
+                <input type="text" id="name" name="Task.Name" asp-for="Task.Name" required maxlength="50">
 
                 <label for="start-date">Fecha de inicio:</label>
-                <input type="date" id="start-date" name="Task.StartDate" asp-for="Task.StartDate" required>
+                <input type="date" id="start-date" name="Task.StartDate" asp-for="Task.StartDate" required readonly
+                onfocus="this.removeAttribute('readonly');">
 
                 <label for="end-date">Fecha de cierre:</label>
-                <input type="date" id="end-date" name="Task.EndDate" asp-for="Task.EndDate" required>
+                <input type="date" id="end-date" name="Task.EndDate" asp-for="Task.EndDate" required readonly
+                onfocus="this.removeAttribute('readonly');">
 
                 <label for="description">Descripción:</label>
-                <textarea id="description" name="Task.Description" asp-for="Task.Description" required></textarea>
+                <textarea id="description" name="Task.Description" asp-for="Task.Description" required maxlength="250"></textarea>
 
                 <label for="status">Estado:</label>
                 <select id="status" name="Task.Status" asp-for="Task.Status" required>
@@ -340,6 +88,32 @@
             </form>
         </div>
     </div>
+
+    @if (TempData["ErrorMessage"] != null && TempData["ErrorTitle"] != null)
+    {
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                Swal.fire({
+                    icon: "error",
+                    title: "@TempData["ErrorTitle"]",
+                    text: "@TempData["ErrorMessage"]"
+                });
+            });
+        </script>
+    }
+
+    @if (TempData["Message"] != null && TempData["Title"] != null)
+    {
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                Swal.fire({
+                    icon: "success",
+                    title: "@TempData["Title"]",
+                    text: "@TempData["Message"]",
+                });
+            });
+        </script>
+    }
 
     <script>
         let TaskList = @Html.Raw(taskListJson);

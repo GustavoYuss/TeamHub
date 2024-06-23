@@ -13,56 +13,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="/css/loginStyles.css">
-    <!-- Incluir SweetAlert2 CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-
-<style>
-    .form-container {
-        text-align: left;
-        color: red;
-    }
-
-    .input-group .icon {
-        position: absolute;
-        left: 10px;
-        top: 60%;
-        transform: translateY(-50%);
-    }
-
-    .input-group .input {
-        padding-left: 40px;
-    }
-
-    .input {
-        width: calc(100% - 60px);
-        height: 52px;
-        padding: 0 10px 0 40px;
-        border: 1px solid #0C97C8;
-        border-radius: 15px;
-        font-size: 18px;
-        color: #FFFFF3F3;
-        background: transparent;
-        margin-top: 13px;
-    }
-
-    .show-password {
-        position: absolute;
-        right: 10px;
-        top: 60%;
-        transform: translateY(-50%);
-        cursor: pointer;
-        user-select: none;
-    }
-
-    .text-danger {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        font-size: 14px;
-        line-height: 1.5;
-    }
-</style>
 
 <body>
     <div class="background">
@@ -70,37 +22,48 @@
             <img src="/images/Team_Hub-removebg-preview.png" alt="Team Hub" class="logo">
             <div class="overlay">
                 <div class="form-container">
-                    <form method="post">
+                    <form method="post" id="login-form">
                         <h1 class="title">Sign in</h1>
                         <p class="subtitle">Por favor ingrese su correo y contraseña</p>
-
                         <div class="input-group">
                             <img src="/images/ICON-EMAIL.png" alt="Email Icon" class="icon">
-                            <input type="text" placeholder="Email" class="input" id="txtEmail" required="required"
-                                   asp-for="sessionLoginRequest.Email">
+                            <input type="email" placeholder="Email" class="input" id="txtEmail" required="required"
+                                maxlength="30" asp-for="sessionLoginRequest.Email">
                             <span asp-validation-for="sessionLoginRequest.Email" class="text-danger"></span>
                         </div>
-
                         <div class="input-group">
                             <img src="/images/ICON-PASSWORD.png" alt="Password Icon" class="icon">
                             <input type="password" placeholder="Password" class="input" id="txtPassword"
-                                   required="required" asp-for="sessionLoginRequest.Password">
-                            <label for="showPassword" id="togglePassword" class="show-password">Mostrar</label>
+                                required="required" maxlength="20" asp-for="sessionLoginRequest.Password">
                             <span asp-validation-for="sessionLoginRequest.Password" class="text-danger"></span>
+                            <label for="showPassword" id="togglePassword" class="show-password">Mostrar</label>
                         </div>
-
-                        <button class="sign-in-button" type="submit" value="login">Sign in</button>
+                        <div class="button-group">
+                            <button type="submit" class="sign-in-button">Sign in</button>
+                        </div>
                     </form>
                 </div>
             </div>
             <p class="register-text">
                 ¿Aun no cuentas con una cuenta? <a href="/RegisterUserModule">Registrarse aquí</a>
             </p>
-            <p class="forgot-password"><a href="javascript:void(0);" onclick="PasswordRecovery()">¿Olvidaste tu contraseña?</a></p>
+            <p class="forgot-password"><a href="javascript:void(0);" onclick="PasswordRecovery()">¿Olvidaste tu
+                    contraseña?</a></p>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (TempData["Message"] != null && TempData["Title"] != null)
+    {
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                Swal.fire({
+                    icon: "error",
+                    title: "@TempData["Title"]",
+                    text: "@TempData["Message"]",
+                });
+            });
+        </script>
+    }
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {

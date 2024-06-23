@@ -36,10 +36,9 @@ namespace TeamsHubWebClient.Pages
         {
             if (file == null || file.Length == 0)
             {
-                return; // O devuelve algún error, según tu lógica.
+                return; 
             }
 
-            // Convertir el archivo a bytes
             byte[] fileBytes;
             using (var memoryStream = new MemoryStream())
             {

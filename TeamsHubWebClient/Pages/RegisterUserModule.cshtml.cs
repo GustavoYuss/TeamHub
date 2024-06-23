@@ -4,6 +4,10 @@ using TeamHubServiceUser.Entities;
 using TeamsHubWebClient.DTOs;
 using TeamsHubWebClient.Gateways.Interfaces;
 using TeamsHubWebClient.SinglentonClasses;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace TeamsHubWebClient.Pages
 {
@@ -11,6 +15,7 @@ namespace TeamsHubWebClient.Pages
     {
         private readonly ILogger<RegisterUserModel> _logger;
         private readonly IUserManager _userManager;
+
         [BindProperty]
         public StudentDTO studentDTO { get; set; }
 
@@ -23,7 +28,7 @@ namespace TeamsHubWebClient.Pages
 
         public void OnGet() { }
 
-        public void OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             var messageErrors = AreFieldsValid(studentDTO);
 
@@ -33,58 +38,53 @@ namespace TeamsHubWebClient.Pages
                 {
                     ModelState.AddModelError(string.Empty, error);
                 }
+                return Page();
             }
 
-            if (messageErrors.Count == 0)
+            if (ModelState.IsValid)
             {
                 _userManager.AddStudent(studentDTO);
-                RedirectToPage("/Index");
+                return RedirectToPage("/Index");
             }
-        }
 
+            return Page();
+        }
 
         private List<string> AreFieldsValid(StudentDTO studentDTO)
         {
-            bool isValid = true;
-            List<string> messeageErrors = new List<string>();
+            var messageErrors = new List<string>();
 
             if (string.IsNullOrEmpty(studentDTO.Name))
             {
-                messeageErrors.Add("El nombre es obligatorio.");
-                isValid = false;
+                messageErrors.Add("El nombre es obligatorio.");
             }
 
             if (string.IsNullOrEmpty(studentDTO.Email))
             {
-                messeageErrors.Add("El correo es obligatorio.");
-                isValid = false;
+                messageErrors.Add("El correo es obligatorio.");
             }
 
             if (string.IsNullOrEmpty(studentDTO.SurName))
             {
-                messeageErrors.Add("El apellido materno es obligatorio.");
-                isValid = false;
+                messageErrors.Add("El apellido materno es obligatorio.");
             }
 
             if (string.IsNullOrEmpty(studentDTO.LastName))
             {
-                messeageErrors.Add("El apellido paterno es obligatorio.");
-                isValid = false;
+                messageErrors.Add("El apellido paterno es obligatorio.");
             }
 
             if (string.IsNullOrEmpty(studentDTO.MiddleName))
             {
-                messeageErrors.Add("El apodo es obligatorio.");
-                isValid = false;
+                messageErrors.Add("El apodo es obligatorio.");
             }
 
             if (string.IsNullOrEmpty(studentDTO.Password))
             {
-                messeageErrors.Add("El contraseña es obligatorio.");
-                isValid = false;
+                messageErrors.Add("El contraseña es obligatorio.");
             }
 
-            return messeageErrors;
+            return messageErrors;
         }
     }
 }
