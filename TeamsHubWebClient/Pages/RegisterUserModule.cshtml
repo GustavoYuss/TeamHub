@@ -22,41 +22,34 @@
             <div class="overlay">
                 <div id="form-container">
                     <h1 class="title">Registrarse</h1>
-                    <div class="input-group">
-                        <div class="column">
-                            <input type="text" placeholder="Nombre" class="input" id="txtN1ombre"
-                                asp-for="studentDTO.Name" required="required" maxlength="15">
+                    <form method="post" id="register-form">
+                        <div class="input-group">
+                            <div class="column">
+                                <input type="text" placeholder="Nombre" class="input" asp-for="studentDTO.Name" required maxlength="15">
                                 <span asp-validation-for="studentDTO.Name" class="text-danger"></span>
-                            <input type="text" placeholder="Apellido Paterno" class="input" id="txtApellidoPaterno"
-                                asp-for="studentDTO.LastName" required="required" maxlength="15">
+                                <input type="text" placeholder="Apellido Paterno" class="input" asp-for="studentDTO.LastName" required maxlength="15">
                                 <span asp-validation-for="studentDTO.LastName" class="text-danger"></span>
-                            <input type="text" placeholder="Apellido Materno" class="input" id="txtApellidoMaterno"
-                                asp-for="studentDTO.SurName" required="required" maxlength="15">
+                                <input type="text" placeholder="Apellido Materno" class="input" asp-for="studentDTO.SurName" required maxlength="15">
                                 <span asp-validation-for="studentDTO.SurName" class="text-danger"></span>
-                            <input type="text" placeholder="Apodo" class="input" id="txtApodo"
-                                asp-for="studentDTO.MiddleName" required="required" maxlength="15">
+                                <input type="text" placeholder="Apodo" class="input" asp-for="studentDTO.MiddleName" required maxlength="15">
                                 <span asp-validation-for="studentDTO.MiddleName" class="text-danger"></span>
-                        </div>
-                        <div class="column">
-                            <input type="email" placeholder="Correo" class="input" id="txtCorreo"
-                                asp-for="studentDTO.Email" required="required" maxlength="50">
+                            </div>
+                            <div class="column">
+                                <input type="email" placeholder="Correo" class="input" asp-for="studentDTO.Email" required maxlength="50">
                                 <span asp-validation-for="studentDTO.Email" class="text-danger"></span>
-                            <input type="password" placeholder="Contraseña" class="input" id="txtContrasena"
-                                asp-for="studentDTO.Password" required="required" maxlength="20">
-                                <span asp-validation-for="studentDTO.LastName" class="text-danger"></span>
-                            <input type="password" placeholder="Confirmación con." class="input" id="txtConfirmacion"
-                                asp-for="studentDTO.Password" required="required" maxlength="20">
-                                <span asp-validation-for="studentDTO.LastName" class="text-danger"></span>
+                                <input type="password" placeholder="Contraseña" class="input" asp-for="studentDTO.Password" required maxlength="20">
+                                <span asp-validation-for="studentDTO.Password" class="text-danger"></span>
+                                <input type="password" placeholder="Confirmación contraseña." class="input" required maxlength="20">
+                                <span class="text-danger"></span>
+                            </div>
                         </div>
-                    </div>
+                        <div class="button-group">
+                            <button type="button" class="sign-in-button" onclick="location.href='/Login'">Cancelar</button>
+                            <button type="submit" class="sign-in-button">Registrar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <form method="post" id="register-form">
-            <div class="button-group">
-                <button type="button" class="sign-in-button" onclick="location.href='/Login'">Cancelar</button>
-                <button type="submit" class="sign-in-button">Registrar</button>
-            </div>
-        </form>
         </div>
     </div>
 </body>

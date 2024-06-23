@@ -184,11 +184,11 @@ app.MapPost("/TeamHub/Users/AddToProject/{idProject}/{idStudent}", ([FromService
     }
 }).WithName("AddStudentOfProject");
 
-app.MapDelete("/TeamHub/Project/File/{idFile}", ([FromServices] IFileManager fileManager,[FromRoute] int idFile) =>
+app.MapDelete("/TeamHub/Project/File/{idFile}", async ([FromServices] IFileManager fileManager,[FromRoute] int idFile) =>
 {     
     try
     {
-        var userList = fileManager.DeleteFile(idFile);
+        await fileManager.DeleteFile(idFile);
         return Results.Ok();
     }
     catch (System.Exception ex)

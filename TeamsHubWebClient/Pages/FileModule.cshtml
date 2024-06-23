@@ -255,7 +255,9 @@
                             });
                         },
                     error: function(xhr, status, error) {
+                        Swal.fire("Error!", 'Ha ocurrido un error al conectarse con el servidor, intente nuevamente más tarde', "error");
                         console.error('Error al subir el archivo:', error);
+                        fileInput.value = ''; 
                     }
                 });
             });
@@ -290,6 +292,7 @@
                         });
                 },
                 error: function (xhr, status, error) {
+                    Swal.fire("Error!", 'Ha ocurrido un error al conectarse con el servidor, intente nuevamente más tarde', "error");
                     console.error('Error al eliminar el usuario:', error);
                 }
             });
