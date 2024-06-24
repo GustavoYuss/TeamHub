@@ -38,7 +38,7 @@ html {
     padding: 50px; /* Se ha aumentado el espacio interno del cuadro */
     position: relative;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    margin-bottom: 50px; /* Ajusta la distancia del cuadro a los enlaces de registro y contraseña */
+    margin-bottom: 18px; /* Ajusta la distancia del cuadro a los enlaces de registro y contraseña */
     overflow: hidden;
 }
 
@@ -128,7 +128,7 @@ html {
     font-weight: bold;
     padding: 10px 20px;
     cursor: pointer;
-    width: 100%;
+    width: 70%;
     margin: 20px 0;
 }
 
