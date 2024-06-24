@@ -20,30 +20,30 @@
     <div class="background">
         <div class="container">
             <img src="/images/Team_Hub-removebg-preview.png" alt="Team Hub" class="logo">
-            <div class="overlay">
-                <div class="form-container">
-                    <form method="post" id="login-form">
-                        <h1 class="title">Sign in</h1>
-                        <p class="subtitle">Por favor ingrese su correo y contraseña</p>
-                        <div class="input-group">
-                            <img src="/images/ICON-EMAIL.png" alt="Email Icon" class="icon">
-                            <input type="email" placeholder="Email" class="input" id="txtEmail" required="required"
-                                maxlength="30" asp-for="sessionLoginRequest.Email">
-                            <span asp-validation-for="sessionLoginRequest.Email" class="text-danger"></span>
+                <form method="post" id="login-form">
+                    <div class="overlay">
+                        <div class="form-container">
+                            
+                                <h1 class="title">Sign in</h1>
+                                <p class="subtitle">Por favor ingrese su correo y contraseña</p>
+                                <div class="input-group">
+                                    <img src="/images/ICON-EMAIL.png" alt="Email Icon" class="icon">
+                                    <input type="email" placeholder="Email" class="input" id="txtEmail" required="required"
+                                        maxlength="30" asp-for="sessionLoginRequest.Email">
+                                    <span asp-validation-for="sessionLoginRequest.Email" class="text-danger"></span>
+                                </div>
+                                <div class="input-group">
+                                    <img src="/images/ICON-PASSWORD.png" alt="Password Icon" class="icon">
+                                    <input type="password" placeholder="Password" class="input" id="txtPassword"
+                                        required="required" maxlength="20" asp-for="sessionLoginRequest.Password">
+                                    <span asp-validation-for="sessionLoginRequest.Password" class="text-danger"></span>
+                                    <label for="showPassword" id="togglePassword" class="show-password">Mostrar</label>
+                                </div>
+                                
                         </div>
-                        <div class="input-group">
-                            <img src="/images/ICON-PASSWORD.png" alt="Password Icon" class="icon">
-                            <input type="password" placeholder="Password" class="input" id="txtPassword"
-                                required="required" maxlength="20" asp-for="sessionLoginRequest.Password">
-                            <span asp-validation-for="sessionLoginRequest.Password" class="text-danger"></span>
-                            <label for="showPassword" id="togglePassword" class="show-password">Mostrar</label>
-                        </div>
-                        <div class="button-group">
-                            <button type="submit" class="sign-in-button">Sign in</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+                    </div>
+                    <button type="submit" class="sign-in-button">Sign in</button>
+                </form>
             <p class="register-text">
                 ¿Aun no cuentas con una cuenta? <a href="/RegisterUserModule">Registrarse aquí</a>
             </p>
