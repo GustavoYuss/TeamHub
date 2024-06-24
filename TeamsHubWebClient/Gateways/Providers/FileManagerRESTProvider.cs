@@ -27,7 +27,7 @@ namespace TeamsHubWebClient.Gateways.Providers
                 Credentials = ChannelCredentials.Insecure
             };
 
-            using var channel = GrpcChannel.ForAddress("http://localhost:5001", channelOptions);
+            using var channel = GrpcChannel.ForAddress("http://172.16.0.6:8080", channelOptions);
             client = new FileManagement.FileManagementClient(channel);
             var reply = await client.DeleteFileAsync(new DeleteRequest { IdFile = IdDocument });
         }
@@ -48,7 +48,7 @@ namespace TeamsHubWebClient.Gateways.Providers
                     Credentials = ChannelCredentials.Insecure
                 };
 
-                using var channel = GrpcChannel.ForAddress("http://localhost:5001", channelOptions);
+                using var channel = GrpcChannel.ForAddress("http://172.16.0.6:8080", channelOptions);
                 client = new FileManagement.FileManagementClient(channel);
                 var reply = await client.SaveFileAsync(new FileRequest
                 {

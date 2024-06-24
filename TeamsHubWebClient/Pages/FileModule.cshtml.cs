@@ -53,7 +53,7 @@ namespace TeamsHubWebClient.Pages
 
             try
             {
-                using var channel = GrpcChannel.ForAddress("http://localhost:5001", channelOptions);
+                using var channel = GrpcChannel.ForAddress("http://172.16.0.6:8080", channelOptions);
                 var client = new FileManagement.FileManagementClient(channel);
                 var reply = await client.SaveFileAsync(new FileRequest
                 {

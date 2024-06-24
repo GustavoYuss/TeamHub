@@ -199,6 +199,7 @@
                 },
                 success: function (result) {
                     userList = @Html.Raw(Json.Serialize(Model.StudentList));
+                    location.reload();
                 },
                 error: function (xhr, status, error) {
                     console.error('Error al actualizar la lista de usuarios:', error);
@@ -216,7 +217,7 @@
                 taskName.textContent = task.name;
 
                 var taskDescription = document.createElement("p");
-                taskDescription.textContent = task.description;
+                taskDescription.textContent = task.description.substring(0, 50);
 
                 taskItem.appendChild(taskName);
                 taskItem.appendChild(taskDescription);
